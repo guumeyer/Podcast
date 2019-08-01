@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14490.49"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" rowHeight="117" id="vOi-RZ-qoK" customClass="PodcastTableViewCell" customModule="Podcast" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="427" height="117"/>
+            <autoresizingMask key="autoresizingMask"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="vOi-RZ-qoK" id="Ig6-zY-S66">
+                <rect key="frame" x="0.0" y="0.0" width="427" height="116.5"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="NFl-0s-Fyg" customClass="UIURLImageView" customModule="Podcast" customModuleProvider="target">
+                        <rect key="frame" x="20" y="8" width="100" height="100"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="100" id="5JD-xH-fsT"/>
+                            <constraint firstAttribute="width" constant="100" id="OPc-Um-pZI"/>
+                        </constraints>
+                    </imageView>
+                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="6" translatesAutoresizingMaskIntoConstraints="NO" id="Liw-yI-OpU">
+                        <rect key="frame" x="132" y="16" width="275" height="67.5"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Track Name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ViK-jY-7dE">
+                                <rect key="frame" x="0.0" y="0.0" width="275" height="20.5"/>
+                                <fontDescription key="fontDescription" type="system" weight="medium" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Artist Name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="T6l-sL-Sxn">
+                                <rect key="frame" x="0.0" y="26.5" width="275" height="18"/>
+                                <fontDescription key="fontDescription" type="system" weight="light" pointSize="15"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Episodes Count" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Luc-U0-3kO">
+                                <rect key="frame" x="0.0" y="50.5" width="275" height="17"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                    </stackView>
+                </subviews>
+                <constraints>
+                    <constraint firstItem="NFl-0s-Fyg" firstAttribute="leading" secondItem="Ig6-zY-S66" secondAttribute="leadingMargin" id="3g5-gG-pd6"/>
+                    <constraint firstItem="Liw-yI-OpU" firstAttribute="leading" secondItem="NFl-0s-Fyg" secondAttribute="trailing" constant="12" id="54v-vD-RrN"/>
+                    <constraint firstAttribute="rightMargin" secondItem="Liw-yI-OpU" secondAttribute="rightMargin" id="Idl-Jr-dxt"/>
+                    <constraint firstItem="Liw-yI-OpU" firstAttribute="top" secondItem="Ig6-zY-S66" secondAttribute="top" constant="16" id="Vez-73-8Z6"/>
+                    <constraint firstItem="NFl-0s-Fyg" firstAttribute="top" secondItem="Ig6-zY-S66" secondAttribute="top" constant="8" id="uBY-By-9Np"/>
+                </constraints>
+            </tableViewCellContentView>
+            <connections>
+                <outlet property="artistNameLabel" destination="T6l-sL-Sxn" id="wnT-0I-831"/>
+                <outlet property="episodeCount" destination="Luc-U0-3kO" id="tGo-qV-MoX"/>
+                <outlet property="podcastImageView" destination="NFl-0s-Fyg" id="Lxd-EM-uBC"/>
+                <outlet property="trackNameLabel" destination="ViK-jY-7dE" id="GaW-Vz-Yrw"/>
+            </connections>
+            <point key="canvasLocation" x="-490.57971014492756" y="19.084821428571427"/>
+        </tableViewCell>
+    </objects>
+</document>
