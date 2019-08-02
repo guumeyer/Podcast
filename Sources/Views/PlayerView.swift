@@ -109,11 +109,8 @@ final class PlayerView: UIView {
 
     override func awakeFromNib() {
         super.awakeFromNib()
-
         setupRemoteControl()
-
         setupGesture()
-
         setupSessionAudio()
 
         addPeriodicTimeObserver()
@@ -166,15 +163,12 @@ final class PlayerView: UIView {
 
     @IBAction func handleCurrenTimeSlider(_ sender: Any) {
         guard let durantion = player.currentItem?.duration else { return }
-
         let percentage = Float64(currentiTimeSlider.value)
-
         let durantionSeconds = CMTimeGetSeconds(durantion)
-
         let seekTimeInSeconds = percentage * durantionSeconds
-
         let seekTime = CMTimeMakeWithSeconds(seekTimeInSeconds, preferredTimescale: 1)
-
+        
+        updateElapsedPlaybackTime(for: seekTimeInSeconds)
         player.seek(to: seekTime)
     }
 
@@ -226,6 +220,7 @@ final class PlayerView: UIView {
         commandCenter.playCommand.addTarget { [weak self](_) -> MPRemoteCommandHandlerStatus in
             print("Should play some sound")
             self?.handlePlayAction()
+            self?.setupNowPlayinfoElapsedPlaybackTime()
             return .success
         }
 
@@ -233,6 +228,7 @@ final class PlayerView: UIView {
         commandCenter.pauseCommand.addTarget { [weak self] (_) -> MPRemoteCommandHandlerStatus in
             print("Should pause some sound")
             self?.handlePauseAction()
+            self?.setupNowPlayinfoElapsedPlaybackTime()
             return .success
         }
 
@@ -250,9 +246,7 @@ final class PlayerView: UIView {
 
     private func setupGesture() {
         addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(handleTapMaximizePlayer)))
-
         miniPlayerView.addGestureRecognizer(UIPanGestureRecognizer(target: self, action: #selector(handlePan)))
-
         maximazePlayer.addGestureRecognizer(UIPanGestureRecognizer(target: self, action: #selector(handlePanDismissal)))
     }
 
@@ -301,15 +295,18 @@ final class PlayerView: UIView {
     }
 
     private func setupNowPlayinfoCurrentTime() {
-        var nowPlayingInfo = MPNowPlayingInfoCenter.default().nowPlayingInfo
-        
-        guard let currentItem = player.currentItem else { return }
-        let durationInSeconds = CMTimeGetSeconds(currentItem.duration)
+        guard let duration = player.currentItem?.duration else { return }
+        let durationInSeconds = CMTimeGetSeconds(duration)
+        MPNowPlayingInfoCenter.default().nowPlayingInfo?[MPMediaItemPropertyPlaybackDuration] = durationInSeconds
+    }
+    
+    private func setupNowPlayinfoElapsedPlaybackTime() {
         let elapseTime = CMTimeGetSeconds(player.currentTime())
-        
-        nowPlayingInfo?[MPNowPlayingInfoPropertyElapsedPlaybackTime] = durationInSeconds
-        nowPlayingInfo?[MPMediaItemPropertyPlaybackDuration] = durationInSeconds
-        MPNowPlayingInfoCenter.default().nowPlayingInfo = nowPlayingInfo
+        updateElapsedPlaybackTime(for: elapseTime)
+    }
+    
+    private func updateElapsedPlaybackTime(for elapseTime: Float64) {
+        MPNowPlayingInfoCenter.default().nowPlayingInfo?[MPNowPlayingInfoPropertyElapsedPlaybackTime] = elapseTime
     }
 
     // MARK: - Player observer
@@ -320,7 +317,6 @@ final class PlayerView: UIView {
             guard let strongSelf = self else { return }
             strongSelf.currentTimeLabel.text = time.formartDisplay()
             strongSelf.durationLabel.text = strongSelf.player.currentItem?.duration.formartDisplay()
-            strongSelf.setupNowPlayinfoCurrentTime()
             strongSelf.updateCurrentTimeSlider()
         }
     }
@@ -328,7 +324,6 @@ final class PlayerView: UIView {
     private func updateCurrentTimeSlider() {
         let currentTimeSeconds = CMTimeGetSeconds(player.currentTime())
         let durantionSeconds = CMTimeGetSeconds(player.currentItem?.duration ?? CMTimeMake(value: 1, timescale: 1))
-
         let percentage = currentTimeSeconds / durantionSeconds
 
         currentiTimeSlider.value = Float(percentage)
@@ -341,6 +336,7 @@ final class PlayerView: UIView {
         player.addBoundaryTimeObserver(forTimes: times, queue: .main) { [weak self] in
             // The audio streaming is playing
             self?.enlargeEpisodeImageViewAnimation()
+            self?.setupNowPlayinfoCurrentTime()
         }
     }
 
