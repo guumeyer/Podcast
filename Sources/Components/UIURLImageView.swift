@@ -12,14 +12,16 @@ final class UIURLImageView: UIImageView {
 
     /// The image URL String
     var url: String?
+    private static let placeHolderImage = UIImage(named: "placeholder")
 
     /// Loads image based on the url web or local cache
     ///
     /// - Parameter url: the image URL
-    func load(url: String) {
+    func load(url: String, completion: ((UIImage?) -> Void)? = nil)  {
         image = nil
         self.url = url
         guard let imageUrl = URL(string: url) else {
+            print("Invalid image URL")
             return
         }
         ImageCacheService.shared.load(imageUrl) {[weak self] (result) in
@@ -28,12 +30,14 @@ final class UIURLImageView: UIImageView {
             case .success( let image):
                 if self?.url == url {
                     DispatchQueue.main.async {
+                        completion?(image)
                         strongSelf.transition(toImage: image)
                     }
                 }
             case .failure(let error):
                 DispatchQueue.main.async {
-                    strongSelf.transition(toImage: UIImage(named: "placeholder"))
+                    completion?(UIURLImageView.placeHolderImage)
+                    strongSelf.transition(toImage: UIURLImageView.placeHolderImage)
                 }
                 print(error.localizedDescription)
             }

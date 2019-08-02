@@ -25,17 +25,34 @@ final class PlayerView: UIView {
         }
     }
 
+
+    
     var episode: Episode! {
         didSet {
             titleLabel.text = episode.title
             miniTitleLabel.text = episode.title
             playEpisode()
-            guard let imageUrl = episode.image else { return }
-
-            episodeImageView.load(url: imageUrl)
-            miniEpisodeImageView.load(url: imageUrl)
+            setupNowPlayinfo()
+            episodeImageView.image = nil
+            miniEpisodeImageView.image = nil
+            guard let imageUrl = episode.image else {
+                print("Not found image")
+                return
+            }
+            
+            miniEpisodeImageView.load(url: imageUrl){[weak self] (image) in
+                guard let image = image else {
+                    print("miniEpisodeImageView.load:: nil")
+                    return
+                }
+                
+                self?.episodeImageView.image = image
+                
+                self?.setupNowPlayinfoArtwork(image)
+            }
         }
     }
+
 
     let player: AVPlayer = {
         let avPlayer = AVPlayer()
@@ -264,6 +281,36 @@ final class PlayerView: UIView {
         maximazePlayer.alpha = -translation.y / 200
     }
 
+    // MARK: - Now Playing Info
+    private func setupNowPlayinfo() {
+        var nowPlayingInfo = [String: Any]()
+        nowPlayingInfo[MPMediaItemPropertyTitle] = episode.title
+        nowPlayingInfo[MPMediaItemPropertyArtist] = author
+        
+        MPNowPlayingInfoCenter.default().nowPlayingInfo = nowPlayingInfo
+    }
+    
+    private func setupNowPlayinfoArtwork(_ image: UIImage) {
+        var nowPlayingInfo = MPNowPlayingInfoCenter.default().nowPlayingInfo
+        
+        let artwork = MPMediaItemArtwork(boundsSize: image.size, requestHandler: { (_) -> UIImage in
+            return image
+        })
+        nowPlayingInfo?[MPMediaItemPropertyArtwork] = artwork
+        MPNowPlayingInfoCenter.default().nowPlayingInfo = nowPlayingInfo
+    }
+
+    private func setupNowPlayinfoCurrentTime() {
+        var nowPlayingInfo = MPNowPlayingInfoCenter.default().nowPlayingInfo
+        
+        guard let currentItem = player.currentItem else { return }
+        let durationInSeconds = CMTimeGetSeconds(currentItem.duration)
+        let elapseTime = CMTimeGetSeconds(player.currentTime())
+        
+        nowPlayingInfo?[MPNowPlayingInfoPropertyElapsedPlaybackTime] = durationInSeconds
+        nowPlayingInfo?[MPMediaItemPropertyPlaybackDuration] = durationInSeconds
+        MPNowPlayingInfoCenter.default().nowPlayingInfo = nowPlayingInfo
+    }
 
     // MARK: - Player observer
 
@@ -273,6 +320,7 @@ final class PlayerView: UIView {
             guard let strongSelf = self else { return }
             strongSelf.currentTimeLabel.text = time.formartDisplay()
             strongSelf.durationLabel.text = strongSelf.player.currentItem?.duration.formartDisplay()
+            strongSelf.setupNowPlayinfoCurrentTime()
             strongSelf.updateCurrentTimeSlider()
         }
     }
