@@ -48,7 +48,7 @@ final class MainTabController: UITabBarController {
         })
     }
 
-    func maximizePlayerViewAnimation(episode: Episode? = nil, author: String = "") {
+    func maximizePlayerViewAnimation(episode: Episode? = nil, playList: [Episode] = []) {
         minimizedTopAnchorConstraint.isActive = false
         bottomAnchorConstraint.constant = 0
         maximizedTopAnchorConstraint.constant = 0
@@ -56,8 +56,7 @@ final class MainTabController: UITabBarController {
 
 
         if let episode = episode {
-            playerView.author = author
-            playerView.episode = episode
+            playerView.prepare(by: episode, playList)
         }
 
         UIView.animate(withDuration: 0.5,

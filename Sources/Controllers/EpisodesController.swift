@@ -57,7 +57,8 @@ extension EpisodesController {
 
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
 
-        mainController?.maximizePlayerViewAnimation(episode: episodes[indexPath.row], author: podcast.author)
+        mainController?.maximizePlayerViewAnimation(episode: episodes[indexPath.row],
+                                                    playList: episodes)
 
     }
 

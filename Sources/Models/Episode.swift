@@ -9,6 +9,8 @@
 import Foundation
 
 struct Episode {
+    var id: String
+    var author: String
     var title: String
     var summary: String
     var description: String

@@ -14,6 +14,12 @@ final class EpisodesFeedXMLParser: NSObject, XMLParserDelegate {
     private var episodes: [Episode] = []
     private var currentElement = ""
 
+    private var currentAuthor: String = "" {
+        didSet {
+            currentAuthor = currentAuthor.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines)
+        }
+    }
+    
     private var currentTitle: String = "" {
         didSet {
             currentTitle = currentTitle.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines)
@@ -86,6 +92,7 @@ final class EpisodesFeedXMLParser: NSObject, XMLParserDelegate {
 
     func parser(_ parser: XMLParser, foundCharacters string: String)   {
         switch currentElement {
+        case "itunes:author": currentAuthor += string
         case "title": currentTitle += string
         case "itunes:summary" : currentSummary += string
         case "description" : currentDescription += string
@@ -99,7 +106,9 @@ final class EpisodesFeedXMLParser: NSObject, XMLParserDelegate {
                 namespaceURI: String?,
                 qualifiedName qName: String?) {
         if elementName == "item" {
-            let rssItem = Episode(title: currentTitle,
+            let rssItem = Episode(id: UUID().uuidString,
+                                  author: currentAuthor,
+                                  title: currentTitle,
                                   summary: currentSummary,
                                   description: currentDescription,
                                   pubDate: currentPubDate,
