@@ -19,8 +19,11 @@ final class PlayerView: UIView {
             titleLabel.text = episode.title
             authorLabel.text = episode.author
             miniTitleLabel.text = episode.title
+            
+            setupSessionAudio()
             playEpisode()
             setupNowPlayinfo(for: episode)
+            
             episodeImageView.image = nil
             miniEpisodeImageView.image = nil
             guard let imageUrl = episode.image else {
@@ -35,7 +38,6 @@ final class PlayerView: UIView {
                 }
                 
                 self?.episodeImageView.image = image
-                
                 self?.setupNowPlayinfoArtwork(image)
             }
         }
@@ -62,9 +64,10 @@ final class PlayerView: UIView {
         return avPlayer
     }()
     
-
-
-    class func instanceFromNib() -> PlayerView {
+    /// Loads PlayerView
+    ///
+    /// - Returns: an instance of PlayerView
+    static func instanceFromNib() -> PlayerView {
         return Bundle.main.loadNibNamed("PlayerView", owner: self, options: nil)?.first as! PlayerView
     }
 
@@ -114,12 +117,12 @@ final class PlayerView: UIView {
         super.awakeFromNib()
         setupRemoteControl()
         setupGesture()
-        setupSessionAudio()
+        setupInterruptionObserver()
 
         addPeriodicTimeObserver()
         addBoundaryTimeObserver()
     }
-    
+
     /// Prepares the player
     ///
     /// - Parameters:
@@ -217,9 +220,11 @@ final class PlayerView: UIView {
     }
 
     private func audioRouteChangedObserver() {
-        NotificationCenter.default.addObserver(self,
-                                               selector: #selector(handleAudioRouteChanged),
-                                               name: AVAudioSession.routeChangeNotification, object: nil)
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(handleAudioRouteChanged),
+            name: AVAudioSession.routeChangeNotification,
+            object: nil)
     }
 
     private func setupRemoteControl() {
@@ -236,6 +241,10 @@ final class PlayerView: UIView {
         commandCenter.togglePlayPauseCommand.addTarget(self, action: #selector(handleCommanderCenterTogglePlayPause))
         
         commandCenter.nextTrackCommand.addTarget(self, action: #selector(handleCommanderCenterNextTrack))
+    }
+    
+    private func setupInterruptionObserver() {
+        NotificationCenter.default.addObserver(self, selector: #selector(handleInterruption), name: AVAudioSession.interruptionNotification, object: nil)
     }
 
     // MARK: - Handler CommanderCenter
@@ -270,6 +279,22 @@ final class PlayerView: UIView {
             handlePlayAction()
         }
     }
+    
+    // MARK: - Interruption
+    @objc private func handleInterruption(notification: Notification){
+        print("AVAudioSession.interruptionNotification")
+        guard let userInfo = notification.userInfo,
+            let type = userInfo[AVAudioSessionInterruptionTypeKey] as? UInt else { return }
+        
+        if type == AVAudioSession.InterruptionType.began.rawValue {
+            handlePauseUiAction()
+        } else if type == AVAudioSession.InterruptionType.ended.rawValue,
+            let option = userInfo[AVAudioSessionInterruptionOptionKey] as? UInt,
+                option != AVAudioSession.InterruptionOptions.shouldResume.rawValue {
+            handlePlayAction()
+        }
+    }
+    
     private func changeTrack(_ move: PlayerMoveForward) {
         // TODO: implement Episode UUID instead search for title
         guard playList.count > 1,
@@ -338,11 +363,10 @@ final class PlayerView: UIView {
     }
     
     private func updateElapsedPlaybackTime(for elapseTime: Float64) {
-        MPNowPlayingInfoCenter.default().nowPlayingInfo?[MPNowPlayingInfoPropertyElapsedPlaybackTime] = elapseTime
+       MPNowPlayingInfoCenter.default().nowPlayingInfo?[MPNowPlayingInfoPropertyElapsedPlaybackTime] = elapseTime
     }
 
     // MARK: - Player observer
-
     private func addPeriodicTimeObserver() {
         let interval = CMTimeMake(value: 1, timescale: 2)
         player.addPeriodicTimeObserver(forInterval: interval, queue: .main) {[weak self] (time) in
@@ -395,6 +419,10 @@ final class PlayerView: UIView {
 
     private func handlePauseAction() {
         player.pause()
+        handlePauseUiAction()
+    }
+    
+    private func handlePauseUiAction() {
         playAndPauseButton.setImage(UIImage(named: "play"), for: .normal)
         miniPlayPauseButton.setImage(UIImage(named: "play"), for: .normal)
         scaleEpisodeImageView()
