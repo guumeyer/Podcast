@@ -50,6 +50,7 @@ final class PodcastsSearchController: UITableViewController {
 
 // MARK: - UITableView Delegate and DataSource
 extension PodcastsSearchController {
+    
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return podcasts.count
     }

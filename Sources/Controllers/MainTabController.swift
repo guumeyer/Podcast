@@ -59,44 +59,19 @@ final class MainTabController: UITabBarController {
             playerView.prepare(by: episode, playList)
         }
 
-        UIView.animate(withDuration: 0.5,
-                       delay: 0,
-                       usingSpringWithDamping: 0.7,
-                       initialSpringVelocity: 0,
-                       options: .curveEaseOut,
-                       animations: {
-                        self.view.layoutIfNeeded()
-                        self.tabBar.transform = CGAffineTransform(translationX: 0, y: 100)
-                        self.playerView.maximazePlayer.alpha = 1
-                        self.playerView.miniPlayerView.alpha = 0
-
-        })
+        UIView.animateCurveEaseOut {
+            self.view.layoutIfNeeded()
+            self.tabBar.transform = CGAffineTransform(translationX: 0, y: 100)
+            self.playerView.maximazePlayer.alpha = 1
+            self.playerView.miniPlayerView.alpha = 0
+        }
     }
-
-    private func buildNavigationViewController(with rootViweController: UIViewController,
-                                               title: String,
-                                               image: UIImage? = nil) -> UIViewController {
-        let navController = UINavigationController(rootViewController: rootViweController)
-        rootViweController.navigationItem.title = title
-        navController.tabBarItem.title = title
-        navController.tabBarItem.image = image
-
-        return navController
-    }
-
+    
     private func setupViewControllers() {
         viewControllers = [
-            buildNavigationViewController(with: PodcastsSearchController(),
-                                          title: "Search",
-                                          image: UIImage(named: "search")),
-            
-            buildNavigationViewController(with: ViewController(),
-                                          title: "Favorites",
-                                          image: UIImage(named: "favorites")),
-
-            buildNavigationViewController(with: ViewController(),
-                                          title: "Downloads",
-                                          image: UIImage(named: "downloads")),
+            UIControllerFactory.create(.favorites),
+            UIControllerFactory.create(.search),
+            UIControllerFactory.create(.donwload),
         ]
     }
 

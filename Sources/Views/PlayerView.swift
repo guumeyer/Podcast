@@ -155,12 +155,12 @@ final class PlayerView: UIView {
             maximazePlayer.transform = CGAffineTransform(translationX: 0, y: translation.y)
         case .ended:
             let translation = gestore.translation(in: superview)
-            UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 0.7, initialSpringVelocity: 1, options: .curveEaseOut, animations: {
+            UIView.animateCurveEaseOut {
                 self.maximazePlayer.transform = .identity
                 if translation.y > 50 {
                    self.mainController?.minimazePlayerViewAnimation()
                 }
-            });
+            }
         default:
             break
         }
@@ -261,13 +261,11 @@ final class PlayerView: UIView {
     @objc private func handleCommanderCenterPlayTrack() {
         print("CommanderCenter: Play")
         handlePlayAction()
-        setupNowPlayinfoElapsedPlaybackTime()
     }
     
     @objc private func handleCommanderCenterPauseTrack() {
         print("CommanderCenter: Pause")
         handlePauseAction()
-        setupNowPlayinfoElapsedPlaybackTime(playbackRate: 0)
     }
 
     @objc private func handleCommanderCenterTogglePlayPause() {
@@ -315,7 +313,7 @@ final class PlayerView: UIView {
         let translation = gestore.translation(in: superview)
         let velocity = gestore.velocity(in: superview)
 
-        UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 0.7, initialSpringVelocity: 1, options: .curveEaseOut, animations: {
+        UIView.animateCurveEaseOut {
             self.transform = .identity
 
             if translation.y < -200 || velocity.y < -500 {
@@ -324,7 +322,7 @@ final class PlayerView: UIView {
                 self.miniEpisodeImageView.alpha = 1
                 self.maximazePlayer.alpha = 0
             }
-        })
+        }
     }
 
     private func handletPanChanged(_ gestore: UIPanGestureRecognizer) {
@@ -357,7 +355,7 @@ final class PlayerView: UIView {
         MPNowPlayingInfoCenter.default().nowPlayingInfo?[MPMediaItemPropertyPlaybackDuration] = durationInSeconds
     }
     
-    private func setupNowPlayinfoElapsedPlaybackTime(playbackRate: Int = 1) {
+    private func setupNowPlayinfoElapsedPlaybackTime(playbackRate: Float = 1) {
         let elapseTime = CMTimeGetSeconds(player.currentTime())
         updateElapsedPlaybackTime(for: elapseTime)
         MPNowPlayingInfoCenter.default().nowPlayingInfo?[MPNowPlayingInfoPropertyPlaybackRate] = playbackRate
@@ -399,15 +397,15 @@ final class PlayerView: UIView {
 
     // MARK: - Animation
     private func enlargeEpisodeImageViewAnimation() {
-        UIView.animate(withDuration: 0.75, delay: 0, usingSpringWithDamping: 0.5, initialSpringVelocity: 1, options: .curveEaseOut, animations: {
+        UIView.animateCurveEaseOut {
             self.episodeImageView.transform = .identity
-        })
+        }
     }
 
     private func scaleEpisodeImageView() {
-        UIView.animate(withDuration: 0.75, delay: 0, usingSpringWithDamping: 0.5, initialSpringVelocity: 1, options: .curveEaseIn, animations: {
+        UIView.animateCurveEaseOut {
             self.episodeImageView.transform = PlayerView.scaleEpisodeImageView
-        })
+        }
     }
 
     // MARK: - Player action
@@ -416,11 +414,13 @@ final class PlayerView: UIView {
         miniPlayPauseButton.setImage(UIImage(named: "pause"), for: .normal)
         player.play()
         enlargeEpisodeImageViewAnimation()
+        setupNowPlayinfoElapsedPlaybackTime()
     }
 
     private func handlePauseAction() {
         player.pause()
         handlePauseUiAction()
+        setupNowPlayinfoElapsedPlaybackTime(playbackRate: 0)
     }
     
     private func handlePauseUiAction() {
@@ -429,7 +429,7 @@ final class PlayerView: UIView {
         scaleEpisodeImageView()
     }
 
-    // MARK: - Helper
+    // MARK: - Player controller
     private func seekToCurrentTime(for delta: Int64) {
         let fifteenSeconds = CMTimeMake(value: delta, timescale: 1)
         let seekTime = CMTimeSubtract(player.currentTime(), fifteenSeconds)
