@@ -42,15 +42,6 @@ final class PlayerView: UIView {
             }
         }
     }
-    
-    /// The player track directions to play the next or preview audio
-    ///
-    /// - next: the next track in the playlist
-    /// - preview: the preview track in the playlist
-    private enum PlayerMoveForward {
-        case next
-        case preview
-    }
     private let seek: Int64 = 15
     private static let scale: CGFloat = 0.7
     private static let scaleEpisodeImageView  = CGAffineTransform(scaleX: PlayerView.scale, y: PlayerView.scale)
@@ -63,16 +54,8 @@ final class PlayerView: UIView {
         avPlayer.automaticallyWaitsToMinimizeStalling = false
         return avPlayer
     }()
-    
-    /// Loads PlayerView
-    ///
-    /// - Returns: an instance of PlayerView
-    static func instanceFromNib() -> PlayerView {
-        return Bundle.main.loadNibNamed("PlayerView", owner: self, options: nil)?.first as! PlayerView
-    }
 
     // MARK: - Mini Player IBOutlet
-    
     @IBOutlet weak var miniEpisodeImageView: UIURLImageView!
     @IBOutlet weak var miniTitleLabel: UILabel!
     @IBOutlet weak var miniPlayPauseButton: UIButton! {
@@ -82,7 +65,7 @@ final class PlayerView: UIView {
         }
     }
     @IBOutlet weak var miniFastForwardButton: UIButton!
-
+    
     // MARK: - Maximize Player IBOutlet
     @IBOutlet weak var maximazePlayer: UIStackView!
     @IBOutlet weak var miniPlayerView: UIView!
@@ -108,11 +91,14 @@ final class PlayerView: UIView {
             playAndPauseButton.addTarget(self, action: #selector(handlePlayAndPause), for: .touchUpInside)
         }
     }
-
-    @IBAction func handleDismissAction(_ sender: Any) {
-        mainController?.minimazePlayerViewAnimation()
+    
+    /// Loads PlayerView
+    ///
+    /// - Returns: an instance of PlayerView
+    static func instanceFromNib() -> PlayerView {
+        return Bundle.main.loadNibNamed("PlayerView", owner: self, options: nil)?.first as! PlayerView
     }
-
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         setupRemoteControl()
@@ -133,46 +119,8 @@ final class PlayerView: UIView {
         self.episode = episode
     }
 
-    @objc private func handleTapMaximizePlayer() {
-        mainController?.maximizePlayerViewAnimation()
-    }
-
-    @objc private func handlePan(gestore: UIPanGestureRecognizer) {
-        switch gestore.state {
-        case .changed:
-            handletPanChanged(gestore)
-        case .ended:
-            handlePanEnded(gestore)
-        default:
-            break
-        }
-    }
-
-    @objc private func handlePanDismissal(gestore: UIPanGestureRecognizer) {
-        switch gestore.state {
-        case .changed:
-            let translation = gestore.translation(in: superview)
-            maximazePlayer.transform = CGAffineTransform(translationX: 0, y: translation.y)
-        case .ended:
-            let translation = gestore.translation(in: superview)
-            UIView.animateCurveEaseOut {
-                self.maximazePlayer.transform = .identity
-                if translation.y > 50 {
-                   self.mainController?.minimazePlayerViewAnimation()
-                }
-            }
-        default:
-            break
-        }
-    }
-
-    @objc func handlePlayAndPause() {
-        switch player.timeControlStatus {
-        case .paused:
-            handlePlayAction()
-        default:
-            handlePauseAction()
-        }
+    @IBAction func handleDismissAction(_ sender: Any) {
+        mainController?.minimazePlayerViewAnimation()
     }
 
     @IBAction func handleCurrenTimeSlider(_ sender: Any) {
@@ -197,8 +145,53 @@ final class PlayerView: UIView {
     @IBAction func handleVolumeChanges(_ sender: UISlider) {
         player.volume = sender.value
     }
+}
 
-    @objc func handleAudioRouteChanged(note: Notification) {
+// MARK: - Setup AVAudioSession
+extension PlayerView {
+    private func setupSessionAudio() {
+        do {
+            try AVAudioSession.sharedInstance().setCategory(.playback)
+            try AVAudioSession.sharedInstance().setActive(true)
+        } catch let error {
+            print("Failed to activate session audio: ", error)
+        }
+    }
+}
+
+// MARK: - Controll the playlist
+extension PlayerView {
+
+    /// The player track directions to play the next or preview audio
+    ///
+    /// - next: the next track in the playlist
+    /// - preview: the preview track in the playlist
+    private enum PlayerMoveForward {
+        case next
+        case preview
+    }
+    
+    private func changeTrack(_ move: PlayerMoveForward) {
+        guard playList.count > 1,
+            let currentEpisodeIndex = playList.firstIndex(where: { $0.id == episode.id }) else { return }
+        let offset = move == .next ? 1 : playList.count - 1
+        let nextEpisodeIndex = (currentEpisodeIndex + offset) % playList.count
+        episode = playList[nextEpisodeIndex]
+    }
+}
+
+// MARK: - Audio Route Changed
+extension PlayerView {
+    
+    private func audioRouteChangedObserver() {
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(handleAudioRouteChanged),
+            name: AVAudioSession.routeChangeNotification,
+            object: nil)
+    }
+    
+    @objc private func handleAudioRouteChanged(note: Notification) {
         if let userInfo = note.userInfo {
             if let reason = userInfo[AVAudioSessionRouteChangeReasonKey] as? Int {
                 if reason == AVAudioSession.RouteChangeReason.oldDeviceUnavailable.hashValue {
@@ -208,32 +201,107 @@ final class PlayerView: UIView {
             }
         }
     }
+}
 
-    // MARK: - Setups
-    private func setupSessionAudio() {
-        do {
-            try AVAudioSession.sharedInstance().setCategory(.playback)
-            try AVAudioSession.sharedInstance().setActive(true)
-        } catch let error {
-            print("Failed to activate session audio: ", error)
+// MARK: - Interruption
+extension PlayerView {
+    private func setupInterruptionObserver() {
+        NotificationCenter.default.addObserver(self, selector: #selector(handleInterruption), name: AVAudioSession.interruptionNotification, object: nil)
+    }
+    
+    // MARK: - Interruption
+    @objc private func handleInterruption(notification: Notification){
+        print("AVAudioSession.interruptionNotification")
+        guard let userInfo = notification.userInfo,
+            let type = userInfo[AVAudioSessionInterruptionTypeKey] as? UInt else { return }
+        
+        if type == AVAudioSession.InterruptionType.began.rawValue {
+            handlePauseUiAction()
+        } else if type == AVAudioSession.InterruptionType.ended.rawValue,
+            let option = userInfo[AVAudioSessionInterruptionOptionKey] as? UInt,
+            option != AVAudioSession.InterruptionOptions.shouldResume.rawValue {
+            handlePlayAction()
         }
     }
+}
 
-    private func audioRouteChangedObserver() {
-        NotificationCenter.default.addObserver(
-            self,
-            selector: #selector(handleAudioRouteChanged),
-            name: AVAudioSession.routeChangeNotification,
-            object: nil)
+// MARK: - Pan
+extension PlayerView {
+    private func setupGesture() {
+        addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(handleTapMaximizePlayer)))
+        miniPlayerView.addGestureRecognizer(UIPanGestureRecognizer(target: self, action: #selector(handlePan)))
+        maximazePlayer.addGestureRecognizer(UIPanGestureRecognizer(target: self, action: #selector(handlePanDismissal)))
     }
+    
+    @objc private func handlePan(gestore: UIPanGestureRecognizer) {
+        switch gestore.state {
+        case .changed:
+            handletPanChanged(gestore)
+        case .ended:
+            handlePanEnded(gestore)
+        default:
+            break
+        }
+    }
+    
+    @objc private func handlePanDismissal(gestore: UIPanGestureRecognizer) {
+        switch gestore.state {
+        case .changed:
+            let translation = gestore.translation(in: superview)
+            maximazePlayer.transform = CGAffineTransform(translationX: 0, y: translation.y)
+        case .ended:
+            let translation = gestore.translation(in: superview)
+            UIView.animateCurveEaseOut {
+                self.maximazePlayer.transform = .identity
+                if translation.y > 50 {
+                    self.mainController?.minimazePlayerViewAnimation()
+                }
+            }
+        default:
+            break
+        }
+    }
+    
+    @objc private func handleTapMaximizePlayer() {
+        mainController?.maximizePlayerViewAnimation()
+    }
+    
+    // MARK: - Pan
+    private func handlePanEnded(_ gestore: UIPanGestureRecognizer) {
+        let translation = gestore.translation(in: superview)
+        let velocity = gestore.velocity(in: superview)
+        
+        UIView.animateCurveEaseOut {
+            self.transform = .identity
+            
+            if translation.y < -200 || velocity.y < -500 {
+                self.mainController?.maximizePlayerViewAnimation()
+            } else {
+                self.miniEpisodeImageView.alpha = 1
+                self.maximazePlayer.alpha = 0
+            }
+        }
+    }
+    
+    private func handletPanChanged(_ gestore: UIPanGestureRecognizer) {
+        let translation = gestore.translation(in: superview)
+        transform = CGAffineTransform(translationX: 0, y: translation.y)
+        
+        miniEpisodeImageView.alpha = 1 + translation.y / 200
+        maximazePlayer.alpha = -translation.y / 200
+    }
+}
 
+// Mark: - Remote Control
+extension PlayerView {
+    
     private func setupRemoteControl() {
         UIApplication.shared.beginReceivingRemoteControlEvents()
-
+        
         let commandCenter = MPRemoteCommandCenter.shared()
         commandCenter.playCommand.isEnabled = true
         commandCenter.playCommand.addTarget(self, action: #selector(handleCommanderCenterPlayTrack))
-
+        
         commandCenter.pauseCommand.isEnabled = true
         commandCenter.pauseCommand.addTarget(self, action: #selector(handleCommanderCenterPauseTrack))
         
@@ -243,10 +311,6 @@ final class PlayerView: UIView {
         commandCenter.nextTrackCommand.addTarget(self, action: #selector(handleCommanderCenterNextTrack))
     }
     
-    private func setupInterruptionObserver() {
-        NotificationCenter.default.addObserver(self, selector: #selector(handleInterruption), name: AVAudioSession.interruptionNotification, object: nil)
-    }
-
     // MARK: - Handler CommanderCenter
     @objc private func handleCommanderCenterNextTrack() {
         print("CommanderCenter: NextTrack")
@@ -267,7 +331,7 @@ final class PlayerView: UIView {
         print("CommanderCenter: Pause")
         handlePauseAction()
     }
-
+    
     @objc private func handleCommanderCenterTogglePlayPause() {
         // Headset button
         print("CommanderCenter: TogglePlayPause")
@@ -277,63 +341,10 @@ final class PlayerView: UIView {
             handlePlayAction()
         }
     }
-    
-    // MARK: - Interruption
-    @objc private func handleInterruption(notification: Notification){
-        print("AVAudioSession.interruptionNotification")
-        guard let userInfo = notification.userInfo,
-            let type = userInfo[AVAudioSessionInterruptionTypeKey] as? UInt else { return }
-        
-        if type == AVAudioSession.InterruptionType.began.rawValue {
-            handlePauseUiAction()
-        } else if type == AVAudioSession.InterruptionType.ended.rawValue,
-            let option = userInfo[AVAudioSessionInterruptionOptionKey] as? UInt,
-                option != AVAudioSession.InterruptionOptions.shouldResume.rawValue {
-            handlePlayAction()
-        }
-    }
-    
-    private func changeTrack(_ move: PlayerMoveForward) {
-        // TODO: implement Episode UUID instead search for title
-        guard playList.count > 1,
-            let currentEpisodeIndex = playList.firstIndex(where: { $0.id == episode.id }) else { return }
-        let offset = move == .next ? 1 : playList.count - 1
-        let nextEpisodeIndex = (currentEpisodeIndex + offset) % playList.count
-        episode = playList[nextEpisodeIndex]
-    }
-    
-    private func setupGesture() {
-        addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(handleTapMaximizePlayer)))
-        miniPlayerView.addGestureRecognizer(UIPanGestureRecognizer(target: self, action: #selector(handlePan)))
-        maximazePlayer.addGestureRecognizer(UIPanGestureRecognizer(target: self, action: #selector(handlePanDismissal)))
-    }
+}
 
-    // MARK: - Pan
-    private func handlePanEnded(_ gestore: UIPanGestureRecognizer) {
-        let translation = gestore.translation(in: superview)
-        let velocity = gestore.velocity(in: superview)
-
-        UIView.animateCurveEaseOut {
-            self.transform = .identity
-
-            if translation.y < -200 || velocity.y < -500 {
-                self.mainController?.maximizePlayerViewAnimation()
-            } else {
-                self.miniEpisodeImageView.alpha = 1
-                self.maximazePlayer.alpha = 0
-            }
-        }
-    }
-
-    private func handletPanChanged(_ gestore: UIPanGestureRecognizer) {
-        let translation = gestore.translation(in: superview)
-        transform = CGAffineTransform(translationX: 0, y: translation.y)
-
-        miniEpisodeImageView.alpha = 1 + translation.y / 200
-        maximazePlayer.alpha = -translation.y / 200
-    }
-
-    // MARK: - Now Playing Info
+// MARK: - Now Playing Info
+extension PlayerView {
     private func setupNowPlayinfo(for: Episode) {
         var nowPlayingInfo = [String: Any]()
         nowPlayingInfo[MPMediaItemPropertyTitle] = episode.title
@@ -348,7 +359,7 @@ final class PlayerView: UIView {
         })
         MPNowPlayingInfoCenter.default().nowPlayingInfo?[MPMediaItemPropertyArtwork] = artwork
     }
-
+    
     private func setupNowPlayinfoCurrentTime() {
         guard let duration = player.currentItem?.duration else { return }
         let durationInSeconds = CMTimeGetSeconds(duration)
@@ -362,10 +373,13 @@ final class PlayerView: UIView {
     }
     
     private func updateElapsedPlaybackTime(for elapseTime: Float64) {
-       MPNowPlayingInfoCenter.default().nowPlayingInfo?[MPNowPlayingInfoPropertyElapsedPlaybackTime] = elapseTime
+        MPNowPlayingInfoCenter.default().nowPlayingInfo?[MPNowPlayingInfoPropertyElapsedPlaybackTime] = elapseTime
     }
+}
 
-    // MARK: - Player observer
+// MARK: - Player observer
+extension PlayerView {
+    
     private func addPeriodicTimeObserver() {
         let interval = CMTimeMake(value: 1, timescale: 2)
         player.addPeriodicTimeObserver(forInterval: interval, queue: .main) {[weak self] (time) in
@@ -375,15 +389,15 @@ final class PlayerView: UIView {
             strongSelf.updateCurrentTimeSlider()
         }
     }
-
+    
     private func updateCurrentTimeSlider() {
         let currentTimeSeconds = CMTimeGetSeconds(player.currentTime())
         let durantionSeconds = CMTimeGetSeconds(player.currentItem?.duration ?? CMTimeMake(value: 1, timescale: 1))
         let percentage = currentTimeSeconds / durantionSeconds
-
+        
         currentiTimeSlider.value = Float(percentage)
     }
-
+    
     private func addBoundaryTimeObserver() {
         //Observer when player will start to play the audio
         let time = CMTimeMake(value: 1, timescale: 3)
@@ -394,21 +408,28 @@ final class PlayerView: UIView {
             self?.setupNowPlayinfoCurrentTime()
         }
     }
+}
 
-    // MARK: - Animation
+// MARK: - Animation
+extension PlayerView {
+    
     private func enlargeEpisodeImageViewAnimation() {
         UIView.animateCurveEaseOut {
             self.episodeImageView.transform = .identity
         }
     }
-
+    
     private func scaleEpisodeImageView() {
         UIView.animateCurveEaseOut {
             self.episodeImageView.transform = PlayerView.scaleEpisodeImageView
         }
     }
+}
 
-    // MARK: - Player action
+// MARK: - Player action
+extension PlayerView {
+    
+    
     private func handlePlayAction() {
         playAndPauseButton.setImage(UIImage(named: "pause"), for: .normal)
         miniPlayPauseButton.setImage(UIImage(named: "pause"), for: .normal)
@@ -416,7 +437,7 @@ final class PlayerView: UIView {
         enlargeEpisodeImageViewAnimation()
         setupNowPlayinfoElapsedPlaybackTime()
     }
-
+    
     private func handlePauseAction() {
         player.pause()
         handlePauseUiAction()
@@ -428,19 +449,28 @@ final class PlayerView: UIView {
         miniPlayPauseButton.setImage(UIImage(named: "play"), for: .normal)
         scaleEpisodeImageView()
     }
-
+    
     // MARK: - Player controller
+    @objc func handlePlayAndPause() {
+        switch player.timeControlStatus {
+        case .paused:
+            handlePlayAction()
+        default:
+            handlePauseAction()
+        }
+    }
+    
     private func seekToCurrentTime(for delta: Int64) {
         let fifteenSeconds = CMTimeMake(value: delta, timescale: 1)
         let seekTime = CMTimeSubtract(player.currentTime(), fifteenSeconds)
         player.seek(to: seekTime)
     }
-
+    
     private func playEpisode() {
         guard let url = URL(string: episode.mediaUrl) else {
             return
         }
-
+        
         let playItem = AVPlayerItem(url: url)
         player.replaceCurrentItem(with: playItem)
         player.play()
