@@ -262,13 +262,14 @@ final class PlayerView: UIView {
         print("CommanderCenter: Play")
         handlePlayAction()
         setupNowPlayinfoElapsedPlaybackTime()
-        MPNowPlayingInfoCenter.default().nowPlayingInfo?[MPNowPlayingInfoPropertyPlaybackRate] = 0
+        MPNowPlayingInfoCenter.default().nowPlayingInfo?[MPNowPlayingInfoPropertyPlaybackRate] = 1
     }
     
     @objc private func handleCommanderCenterPauseTrack() {
         print("CommanderCenter: Pause")
         handlePauseAction()
         setupNowPlayinfoElapsedPlaybackTime()
+        MPNowPlayingInfoCenter.default().nowPlayingInfo?[MPNowPlayingInfoPropertyPlaybackRate] = 0
     }
 
     @objc private func handleCommanderCenterTogglePlayPause() {
