@@ -125,7 +125,8 @@
 				DB4518FE22DC4F2A0022BD1F /* ApiService.swift */,
 				DB91B49C22DD6245005E70A9 /* ImageCacheService.swift */,
 			);
-			path = Services;
+			name = Services;
+			path = ../Services;
 			sourceTree = "<group>";
 		};
 		DB45190022DCCCF50022BD1F /* Views */ = {
@@ -181,6 +182,7 @@
 				DB91B4A022DE3CE3005E70A9 /* EpisodesController.swift */,
 				2B6735D622F610650014ABC5 /* FavoritesController.swift */,
 				2B6735D822F611CE0014ABC5 /* UIControllerFactory.swift */,
+				DB4518FD22DC4F070022BD1F /* Services */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -217,7 +219,6 @@
 				DB6523AF22DF9AC900F52EA7 /* Components */,
 				DB91B4A422DE75AE005E70A9 /* Parser */,
 				DB45190022DCCCF50022BD1F /* Views */,
-				DB4518FD22DC4F070022BD1F /* Services */,
 				DB4518F222DB01770022BD1F /* HTTPClient */,
 				DB4518EF22DAFF3B0022BD1F /* Itunes */,
 				DBB50B5D22D84BED0029B74B /* Models */,

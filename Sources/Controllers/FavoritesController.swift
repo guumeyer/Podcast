@@ -12,7 +12,6 @@ import UIKit
 final class FavoritesController: UICollectionViewController, UICollectionViewDelegateFlowLayout {
     
     private let cellId = "cellId"
-    
     private let numberOfColumns = 2
     private let space: CGFloat = 16
     /// The cell will be calculated on the `setupCollectionView()` method based on the `numberOfColumns` parameter
@@ -29,7 +28,6 @@ final class FavoritesController: UICollectionViewController, UICollectionViewDel
     
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell =  collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath)
-        cell.backgroundColor = .red
         return cell
     }
 
@@ -54,7 +52,9 @@ final class FavoritesController: UICollectionViewController, UICollectionViewDel
             space: Float(space),
             numberOfColumns: numberOfColumns)
         
-        cellSize = CGSize(width: cellWidth, height: cellWidth)
+        let cellHeight = cellWidth + 46
+        
+        cellSize = CGSize(width: cellWidth, height: cellHeight)
     }
     
     private func calculateCellWidth(_ viewWidth: Float, space: Float, numberOfColumns: Int) -> CGFloat {
