@@ -15,7 +15,7 @@ final class FavoriteCell: UICollectionViewCell {
         return UIURLImageView(image: UIImage(named: "placeholder"))
     }()
     
-    private let nameLabel: UILabel = {
+    var nameLabel: UILabel = {
         let label = UILabel()
         label.font = UIFont.systemFont(ofSize: 15, weight: .semibold)
         return label

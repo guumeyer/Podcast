@@ -17,17 +17,27 @@ final class FavoritesController: UICollectionViewController, UICollectionViewDel
     /// The cell will be calculated on the `setupCollectionView()` method based on the `numberOfColumns` parameter
     private var cellSize = CGSize(width: 100, height: 100)
     
+    private var podcasts: [String] = [
+        "Jovem Nerd",
+        "Let's build that app"
+    ]
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         setupCollectionView()
     }
     
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 5
+        return podcasts.count
     }
     
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell =  collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath)
+        
+        if let favoriteCell = cell as? FavoriteCell {
+            favoriteCell.nameLabel.text = podcasts[indexPath.row]
+        }
+        
         return cell
     }
 
