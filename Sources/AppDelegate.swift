@@ -43,6 +43,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
         let proxyTabBar = UITabBar.appearance()
         proxyTabBar.isTranslucent = false
+        
 
     }
 
