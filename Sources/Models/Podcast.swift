@@ -8,13 +8,14 @@
 
 import Foundation
 
-
+/*
 var artistName: String?
 var artworkUrl600: String?
 var feedUrl: String?
 var primaryGenreName: String?
 var trackCount: Int?
 var trackName: String?
+ */
 
 protocol Podcast {
     var name: String { get }

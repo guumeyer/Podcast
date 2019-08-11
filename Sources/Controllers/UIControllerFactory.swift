@@ -21,6 +21,7 @@ final public class UIControllerFactory {
     ///
     /// - Parameter viewType: the view controller type
     /// - Returns: an UIViewController
+    
     static func create(_ viewType: ViewType) -> UIViewController {
         switch viewType {
         case .favorites:
