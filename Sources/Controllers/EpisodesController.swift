@@ -9,7 +9,6 @@
 import UIKit
 
 final class EpisodesController: UITableViewController {
-
     private var episodes = [Episode]()
     var podcast: Podcast! {
         didSet {
@@ -17,16 +16,25 @@ final class EpisodesController: UITableViewController {
             featchEpisodes()
         }
     }
+    
+    var displayAddFavorite = false {
+        didSet {
+            if displayAddFavorite {
+                setupNavigationBarButtons()
+            } else {
+                navigationItem.rightBarButtonItems = []
+            }
+        }
+    }
 
     private var mainController: MainTabController? {
         return UIApplication.shared.keyWindow?.rootViewController as? MainTabController
     }
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
         setupTableView()
-        setupNavigationBarButtons()
     }
 
     private func featchEpisodes() {
@@ -63,27 +71,14 @@ final class EpisodesController: UITableViewController {
     }
     
     @objc private func handleSaveFavorites() {
-        
-        let favoritePodcast = PodcastEntity(context: PodcastDataManager.default.controller.viewContext)
-        
-        favoritePodcast.authorName = podcast.author
-        favoritePodcast.title = podcast.name
-        favoritePodcast.artworkUrl = podcast.artworkUrl
-        favoritePodcast.feedUrl = podcast.feedUrl
-        favoritePodcast.episodes = Int32(podcast.audioCount)
-        favoritePodcast.image = podcast.getImage()
-        
-        try? PodcastDataManager.default.saveViewContext()
+        PodcastRepository.save(podcast)
     }
 }
 
 extension EpisodesController {
-
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-
         mainController?.maximizePlayerViewAnimation(episode: episodes[indexPath.row],
                                                     playList: episodes)
-
     }
 
     override func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
@@ -100,17 +95,17 @@ extension EpisodesController {
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return episodes.count
     }
-
-    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: EpisodeCell.identifier, for: indexPath)
-
+    
+    override func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         if let episodeCell = cell as? EpisodeCell {
             let episode = episodes[indexPath.row]
             episodeCell.episode = episode
             episodeCell.episodeImageUrl = episode.image ?? podcast.artworkUrl
         }
-        
-        return cell
+    }
+
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        return tableView.dequeueReusableCell(withIdentifier: EpisodeCell.identifier, for: indexPath)
     }
 
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {

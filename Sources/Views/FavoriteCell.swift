@@ -10,18 +10,30 @@ import UIKit
 
 /// The podcast's favorite cell
 final class FavoriteCell: UICollectionViewCell {
+    var podcast: Podcast? {
+        didSet {
+            guard let podcast = podcast else { return }
+            nameLabel.text = podcast.name
+            authorLabel.text = podcast.author
+            if let data = podcast.getImage() {
+                imageView.image = UIImage(data: data)
+            } else {
+                imageView.image = UIImage(named: "placeholder")
+            }
+        }
+    }
     
-    let imageView: UIURLImageView = {
+    private let imageView: UIURLImageView = {
         return UIURLImageView(image: UIImage(named: "placeholder"))
     }()
     
-    var nameLabel: UILabel = {
+    private let nameLabel: UILabel = {
         let label = UILabel()
         label.font = UIFont.systemFont(ofSize: 15, weight: .semibold)
         return label
     }()
     
-    let authorLabel: UILabel = {
+    private let authorLabel: UILabel = {
         let label = UILabel()
         label.font = UIFont.systemFont(ofSize: 14)
         label.textColor = .lightGray

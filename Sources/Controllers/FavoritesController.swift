@@ -17,62 +17,39 @@ final class FavoritesController: UICollectionViewController, UICollectionViewDel
     /// The cell will be calculated on the `setupCollectionView()` method based on the `numberOfColumns` parameter
     private var cellSize = CGSize(width: 100, height: 100)
     
-    private lazy var podcastFetchedResultsController = PodcastFetchedResultsController { [weak self] insertedIndexPaths, deletedIndexPaths, updatedIndexPaths in
-        
+    private lazy var podCastRepository = PodcastRepository { [weak self] insertedIndexPaths, deletedIndexPaths, updatedIndexPaths in
         guard let strongSelf = self else { return }
         
         strongSelf.collectionView.performBatchUpdates({() -> Void in
             insertedIndexPaths?.forEach { strongSelf.collectionView.insertItems(at: [$0]) }
-            deletedIndexPaths?.forEach { strongSelf.collectionView.insertItems(at: [$0]) }
-            updatedIndexPaths?.forEach { strongSelf.collectionView.insertItems(at: [$0]) }
+            deletedIndexPaths?.forEach { strongSelf.collectionView.deleteItems(at: [$0]) }
+            updatedIndexPaths?.forEach { strongSelf.collectionView.reloadItems(at: [$0]) }
         }, completion: nil)
         
     }
-    private var podcasts: [String] = [
-        "Jovem Nerd",
-        "Let's build that app"
-    ]
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
         setupCollectionView()
     }
     
-//    override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-//        return podcasts.count
-//    }
-//
     override func numberOfSections(in collectionView: UICollectionView) -> Int {
-        return podcastFetchedResultsController.fetchedResultsController.sections?.count ?? 0
+        return podCastRepository.numberOfSections
     }
     
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        if let sectionInfo = podcastFetchedResultsController.fetchedResultsController.sections?[section] {
-            return sectionInfo.numberOfObjects
-        }
-        return 0
+        return podCastRepository.numberOfObjects(by: section)
     }
     
     override func collectionView(_ collectionView: UICollectionView,
                         willDisplay cell: UICollectionViewCell,
                         forItemAt indexPath: IndexPath) {
-        let favoritePodcast = podcastFetchedResultsController.fetchedResultsController.object(at: indexPath)
         guard let favoriteCell = cell as? FavoriteCell else { return }
-//        guard let imageData = photo.data else {
-//            downloadImage(photo, photoCell)
-//            return
-//        }
-        favoriteCell.nameLabel.text = favoritePodcast.title
-        favoriteCell.authorLabel.text = favoritePodcast.authorName
-        if let data = favoritePodcast.image {
-            favoriteCell.imageView.image = UIImage(data: data)
-        }
+        favoriteCell.podcast = podCastRepository.object(at: indexPath)
     }
     
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath)
-
-        return cell
+        return collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath)
     }
 
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
@@ -80,10 +57,8 @@ final class FavoritesController: UICollectionViewController, UICollectionViewDel
     }
     
     override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let favoritePodcast = podcastFetchedResultsController.fetchedResultsController.object(at: indexPath)
-
         let episodesController = EpisodesController()
-        episodesController.podcast = favoritePodcast
+        episodesController.podcast = podCastRepository.object(at: indexPath)
         navigationController?.pushViewController(episodesController, animated: true)
     }
     
@@ -99,6 +74,9 @@ final class FavoritesController: UICollectionViewController, UICollectionViewDel
         collectionView.backgroundColor = .white
         collectionView.register(FavoriteCell.self, forCellWithReuseIdentifier: cellId)
         
+        let gesture = UILongPressGestureRecognizer(target: self, action: #selector(handleLongPress))
+        collectionView.addGestureRecognizer(gesture)
+        
         let cellWidth = calculateCellWidth(
             Float(view.frame.width),
             space: Float(space),
@@ -107,6 +85,21 @@ final class FavoritesController: UICollectionViewController, UICollectionViewDel
         let cellHeight = cellWidth + 46
         
         cellSize = CGSize(width: cellWidth, height: cellHeight)
+    }
+    
+    @objc private func handleLongPress(gesture: UILongPressGestureRecognizer) {
+        let location = gesture.location(in: self.collectionView)
+        guard let selectIndexPath = self.collectionView.indexPathForItem(at: location) else { return }
+        
+        let alertView = UIAlertController(title: "Remove Podcast?", message: nil, preferredStyle: .actionSheet)
+        alertView.addAction(UIAlertAction(title: "Yes", style: .destructive, handler: { (_) in
+            self.podCastRepository.remove(at: selectIndexPath)
+        }))
+        
+        alertView.addAction(UIAlertAction(title: "Cancel", style: .cancel))
+        
+        present(alertView, animated: true)
+        
     }
     
     private func calculateCellWidth(_ viewWidth: Float, space: Float, numberOfColumns: Int) -> CGFloat {

@@ -80,16 +80,22 @@ extension PodcastsSearchController {
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let episodesController = EpisodesController()
         episodesController.podcast = podcasts[indexPath.row]
+        episodesController.displayAddFavorite = true
         navigationController?.pushViewController(episodesController, animated: true)
+    }
+    
+    override func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        guard let podcastCell = cell as? PodcastTableViewCell else { return }
+        podcastCell.podcast = podcasts[indexPath.row]
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: PodcastTableViewCell.identifier, for: indexPath)
-
-        guard let podcastCell = cell as? PodcastTableViewCell else { return cell }
-
-        podcastCell.podcast = podcasts[indexPath.row]
-        return podcastCell
+//
+//        guard let podcastCell = cell as? PodcastTableViewCell else { return cell }
+//
+//        podcastCell.podcast = podcasts[indexPath.row]
+        return cell
     }
 
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
