@@ -91,6 +91,13 @@ extension EpisodesController {
         return activityIndicatorView
     }
 
+    override func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
+        let donwloadAction = UITableViewRowAction(style: .normal, title: "Donwload") { (_, _) in
+            print("Donwload")
+        }
+        return [donwloadAction]
+    }
+    
     override func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
         return episodes.isEmpty ? 200 : 0
     }

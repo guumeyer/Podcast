@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		2B39166B23014336001A9A31 /* LocalPodcastRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B39166A23014336001A9A31 /* LocalPodcastRepository.swift */; };
 		2B39166D230151EC001A9A31 /* PodcastRespository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B39166C230151EC001A9A31 /* PodcastRespository.swift */; };
+		2B39166F230157E3001A9A31 /* DonwloadController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B39166E230157E3001A9A31 /* DonwloadController.swift */; };
 		2B6735D522F60C4D0014ABC5 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B6735D422F60C4D0014ABC5 /* ViewController.swift */; };
 		2B6735D722F610650014ABC5 /* FavoritesController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B6735D622F610650014ABC5 /* FavoritesController.swift */; };
 		2B6735D922F611CE0014ABC5 /* UIControllerFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B6735D822F611CE0014ABC5 /* UIControllerFactory.swift */; };
@@ -55,6 +56,7 @@
 /* Begin PBXFileReference section */
 		2B39166A23014336001A9A31 /* LocalPodcastRepository.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocalPodcastRepository.swift; sourceTree = "<group>"; };
 		2B39166C230151EC001A9A31 /* PodcastRespository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PodcastRespository.swift; sourceTree = "<group>"; };
+		2B39166E230157E3001A9A31 /* DonwloadController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DonwloadController.swift; sourceTree = "<group>"; };
 		2B6735D422F60C4D0014ABC5 /* ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		2B6735D622F610650014ABC5 /* FavoritesController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritesController.swift; sourceTree = "<group>"; };
 		2B6735D822F611CE0014ABC5 /* UIControllerFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIControllerFactory.swift; sourceTree = "<group>"; };
@@ -208,6 +210,7 @@
 				2B6735D622F610650014ABC5 /* FavoritesController.swift */,
 				2B6735D822F611CE0014ABC5 /* UIControllerFactory.swift */,
 				DB4518FD22DC4F070022BD1F /* Services */,
+				2B39166E230157E3001A9A31 /* DonwloadController.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -347,6 +350,7 @@
 				2B6735D922F611CE0014ABC5 /* UIControllerFactory.swift in Sources */,
 				DB4518F122DAFF4E0022BD1F /* ItunesSearchResults.swift in Sources */,
 				DB4518FF22DC4F2A0022BD1F /* ApiService.swift in Sources */,
+				2B39166F230157E3001A9A31 /* DonwloadController.swift in Sources */,
 				DBD9CF8E22E0AD08005EC448 /* CMTime.swift in Sources */,
 				DBB50B5F22D84C0A0029B74B /* Podcast.swift in Sources */,
 				2B6735DB22F624AF0014ABC5 /* UIView.swift in Sources */,
