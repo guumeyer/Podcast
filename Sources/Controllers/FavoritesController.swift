@@ -10,14 +10,13 @@ import UIKit
 
 /// The user's favorite list
 final class FavoritesController: UICollectionViewController, UICollectionViewDelegateFlowLayout {
-    
     private let cellId = "cellId"
     private let numberOfColumns = 2
     private let space: CGFloat = 16
     /// The cell will be calculated on the `setupCollectionView()` method based on the `numberOfColumns` parameter
     private var cellSize = CGSize(width: 100, height: 100)
     
-    private lazy var podCastRepository = PodcastRepository { [weak self] insertedIndexPaths, deletedIndexPaths, updatedIndexPaths in
+    private lazy var podCastRepository: PodcastRepository = LocalPodcastRepository { [weak self] insertedIndexPaths, deletedIndexPaths, updatedIndexPaths in
         guard let strongSelf = self else { return }
         
         strongSelf.collectionView.performBatchUpdates({() -> Void in
@@ -25,7 +24,6 @@ final class FavoritesController: UICollectionViewController, UICollectionViewDel
             deletedIndexPaths?.forEach { strongSelf.collectionView.deleteItems(at: [$0]) }
             updatedIndexPaths?.forEach { strongSelf.collectionView.reloadItems(at: [$0]) }
         }, completion: nil)
-        
     }
 
     override func viewDidLoad() {

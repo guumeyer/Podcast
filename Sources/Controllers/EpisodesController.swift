@@ -9,7 +9,10 @@
 import UIKit
 
 final class EpisodesController: UITableViewController {
+    
+    private let podcastRepository: PodcastRepository = LocalPodcastRepository(nil)
     private var episodes = [Episode]()
+    
     var podcast: Podcast! {
         didSet {
             navigationItem.title = podcast.name
@@ -71,7 +74,7 @@ final class EpisodesController: UITableViewController {
     }
     
     @objc private func handleSaveFavorites() {
-        PodcastRepository.save(podcast)
+        podcastRepository.save(podcast)
     }
 }
 

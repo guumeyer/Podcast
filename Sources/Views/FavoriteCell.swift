@@ -24,7 +24,10 @@ final class FavoriteCell: UICollectionViewCell {
     }
     
     private let imageView: UIURLImageView = {
-        return UIURLImageView(image: UIImage(named: "placeholder"))
+        let imageView = UIURLImageView(image: UIImage(named: "placeholder"))
+        imageView.layer.cornerRadius = 5
+        imageView.clipsToBounds = true
+        return imageView
     }()
     
     private let nameLabel: UILabel = {

@@ -7,7 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		2B39166B23014336001A9A31 /* PodcastRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B39166A23014336001A9A31 /* PodcastRepository.swift */; };
+		2B39166B23014336001A9A31 /* LocalPodcastRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B39166A23014336001A9A31 /* LocalPodcastRepository.swift */; };
+		2B39166D230151EC001A9A31 /* PodcastRespository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B39166C230151EC001A9A31 /* PodcastRespository.swift */; };
 		2B6735D522F60C4D0014ABC5 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B6735D422F60C4D0014ABC5 /* ViewController.swift */; };
 		2B6735D722F610650014ABC5 /* FavoritesController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B6735D622F610650014ABC5 /* FavoritesController.swift */; };
 		2B6735D922F611CE0014ABC5 /* UIControllerFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B6735D822F611CE0014ABC5 /* UIControllerFactory.swift */; };
@@ -52,7 +53,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		2B39166A23014336001A9A31 /* PodcastRepository.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PodcastRepository.swift; sourceTree = "<group>"; };
+		2B39166A23014336001A9A31 /* LocalPodcastRepository.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocalPodcastRepository.swift; sourceTree = "<group>"; };
+		2B39166C230151EC001A9A31 /* PodcastRespository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PodcastRespository.swift; sourceTree = "<group>"; };
 		2B6735D422F60C4D0014ABC5 /* ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		2B6735D622F610650014ABC5 /* FavoritesController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritesController.swift; sourceTree = "<group>"; };
 		2B6735D822F611CE0014ABC5 /* UIControllerFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIControllerFactory.swift; sourceTree = "<group>"; };
@@ -112,11 +114,12 @@
 		2B7EA5DC2300D4930073DAF0 /* Repositories */ = {
 			isa = PBXGroup;
 			children = (
-				2B39166A23014336001A9A31 /* PodcastRepository.swift */,
+				2B39166A23014336001A9A31 /* LocalPodcastRepository.swift */,
 				2B7EA5E62300DEF30073DAF0 /* PodcastEntity.swift */,
 				2B7EA5DD2300D4BC0073DAF0 /* DataController.swift */,
 				2B7EA5DF2300D5120073DAF0 /* PodcastModel.xcdatamodeld */,
 				2B7EA5E22300D8DC0073DAF0 /* PodcastDataManager.swift */,
+				2B39166C230151EC001A9A31 /* PodcastRespository.swift */,
 			);
 			path = Repositories;
 			sourceTree = "<group>";
@@ -350,7 +353,7 @@
 				DB8FEE2D22DEE8490041A777 /* UIURLImageView.swift in Sources */,
 				DBD9CF8B22E01360005EC448 /* PlayerView.swift in Sources */,
 				2B7EA5DE2300D4BC0073DAF0 /* DataController.swift in Sources */,
-				2B39166B23014336001A9A31 /* PodcastRepository.swift in Sources */,
+				2B39166B23014336001A9A31 /* LocalPodcastRepository.swift in Sources */,
 				2B6735D722F610650014ABC5 /* FavoritesController.swift in Sources */,
 				2B6735E022F65C5C0014ABC5 /* FavoriteCell.swift in Sources */,
 				DB4518F822DB09760022BD1F /* ItunesMedia.swift in Sources */,
@@ -366,6 +369,7 @@
 				DB91B4A322DE70F6005E70A9 /* Episode.swift in Sources */,
 				DB4518FA22DC47200022BD1F /* ItunesApiService.swift in Sources */,
 				2B6735D522F60C4D0014ABC5 /* ViewController.swift in Sources */,
+				2B39166D230151EC001A9A31 /* PodcastRespository.swift in Sources */,
 				DBDE163B22D790A500BD646F /* MainTabController.swift in Sources */,
 				DB4518FC22DC47B40022BD1F /* ApiMediaLoader.swift in Sources */,
 				DB91B4A122DE3CE3005E70A9 /* EpisodesController.swift in Sources */,

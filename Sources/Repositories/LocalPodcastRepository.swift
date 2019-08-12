@@ -1,5 +1,5 @@
 //
-//  PodcastRepository.swift
+//  LocalPodcastRepository.swift
 //  Podcast
 //
 //  Created by Gustavo on 2019-08-11.
@@ -10,7 +10,7 @@ import Foundation
 import CoreData
 
 // TODO: Add protocol
-final class PodcastRepository: NSObject {
+final class LocalPodcastRepository: NSObject, PodcastRepository {
     private var insertedIndexPaths: [IndexPath]!
     private var deletedIndexPaths: [IndexPath]!
     private var updatedIndexPaths: [IndexPath]!
@@ -36,15 +36,9 @@ final class PodcastRepository: NSObject {
         return controller
     } ()
     
-    var changeContentCompletionHandler: ((
-    _ insertItems: [IndexPath]?,
-    _ deleteItems: [IndexPath]?,
-    _ reloadItems: [IndexPath]? ) -> Void)!
+    var changeContentCompletionHandler: PodcastChangeContentResultType?
     
-    init(_ changeContentCompletion: @escaping (
-        _ insertItems: [IndexPath]?,
-        _ deleteItems: [IndexPath]?,
-        _ reloadItems: [IndexPath]? ) -> Void) {
+    init(_ changeContentCompletion: PodcastChangeContentResultType?) {
         changeContentCompletionHandler = changeContentCompletion
     }
     
@@ -69,7 +63,7 @@ final class PodcastRepository: NSObject {
         try? PodcastDataManager.default.saveViewContext()
     }
     
-    static func findByTitleAndFeedUrl(title: String, feedUrl: String? = nil) -> Podcast? {
+    func findByTitleAndFeedUrl(title: String, feedUrl: String? = nil) -> Podcast? {
         let request:NSFetchRequest<PodcastEntity> = PodcastEntity.fetchRequest()
         if let feed = feedUrl {
             request.predicate = NSPredicate(format: "title = %@, feedUrl = %@", title, feed)
@@ -86,7 +80,7 @@ final class PodcastRepository: NSObject {
         return nil
     }
     
-    static func save(_ podcast: Podcast) {
+    func save(_ podcast: Podcast) {
         if findByTitleAndFeedUrl(title: podcast.name) == nil {
             let favoritePodcast = PodcastEntity(context: PodcastDataManager.default.controller.viewContext)
             favoritePodcast.authorName = podcast.author
@@ -101,7 +95,7 @@ final class PodcastRepository: NSObject {
     }
 }
 
-extension PodcastRepository: NSFetchedResultsControllerDelegate {
+extension LocalPodcastRepository: NSFetchedResultsControllerDelegate {
     func controllerWillChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
         insertedIndexPaths = [IndexPath]()
         deletedIndexPaths = [IndexPath]()
