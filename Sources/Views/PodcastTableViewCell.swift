@@ -35,7 +35,11 @@ final class PodcastTableViewCell: UITableViewCell {
                 return
             }
 
-            podcastImageView.load(url: urlString)
+            podcastImageView.load(url: urlString) { [weak self] (image) in
+                if let data = image?.pngData() {
+                    self?.podcast.setImage(data: data)
+                }
+            }
         }
     }
 

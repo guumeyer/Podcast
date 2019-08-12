@@ -26,6 +26,7 @@ final class EpisodesController: UITableViewController {
         super.viewDidLoad()
 
         setupTableView()
+        setupNavigationBarButtons()
     }
 
     private func featchEpisodes() {
@@ -45,11 +46,34 @@ final class EpisodesController: UITableViewController {
             }
         }
     }
+    
+    private func setupNavigationBarButtons() {
+        navigationItem.rightBarButtonItems = [
+            UIBarButtonItem(title: "Favorite",
+                            style: .plain,
+                            target: self,
+                            action: #selector(handleSaveFavorites))
+        ]
+    }
 
     private func setupTableView() {
         tableView.register(UINib(nibName: String(describing:EpisodeCell.self), bundle: nil),
                            forCellReuseIdentifier: EpisodeCell.identifier)
         tableView.tableFooterView = UIView()
+    }
+    
+    @objc private func handleSaveFavorites() {
+        
+        let favoritePodcast = PodcastEntity(context: PodcastDataManager.default.controller.viewContext)
+        
+        favoritePodcast.authorName = podcast.author
+        favoritePodcast.title = podcast.name
+        favoritePodcast.artworkUrl = podcast.artworkUrl
+        favoritePodcast.feedUrl = podcast.feedUrl
+        favoritePodcast.episodes = Int32(podcast.audioCount)
+        favoritePodcast.image = podcast.getImage()
+        
+        try? PodcastDataManager.default.saveViewContext()
     }
 }
 

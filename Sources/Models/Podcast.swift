@@ -23,4 +23,7 @@ protocol Podcast {
     var audioCount: Int { get }
     var feedUrl : String? { get }
     var artworkUrl: String? { get }
+    
+    func setImage(data: Data)
+    func getImage() -> Data?
 }

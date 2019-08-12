@@ -15,6 +15,8 @@
 		2B7EA5DE2300D4BC0073DAF0 /* DataController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B7EA5DD2300D4BC0073DAF0 /* DataController.swift */; };
 		2B7EA5E12300D5120073DAF0 /* PodcastModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 2B7EA5DF2300D5120073DAF0 /* PodcastModel.xcdatamodeld */; };
 		2B7EA5E32300D8DC0073DAF0 /* PodcastDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B7EA5E22300D8DC0073DAF0 /* PodcastDataManager.swift */; };
+		2B7EA5E72300DEF30073DAF0 /* PodcastEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B7EA5E62300DEF30073DAF0 /* PodcastEntity.swift */; };
+		2B7EA5EC2300ECED0073DAF0 /* PodcastFetchedResultsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B7EA5EB2300ECED0073DAF0 /* PodcastFetchedResultsController.swift */; };
 		DB16A63922D8652B00F1B04F /* UINavigationBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB16A63822D8652B00F1B04F /* UINavigationBar.swift */; };
 		DB4518F122DAFF4E0022BD1F /* ItunesSearchResults.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB4518F022DAFF4E0022BD1F /* ItunesSearchResults.swift */; };
 		DB4518F522DB01770022BD1F /* URLSessionHTTPClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB4518F322DB01770022BD1F /* URLSessionHTTPClient.swift */; };
@@ -58,6 +60,8 @@
 		2B7EA5DD2300D4BC0073DAF0 /* DataController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataController.swift; sourceTree = "<group>"; };
 		2B7EA5E02300D5120073DAF0 /* PodcastModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = PodcastModel.xcdatamodel; sourceTree = "<group>"; };
 		2B7EA5E22300D8DC0073DAF0 /* PodcastDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PodcastDataManager.swift; sourceTree = "<group>"; };
+		2B7EA5E62300DEF30073DAF0 /* PodcastEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PodcastEntity.swift; sourceTree = "<group>"; };
+		2B7EA5EB2300ECED0073DAF0 /* PodcastFetchedResultsController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PodcastFetchedResultsController.swift; sourceTree = "<group>"; };
 		DB16A63822D8652B00F1B04F /* UINavigationBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UINavigationBar.swift; sourceTree = "<group>"; };
 		DB4518F022DAFF4E0022BD1F /* ItunesSearchResults.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItunesSearchResults.swift; sourceTree = "<group>"; };
 		DB4518F322DB01770022BD1F /* URLSessionHTTPClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = URLSessionHTTPClient.swift; sourceTree = "<group>"; };
@@ -108,9 +112,11 @@
 		2B7EA5DC2300D4930073DAF0 /* Repositories */ = {
 			isa = PBXGroup;
 			children = (
+				2B7EA5E62300DEF30073DAF0 /* PodcastEntity.swift */,
 				2B7EA5DD2300D4BC0073DAF0 /* DataController.swift */,
 				2B7EA5DF2300D5120073DAF0 /* PodcastModel.xcdatamodeld */,
 				2B7EA5E22300D8DC0073DAF0 /* PodcastDataManager.swift */,
+				2B7EA5EB2300ECED0073DAF0 /* PodcastFetchedResultsController.swift */,
 			);
 			path = Repositories;
 			sourceTree = "<group>";
@@ -332,6 +338,7 @@
 				2B7EA5E12300D5120073DAF0 /* PodcastModel.xcdatamodeld in Sources */,
 				DB6886E722F2E83300EEAEAB /* UIApplication.swift in Sources */,
 				DBB50B5C22D84B900029B74B /* PodcastsSearchController.swift in Sources */,
+				2B7EA5EC2300ECED0073DAF0 /* PodcastFetchedResultsController.swift in Sources */,
 				DB4518F522DB01770022BD1F /* URLSessionHTTPClient.swift in Sources */,
 				DB8FEE2F22DEF9EC0041A777 /* String.swift in Sources */,
 				DB91B49F22DDA4F6005E70A9 /* EpisodesFeedXMLParser.swift in Sources */,
@@ -352,6 +359,7 @@
 				DBB50B5922D7FD710029B74B /* UImage.swift in Sources */,
 				DB16A63922D8652B00F1B04F /* UINavigationBar.swift in Sources */,
 				DB4518F622DB01770022BD1F /* HTTPClient.swift in Sources */,
+				2B7EA5E72300DEF30073DAF0 /* PodcastEntity.swift in Sources */,
 				DB8FEE2922DEE56B0041A777 /* EpisodeCell.swift in Sources */,
 				DBDE162622D78D7700BD646F /* AppDelegate.swift in Sources */,
 				DB6523B122DFA88900F52EA7 /* UIImageView.swift in Sources */,

@@ -11,7 +11,7 @@ import UIKit
 /// The podcast's favorite cell
 final class FavoriteCell: UICollectionViewCell {
     
-    private let imageView: UIURLImageView = {
+    let imageView: UIURLImageView = {
         return UIURLImageView(image: UIImage(named: "placeholder"))
     }()
     
@@ -21,7 +21,7 @@ final class FavoriteCell: UICollectionViewCell {
         return label
     }()
     
-    private let authorLabel: UILabel = {
+    let authorLabel: UILabel = {
         let label = UILabel()
         label.font = UIFont.systemFont(ofSize: 14)
         label.textColor = .lightGray

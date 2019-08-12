@@ -77,16 +77,12 @@ extension PodcastsSearchController {
         return podcasts.isEmpty && searchController.searchBar.text?.isEmpty == false ? 200 : 0
     }
 
-
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-
         let episodesController = EpisodesController()
         episodesController.podcast = podcasts[indexPath.row]
         navigationController?.pushViewController(episodesController, animated: true)
     }
     
-
-
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: PodcastTableViewCell.identifier, for: indexPath)
 

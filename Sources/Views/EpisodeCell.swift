@@ -46,7 +46,7 @@ final class EpisodeCell: UITableViewCell {
         didSet {
             episodeImageView.image = nil
             guard let urlString = episodeImageUrl else {
-                    return
+                return
             }
             episodeImageView.load(url: urlString)
         }

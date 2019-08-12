@@ -8,16 +8,25 @@
 
 import Foundation
 
-struct ItunesMedia: Decodable {
+class ItunesMedia: Decodable {
     var artistName: String?
     var artworkUrl600: String?
     var feedUrl: String?
     var primaryGenreName: String?
     var trackCount: Int?
     var trackName: String?
+    var artworkImage: Data?
 }
 
 extension ItunesMedia: Podcast {
+    func getImage() -> Data? {
+        return artworkImage
+    }
+    
+    func setImage(data: Data) {
+        artworkImage = data
+    }
+    
     var audioCount: Int {
         return trackCount ?? 0
     }
