@@ -81,6 +81,8 @@ final class EpisodesFeedXMLParser: NSObject, XMLParserDelegate {
         case "enclosure" :
             if attributeDict["type"] == "audio/mpeg", let mediaUrl = attributeDict["url"] {
                 currentMediaUrl = mediaUrl
+            } else if let mediaUrl = attributeDict["url"] {
+                currentMediaUrl = mediaUrl
             }
         case "itunes:image" :
             if let imageUrl = attributeDict["href"] {
@@ -97,6 +99,7 @@ final class EpisodesFeedXMLParser: NSObject, XMLParserDelegate {
         case "itunes:summary" : currentSummary += string
         case "description" : currentDescription += string
         case "pubDate" : currentPubDate += string
+        case "enclosure" : currentPubDate += string
         default: break
         }
     }
