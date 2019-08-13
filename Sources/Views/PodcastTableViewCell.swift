@@ -9,7 +9,6 @@
 import UIKit
 
 final class PodcastTableViewCell: UITableViewCell {
-
     @IBOutlet weak var podcastImageView: UIURLImageView! {
         didSet {
             podcastImageView.layer.cornerRadius = 5

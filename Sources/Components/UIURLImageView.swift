@@ -8,8 +8,8 @@
 
 import UIKit
 
+/// The UIURLImageView loads image based on the url web or local cache.
 final class UIURLImageView: UIImageView {
-
     /// The image URL String
     var url: String?
     private static let placeHolderImage = UIImage(named: "placeholder")
@@ -24,7 +24,7 @@ final class UIURLImageView: UIImageView {
             print("Invalid image URL")
             return
         }
-        ImageCacheService.shared.load(imageUrl) {[weak self] (result) in
+        ImageCacheService.shared.load(imageUrl) { [weak self] (result) in
             guard let strongSelf = self else { return }
             switch result {
             case .success( let image):

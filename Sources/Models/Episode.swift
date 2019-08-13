@@ -8,13 +8,37 @@
 
 import Foundation
 
-struct Episode {
-    var id: String
-    var author: String
-    var title: String
-    var summary: String
-    var description: String
-    var pubDate: String
-    var mediaUrl: String
-    var image: String?
+/// The Episode protocol will be diplayed on the UI components
+protocol Episode {
+    /// The identification
+    var id: String { get }
+    /// The author name
+    var author: String { get }
+    /// The episode title
+    var title: String { get }
+    /// The episode summary
+    var summary: String { get }
+    /// The episode decription
+    var description: String { get }
+    /// The publication date
+    var pubDate: String { get }
+    /// The media URL
+    var mediaUrl: String { get }
+    /// The episode image URL
+    var imageUrl: String? { get }
+    /// Sets the artwork image
+    ///
+    /// - Parameter data: the image data.
+    func setImage(data: Data)
+    
+    /// Gets the image data
+    ///
+    /// - Returns: an image data.
+    func getImage() -> Data?
+}
+
+extension Episode {
+    var id: String {
+        return "\(author)\(title)"
+    }
 }

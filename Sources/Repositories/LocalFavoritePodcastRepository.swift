@@ -1,5 +1,5 @@
 //
-//  LocalPodcastRepository.swift
+//  LocalFavoritePodcastRepository.swift
 //  Podcast
 //
 //  Created by Gustavo on 2019-08-11.
@@ -9,14 +9,13 @@
 import Foundation
 import CoreData
 
-// TODO: Add protocol
-final class LocalPodcastRepository: NSObject, PodcastRepository {
+final class LocalFavoritePodcastRepository: NSObject, FavoritePodcastRepository {
     private var insertedIndexPaths: [IndexPath]!
     private var deletedIndexPaths: [IndexPath]!
     private var updatedIndexPaths: [IndexPath]!
-    
-    private lazy var fetchedResultsController: NSFetchedResultsController<PodcastEntity> = {
-        let fetchRequest:NSFetchRequest<PodcastEntity> = PodcastEntity.fetchRequest()
+
+    private lazy var fetchedResultsController: NSFetchedResultsController<FavoritePodcasts> = {
+        let fetchRequest:NSFetchRequest<FavoritePodcasts> = FavoritePodcasts.fetchRequest()
         let sortDescriptor = NSSortDescriptor(key: "title", ascending: false)
         fetchRequest.sortDescriptors = [sortDescriptor]
         
@@ -64,7 +63,7 @@ final class LocalPodcastRepository: NSObject, PodcastRepository {
     }
     
     func findByTitleAndFeedUrl(title: String, feedUrl: String? = nil) -> Podcast? {
-        let request:NSFetchRequest<PodcastEntity> = PodcastEntity.fetchRequest()
+        let request:NSFetchRequest<FavoritePodcasts> = FavoritePodcasts.fetchRequest()
         if let feed = feedUrl {
             request.predicate = NSPredicate(format: "title = %@, feedUrl = %@", title, feed)
         } else {
@@ -82,7 +81,7 @@ final class LocalPodcastRepository: NSObject, PodcastRepository {
     
     func save(_ podcast: Podcast) {
         if findByTitleAndFeedUrl(title: podcast.name) == nil {
-            let favoritePodcast = PodcastEntity(context: PodcastDataManager.default.controller.viewContext)
+            let favoritePodcast = FavoritePodcasts(context: PodcastDataManager.default.controller.viewContext)
             favoritePodcast.authorName = podcast.author
             favoritePodcast.title = podcast.name
             favoritePodcast.artworkUrl = podcast.artworkUrl
@@ -95,7 +94,7 @@ final class LocalPodcastRepository: NSObject, PodcastRepository {
     }
 }
 
-extension LocalPodcastRepository: NSFetchedResultsControllerDelegate {
+extension LocalFavoritePodcastRepository: NSFetchedResultsControllerDelegate {
     func controllerWillChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
         insertedIndexPaths = [IndexPath]()
         deletedIndexPaths = [IndexPath]()

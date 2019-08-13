@@ -1,5 +1,5 @@
 //
-//  EpisodesFeedXMLParser.swift
+//  FeedEpisodesXmlParser.swift
 //  Podcast
 //
 //  Created by Meyer, Gustavo on 7/15/19.
@@ -10,58 +10,64 @@ import Foundation
 
 typealias EpisodesFeedHandler = (Result<[Episode], Error>) -> Void
 
-final class EpisodesFeedXMLParser: NSObject, XMLParserDelegate {
-    private var episodes: [Episode] = []
+/// The `EpisodesFeedXMLParser` parse the Itunes Episode XML.
+final class FeedEpisodesXmlParser: NSObject {
+    private var episodes: [FeedEpisode] = []
     private var currentElement = ""
-
     private var currentAuthor: String = "" {
         didSet {
             currentAuthor = currentAuthor.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines)
         }
     }
-    
     private var currentTitle: String = "" {
         didSet {
             currentTitle = currentTitle.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines)
         }
     }
-
     private var currentSummary: String = "" {
         didSet {
             currentSummary = currentSummary.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines)
         }
     }
-
     private var currentDescription: String = "" {
         didSet {
             currentDescription = currentDescription.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines)
         }
     }
-
     private var currentImage: String = "" {
         didSet {
             currentImage = currentImage.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines)
         }
     }
-
     private var currentMediaUrl: String = "" {
         didSet {
             currentMediaUrl = currentMediaUrl.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines)
         }
     }
-
     private var currentPubDate: String = "" {
         didSet {
             currentPubDate = currentPubDate.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines)
         }
     }
-    private var parserCompletionHandler: EpisodesFeedHandler?
+    private var parserCompletionHandler: EpisodesFeedHandler!
 
-    init(completionHandler: EpisodesFeedHandler?) {
+    /// Parses the xml content then perform the `completionHandler`.
+    ///
+    /// - Parameters:
+    ///   - data: the content to be parsed.
+    ///   - completionHandler: the completion handler will be performed.
+    func parse(data: Data, completionHandler: EpisodesFeedHandler?) {
         parserCompletionHandler = completionHandler
+        let parser = XMLParser(data: data)
+        parser.delegate = self
+        parser.parse()
     }
 
-    // MARK: - XML Parser Delegate
+}
+
+// MARK: - XML Parser Delegate
+extension FeedEpisodesXmlParser: XMLParserDelegate {
+    
     func parser(_ parser: XMLParser,
                 didStartElement elementName: String,
                 namespaceURI: String?,
@@ -91,7 +97,7 @@ final class EpisodesFeedXMLParser: NSObject, XMLParserDelegate {
         default: break
         }
     }
-
+    
     func parser(_ parser: XMLParser, foundCharacters string: String)   {
         switch currentElement {
         case "itunes:author": currentAuthor += string
@@ -103,37 +109,30 @@ final class EpisodesFeedXMLParser: NSObject, XMLParserDelegate {
         default: break
         }
     }
-
+    
     func parser(_ parser: XMLParser,
                 didEndElement elementName: String,
                 namespaceURI: String?,
                 qualifiedName qName: String?) {
         if elementName == "item" {
-            let rssItem = Episode(id: UUID().uuidString,
-                                  author: currentAuthor,
+            let rssItem = FeedEpisode(author: currentAuthor,
                                   title: currentTitle,
                                   summary: currentSummary,
                                   description: currentDescription,
                                   pubDate: currentPubDate,
                                   mediaUrl: currentMediaUrl,
-                                  image: currentImage.isEmpty ? nil : currentImage
+                                  imageUrl: currentImage.isEmpty ? nil : currentImage
             )
             episodes.append(rssItem)
         }
     }
-
+    
     func parserDidEndDocument(_ parser: XMLParser) {
         parserCompletionHandler?(.success(episodes))
     }
-
-    func parse(data: Data) {
-        let parser = XMLParser(data: data)
-        parser.delegate = self
-        parser.parse()
-    }
-
+    
+    
     func parser(_ parser: XMLParser, parseErrorOccurred parseError: Error) {
         parserCompletionHandler?(.failure(parseError))
     }
-    
 }

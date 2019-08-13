@@ -10,7 +10,6 @@ import Foundation
 
 /// The Podcast data manager
 final class PodcastDataManager {
-    
     /// The default data controller based on the PodcastModel
     static var `default` = PodcastDataManager(modelName: "PodcastModel")
     var controller: DataController!

@@ -1,5 +1,5 @@
 //
-//  PodcastEntity.swift
+//  FavoritePodcasts.swift
 //  Podcast
 //
 //  Created by Gustavo on 2019-08-11.
@@ -8,7 +8,8 @@
 
 import Foundation
 
-extension PodcastEntity: Podcast {
+// the FavoritePodcast extension to conform the Podcast protocol
+extension FavoritePodcasts: Podcast {
     func setImage(data: Data) {
         image = data
     }

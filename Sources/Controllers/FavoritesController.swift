@@ -16,7 +16,7 @@ final class FavoritesController: UICollectionViewController, UICollectionViewDel
     /// The cell will be calculated on the `setupCollectionView()` method based on the `numberOfColumns` parameter
     private var cellSize = CGSize(width: 100, height: 100)
     
-    private lazy var podCastRepository: PodcastRepository = LocalPodcastRepository { [weak self] insertedIndexPaths, deletedIndexPaths, updatedIndexPaths in
+    private lazy var podCastRepository: FavoritePodcastRepository = LocalFavoritePodcastRepository { [weak self] insertedIndexPaths, deletedIndexPaths, updatedIndexPaths in
         guard let strongSelf = self else { return }
         
         strongSelf.collectionView.performBatchUpdates({() -> Void in

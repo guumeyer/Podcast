@@ -9,60 +9,57 @@
 import Foundation
 import CoreData
 
+/// The `DataController` handles the `NSPersistentContainer`.
 final class DataController {
     let persistentContainer:NSPersistentContainer
     
+    /// Returns the viewContext from `NSPersistentContainer`.
     var viewContext:NSManagedObjectContext {
         return persistentContainer.viewContext
     }
     
     let backgroundContext:NSManagedObjectContext!
     
+    /// Constructs the `DataController` instance.
+    ///
+    /// - Parameter modelName: the model name.
     init(modelName:String) {
         persistentContainer = NSPersistentContainer(name: modelName)
         backgroundContext = persistentContainer.newBackgroundContext()
     }
     
-    func configureContexts() {
-        viewContext.automaticallyMergesChangesFromParent = true
-        backgroundContext.automaticallyMergesChangesFromParent = true
-        
-        backgroundContext.mergePolicy = NSMergePolicy.mergeByPropertyObjectTrump
-        viewContext.mergePolicy = NSMergePolicy.mergeByPropertyStoreTrump
-    }
-    
+    /// Load stores
+    ///
+    /// - Parameter completion: the completion handler.
     func load(completion: (() -> Void)? = nil) {
-        persistentContainer.loadPersistentStores { storeDescription, error in
+        persistentContainer.loadPersistentStores { [weak self] storeDescription, error in
+            guard let strongSelf = self else { return }
             guard error == nil else {
                 fatalError(error!.localizedDescription)
             }
-            self.autoSaveViewContext()
-            self.configureContexts()
+            strongSelf.autoSaveViewContext()
+            strongSelf.setupContexts()
             completion?()
         }
     }
-}
-
-// MARK: - Autosaving
-extension DataController {
     
     /// Persist data context
     ///
     /// - Throws: <#throws value description#>
     func saveContext() throws {
-        viewContext.performAndWait() {
-            
-            if self.viewContext.hasChanges {
+        viewContext.performAndWait() { [weak self] in
+            guard let strongSelf = self else { return }
+            if strongSelf.viewContext.hasChanges {
                 do {
-                    try self.viewContext.save()
+                    try strongSelf.viewContext.save()
                 } catch {
                     print("Error while saving main context: \(error)")
                 }
                 
                 // now we save in the background
-                self.backgroundContext.perform() {
+                strongSelf.backgroundContext.perform() {
                     do {
-                        try self.backgroundContext.save()
+                        try strongSelf.backgroundContext.save()
                     } catch {
                         print("Error while saving persisting context: \(error)")
                     }
@@ -74,7 +71,7 @@ extension DataController {
     /// Persist data context based on the `interval` parameter
     ///
     /// - Parameter interval: the interval, default is 30 s
-    func autoSaveViewContext(interval:TimeInterval = 30) {
+    private func autoSaveViewContext(interval:TimeInterval = 30) {
         print("autosaving")
         
         guard interval > 0 else {
@@ -86,8 +83,17 @@ extension DataController {
             try? viewContext.save()
         }
         
-        DispatchQueue.main.asyncAfter(deadline: .now() + interval) {
-            self.autoSaveViewContext(interval: interval)
+        DispatchQueue.main.asyncAfter(deadline: .now() + interval) { [weak self] in
+            self?.autoSaveViewContext(interval: interval)
         }
+    }
+    
+    /// Setups the contexts
+    private func setupContexts() {
+        viewContext.automaticallyMergesChangesFromParent = true
+        backgroundContext.automaticallyMergesChangesFromParent = true
+        
+        backgroundContext.mergePolicy = NSMergePolicy.mergeByPropertyObjectTrump
+        viewContext.mergePolicy = NSMergePolicy.mergeByPropertyStoreTrump
     }
 }

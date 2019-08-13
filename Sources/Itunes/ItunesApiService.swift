@@ -50,8 +50,8 @@ final class ItunesApiService: ApiMediaLoader {
         httpClient?.makeRequest(from: URLRequest(url: url)) { (result) in
             switch result {
             case .success(let data, _):
-                let episodeParser = EpisodesFeedXMLParser(completionHandler: completion)
-                episodeParser.parse(data: data)
+                let episodeParser = FeedEpisodesXmlParser()
+                episodeParser.parse(data: data, completionHandler: completion)
                 //TODO add completion .failure
                 print("featchMedias: success")
             case .failure(let error):

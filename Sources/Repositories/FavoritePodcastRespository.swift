@@ -1,5 +1,5 @@
 //
-//  PodcastRespository.swift
+//  FavoritePodcast.swift
 //  Podcast
 //
 //  Created by Gustavo on 2019-08-12.
@@ -10,9 +10,8 @@ import Foundation
 
 typealias PodcastChangeContentResultType = (_ insertItems: [IndexPath]?, _ deleteItems: [IndexPath]?, _ reloadItems: [IndexPath]?) -> Void
 
-/// Podcast repository object
-protocol PodcastRepository {
-    
+/// Favorite Podcast Repository object
+protocol FavoritePodcastRepository {
     /// Completion handler to notify when the PodcastEntity context has been changed
     var changeContentCompletionHandler: PodcastChangeContentResultType? { get }
     

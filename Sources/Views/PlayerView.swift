@@ -26,7 +26,7 @@ final class PlayerView: UIView {
             
             episodeImageView.image = nil
             miniEpisodeImageView.image = nil
-            guard let imageUrl = episode.image else {
+            guard let imageUrl = episode.imageUrl else {
                 print("Not found image")
                 return
             }

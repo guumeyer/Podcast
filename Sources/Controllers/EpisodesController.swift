@@ -10,7 +10,7 @@ import UIKit
 
 final class EpisodesController: UITableViewController {
     
-    private let podcastRepository: PodcastRepository = LocalPodcastRepository(nil)
+    private let podcastRepository: FavoritePodcastRepository = LocalFavoritePodcastRepository(nil)
     private var episodes = [Episode]()
     
     var podcast: Podcast! {
@@ -110,7 +110,7 @@ extension EpisodesController {
         if let episodeCell = cell as? EpisodeCell {
             let episode = episodes[indexPath.row]
             episodeCell.episode = episode
-            episodeCell.episodeImageUrl = episode.image ?? podcast.artworkUrl
+            episodeCell.episodeImageUrl = episode.imageUrl ?? podcast.artworkUrl
         }
     }
 
