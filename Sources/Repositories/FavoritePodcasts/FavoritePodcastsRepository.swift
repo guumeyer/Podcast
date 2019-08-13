@@ -1,5 +1,5 @@
 //
-//  FavoritePodcast.swift
+//  FavoritePodcastsRepository.swift
 //  Podcast
 //
 //  Created by Gustavo on 2019-08-12.
@@ -8,14 +8,12 @@
 
 import Foundation
 
-typealias PodcastChangeContentResultType = (_ insertItems: [IndexPath]?, _ deleteItems: [IndexPath]?, _ reloadItems: [IndexPath]?) -> Void
-
-/// Favorite Podcast Repository object
-protocol FavoritePodcastRepository {
-    /// Completion handler to notify when the PodcastEntity context has been changed
-    var changeContentCompletionHandler: PodcastChangeContentResultType? { get }
+/// Favorite Podcasts Repository object
+protocol FavoritePodcastsRepository {
+    /// Completion handler to notify when the FavoritePodcasts context has been changed
+    var changeContentCompletionHandler: RepositoryFeatchChangeContentResultType? { get }
     
-    init(_ changeContentCompletion: PodcastChangeContentResultType?)
+    init(_ changeContentCompletion: RepositoryFeatchChangeContentResultType?)
     
     /// The number of sections
     var numberOfSections: Int { get }
@@ -26,7 +24,7 @@ protocol FavoritePodcastRepository {
     /// - Returns: the amount of objects present in the section
     func numberOfObjects(by section: Int) -> Int
     
-    /// Gets the objects by index.
+    /// Gets the Podcast by index.
     ///
     /// - Parameter indexPath: the selected index path
     /// - Returns: a podcast.

@@ -35,7 +35,7 @@ final public class UIControllerFactory {
                          title: "Search",
                          image: UIImage(named: "search"))
         case .donwload:
-            return build(with: DonwloadController(),
+            return build(with: DownloadController(),
                          title: "Downloads",
                          image: UIImage(named: "downloads"))
         }

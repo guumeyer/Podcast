@@ -10,7 +10,8 @@ import UIKit
 
 final class EpisodesController: UITableViewController {
     
-    private let podcastRepository: FavoritePodcastRepository = LocalFavoritePodcastRepository(nil)
+    private lazy var podcastRepository: FavoritePodcastsRepository = LocalFavoritePodcastsRepository(nil)
+    private lazy var episodesRepository: DownloadEpisodesRepository = LocalDownloadEpisodesRepository(nil)
     private var episodes = [Episode]()
     
     var podcast: Podcast! {
@@ -92,8 +93,11 @@ extension EpisodesController {
     }
 
     override func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
-        let donwloadAction = UITableViewRowAction(style: .normal, title: "Donwload") { (_, _) in
+        let donwloadAction = UITableViewRowAction(style: .normal, title: "Donwload") { [weak self] (_, _) in
+            guard let strongSelf = self else { return }
             print("Donwload")
+            let episode = strongSelf.episodes[indexPath.row]
+            strongSelf.episodesRepository.save(episode)
         }
         return [donwloadAction]
     }

@@ -16,7 +16,7 @@ final class FavoritesController: UICollectionViewController, UICollectionViewDel
     /// The cell will be calculated on the `setupCollectionView()` method based on the `numberOfColumns` parameter
     private var cellSize = CGSize(width: 100, height: 100)
     
-    private lazy var podCastRepository: FavoritePodcastRepository = LocalFavoritePodcastRepository { [weak self] insertedIndexPaths, deletedIndexPaths, updatedIndexPaths in
+    private lazy var podcastRepository: FavoritePodcastsRepository = LocalFavoritePodcastsRepository { [weak self] insertedIndexPaths, deletedIndexPaths, updatedIndexPaths in
         guard let strongSelf = self else { return }
         
         strongSelf.collectionView.performBatchUpdates({() -> Void in
@@ -32,18 +32,18 @@ final class FavoritesController: UICollectionViewController, UICollectionViewDel
     }
     
     override func numberOfSections(in collectionView: UICollectionView) -> Int {
-        return podCastRepository.numberOfSections
+        return podcastRepository.numberOfSections
     }
     
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return podCastRepository.numberOfObjects(by: section)
+        return podcastRepository.numberOfObjects(by: section)
     }
     
     override func collectionView(_ collectionView: UICollectionView,
                         willDisplay cell: UICollectionViewCell,
                         forItemAt indexPath: IndexPath) {
         guard let favoriteCell = cell as? FavoriteCell else { return }
-        favoriteCell.podcast = podCastRepository.object(at: indexPath)
+        favoriteCell.podcast = podcastRepository.object(at: indexPath)
     }
     
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -56,7 +56,7 @@ final class FavoritesController: UICollectionViewController, UICollectionViewDel
     
     override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let episodesController = EpisodesController()
-        episodesController.podcast = podCastRepository.object(at: indexPath)
+        episodesController.podcast = podcastRepository.object(at: indexPath)
         navigationController?.pushViewController(episodesController, animated: true)
     }
     
@@ -91,7 +91,7 @@ final class FavoritesController: UICollectionViewController, UICollectionViewDel
         
         let alertView = UIAlertController(title: "Remove Podcast?", message: nil, preferredStyle: .actionSheet)
         alertView.addAction(UIAlertAction(title: "Yes", style: .destructive, handler: { (_) in
-            self.podCastRepository.remove(at: selectIndexPath)
+            self.podcastRepository.remove(at: selectIndexPath)
         }))
         
         alertView.addAction(UIAlertAction(title: "Cancel", style: .cancel))

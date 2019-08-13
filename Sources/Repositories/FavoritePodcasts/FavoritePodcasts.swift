@@ -8,7 +8,7 @@
 
 import Foundation
 
-// the FavoritePodcast extension to conform the Podcast protocol
+// the FavoritePodcast extension to conform to the Podcast protocol
 extension FavoritePodcasts: Podcast {
     func setImage(data: Data) {
         image = data

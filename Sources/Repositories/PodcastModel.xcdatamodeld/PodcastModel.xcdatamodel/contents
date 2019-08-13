@@ -1,6 +1,15 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="14492.1" systemVersion="18G87" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
-    <entity name="DownloadEpisodes" representedClassName="DownloadEpisodes" syncable="YES" codeGenerationType="class"/>
+    <entity name="DownloadEpisodes" representedClassName="DownloadEpisodes" syncable="YES" codeGenerationType="class">
+        <attribute name="episodeAuthor" attributeType="String" syncable="YES"/>
+        <attribute name="episodeDetail" attributeType="String" syncable="YES"/>
+        <attribute name="episodeImage" optional="YES" attributeType="Binary" allowsExternalBinaryDataStorage="YES" syncable="YES"/>
+        <attribute name="episodeImageUrl" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="episodeMediaUrl" attributeType="String" syncable="YES"/>
+        <attribute name="episodePubDate" attributeType="String" syncable="YES"/>
+        <attribute name="episodeSummary" attributeType="String" syncable="YES"/>
+        <attribute name="episodeTitle" attributeType="String" syncable="YES"/>
+    </entity>
     <entity name="FavoritePodcasts" representedClassName="FavoritePodcasts" syncable="YES" codeGenerationType="class">
         <attribute name="artworkUrl" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="authorName" attributeType="String" syncable="YES"/>
@@ -11,6 +20,6 @@
     </entity>
     <elements>
         <element name="FavoritePodcasts" positionX="-63" positionY="-18" width="128" height="135"/>
-        <element name="DownloadEpisodes" positionX="-63" positionY="27" width="128" height="45"/>
+        <element name="DownloadEpisodes" positionX="-63" positionY="27" width="128" height="165"/>
     </elements>
 </model>

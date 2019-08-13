@@ -1,5 +1,5 @@
 //
-//  LocalFavoritePodcastRepository.swift
+//  LocalFavoritePodcastsRepository.swift
 //  Podcast
 //
 //  Created by Gustavo on 2019-08-11.
@@ -9,7 +9,7 @@
 import Foundation
 import CoreData
 
-final class LocalFavoritePodcastRepository: NSObject, FavoritePodcastRepository {
+final class LocalFavoritePodcastsRepository: NSObject, FavoritePodcastsRepository {
     private var insertedIndexPaths: [IndexPath]!
     private var deletedIndexPaths: [IndexPath]!
     private var updatedIndexPaths: [IndexPath]!
@@ -35,14 +35,14 @@ final class LocalFavoritePodcastRepository: NSObject, FavoritePodcastRepository 
         return controller
     } ()
     
-    var changeContentCompletionHandler: PodcastChangeContentResultType?
-    
-    init(_ changeContentCompletion: PodcastChangeContentResultType?) {
-        changeContentCompletionHandler = changeContentCompletion
-    }
+    var changeContentCompletionHandler: RepositoryFeatchChangeContentResultType?
     
     var numberOfSections: Int {
         return fetchedResultsController.sections?.count ?? 0
+    }
+    
+    init(_ changeContentCompletion: RepositoryFeatchChangeContentResultType?) {
+        changeContentCompletionHandler = changeContentCompletion
     }
     
     func numberOfObjects(by section: Int) -> Int {
@@ -94,7 +94,7 @@ final class LocalFavoritePodcastRepository: NSObject, FavoritePodcastRepository 
     }
 }
 
-extension LocalFavoritePodcastRepository: NSFetchedResultsControllerDelegate {
+extension LocalFavoritePodcastsRepository: NSFetchedResultsControllerDelegate {
     func controllerWillChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
         insertedIndexPaths = [IndexPath]()
         deletedIndexPaths = [IndexPath]()
