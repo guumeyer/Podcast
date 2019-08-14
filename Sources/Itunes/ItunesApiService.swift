@@ -27,7 +27,11 @@ final class ItunesApiService: ApiMediaLoader {
             switch result {
             case .success(let data, _):
                 if let searchRResults = try? JSONDecoder().decode(ItunesSearchResults.self, from: data) {
-                    completion(.success(searchRResults.results))
+                    
+                    completion(.success(searchRResults.results.filter({
+                        guard let feedUrl = $0.feedUrl else { return false }
+                        return !feedUrl.isEmpty
+                    })))
                 }
                 print("featchMedias: success")
             case .failure(let error):
