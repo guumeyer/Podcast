@@ -309,6 +309,7 @@ extension PlayerView {
         commandCenter.togglePlayPauseCommand.addTarget(self, action: #selector(handleCommanderCenterTogglePlayPause))
         
         commandCenter.nextTrackCommand.addTarget(self, action: #selector(handleCommanderCenterNextTrack))
+        commandCenter.previousTrackCommand.addTarget(self, action: #selector(handleCommanderCenterPreviewTrack))
     }
     
     // MARK: - Handler CommanderCenter
@@ -331,6 +332,8 @@ extension PlayerView {
         print("CommanderCenter: Pause")
         handlePauseAction()
     }
+    
+    
     
     @objc private func handleCommanderCenterTogglePlayPause() {
         // Headset button
