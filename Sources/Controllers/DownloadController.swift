@@ -25,6 +25,7 @@ final class DownloadController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupTableView()
+        setupObverservers()
     }
     
     // MARK: - Setup
@@ -32,6 +33,24 @@ final class DownloadController: UITableViewController {
         tableView.register(UINib(nibName: String(describing:EpisodeCell.self), bundle: nil),
                            forCellReuseIdentifier: EpisodeCell.identifier)
         tableView.tableFooterView = UIView()
+    }
+    
+    private func setupObverservers() {
+        NotificationCenter.default.addObserver(self, selector: #selector(handleEpisodeDownloadProgress(notification:)), name: .episodeDownloadProgress, object: nil)
+    }
+    
+    @objc private func handleEpisodeDownloadProgress(notification: Notification) {
+        guard let userInfo = notification.userInfo,
+            let id = userInfo["id"] as? String,
+            let progress = userInfo["progress"] as? Float,
+            let totalSize = userInfo["totalSize"] as? String else { return }
+     
+        DispatchQueue.main.async { [weak self] in
+            guard let strongSelf = self else { return }
+            guard let index = strongSelf.episodesRepository.objectIndex(by: id),
+                let cell = strongSelf.tableView.cellForRow(at: IndexPath(row: index, section: 0)) as? EpisodeCell else { return }
+            cell.progressLabel.text = "\(Int(progress * 100))% of \(totalSize)"
+        }
     }
 }
 
@@ -47,8 +66,18 @@ extension DownloadController {
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-         let episode = episodesRepository.object(at: indexPath)
-        mainController?.maximizePlayerViewAnimation(episode: episode)
+        let episode = episodesRepository.object(at: indexPath)
+        if episode.getFileUrl() != nil {
+            mainController?.maximizePlayerViewAnimation(episode: episode)
+        } else {
+            let alertController = UIAlertController(title: "File not found", message: "Can not find the local file.", preferredStyle: .actionSheet)
+            alertController.addAction(UIAlertAction(title: "Play by stream URL", style: .default, handler: { (_) in
+                self.mainController?.maximizePlayerViewAnimation(episode: episode)
+            }))
+            
+            alertController.addAction(UIAlertAction(title: "Cancel", style: .cancel))
+            present(alertController, animated: true)
+        }
     }
     
     override func numberOfSections(in tableView: UITableView) -> Int {

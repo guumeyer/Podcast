@@ -16,14 +16,21 @@ final class EpisodeDownloadManager {
     private init() {}
     
     func download(_ episode: Episode,
-                  progressCompletion: ProgressCompletionHandlerType?,
-                  downloadFinishedCompletion: (() -> Void)? ) {
+                  _ progressCompletion: ProgressCompletionHandlerType? = nil,
+                  _ downloadFinishedCompletion: (() -> Void)? = nil ) {
         guard let streamUrl = URL(string: episode.mediaUrl) else {
             print("Invalid URL: EpisodeDownloadManager: episode.mediaUrl")
             return
         }
         
         downloadClient.download(with: streamUrl, progressCompletion: { (url, progress, fileTotalSize) in
+            print("progress:", progress, "; url:", url, "; fileSize:", fileTotalSize)
+            NotificationCenter.default.post(name: .episodeDownloadProgress,
+                                            object: nil,
+                                            userInfo: ["id": url.absoluteString,
+                                                       "progress": progress,
+                                                       "totalSize": fileTotalSize])
+            
             DispatchQueue.main.async { [weak self] in
                 guard self != nil else { return }
                 progressCompletion?(url, progress, fileTotalSize)
@@ -39,6 +46,10 @@ final class EpisodeDownloadManager {
             episode.setFileUrl(url: destinationURL)
             // TODO: check memory leak
             self.episodesRepository.save(episode)
+            
+            NotificationCenter.default.post(name: .episodeDownloadComplete,
+                                            object: nil,
+                                            userInfo: nil)
             
             DispatchQueue.main.async { [weak self] in
                 guard self != nil else { return }

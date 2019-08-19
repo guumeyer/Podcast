@@ -56,6 +56,10 @@ final class LocalDownloadEpisodesRepository: NSObject, DownloadEpisodesRepositor
         return fetchedResultsController.object(at: indexPath)
     }
     
+    func objectIndex(by id: String) -> Int? {
+        return fetchedResultsController.fetchedObjects?.firstIndex(where: {$0.id == id})
+    }
+    
     func remove(at indexPath: IndexPath) {
         let podcast = fetchedResultsController.object(at: indexPath)
         PodcastDataManager.default.controller.viewContext.delete(podcast)

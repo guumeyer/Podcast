@@ -100,20 +100,7 @@ extension EpisodesController {
             let episode = strongSelf.episodes[indexPath.row]
             strongSelf.episodesRepository.save(episode)
   
-            EpisodeDownloadManager.shared.download(episode, progressCompletion: { (url, progress, fileSize) in
-                print("progress:", progress, "; url:", url, "; fileSize:", fileSize)
-            }, downloadFinishedCompletion: {
-                print("download completed")
-            })
-            
-            
-//            (with: mediaUrl, progressCompletion: { (url, progress, fileSize) in
-//                print("url:", url)
-//                print("progress:", progress)
-//                print("fileSize:", fileSize)
-//            }, downloadFinishedCompletion: { (url, location) in
-//                print("download completed:", url)
-//            })
+            EpisodeDownloadManager.shared.download(episode)
         }
         return [donwloadAction]
     }

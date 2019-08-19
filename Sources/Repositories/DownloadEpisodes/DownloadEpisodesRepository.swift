@@ -25,6 +25,12 @@ protocol DownloadEpisodesRepository {
     /// - Returns: a podcast.
     func object(at indexPath: IndexPath) -> Episode
     
+    /// Finds the object index
+    ///
+    /// - Parameter id: the episode id
+    /// - Returns: an index or nil
+    func objectIndex(by id: String) -> Int?
+    
     /// Removes the podcast based on the `indextPath`
     ///
     /// - Parameter indexPath: the selected index path

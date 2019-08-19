@@ -29,6 +29,7 @@
 		2BC3ED232309401500A5D133 /* EpisodeDownloadManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BC3ED222309401500A5D133 /* EpisodeDownloadManager.swift */; };
 		2BC3ED27230A86C900A5D133 /* LocalFileRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BC3ED26230A86C900A5D133 /* LocalFileRepository.swift */; };
 		2BC3ED29230A880F00A5D133 /* FileRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BC3ED28230A880F00A5D133 /* FileRepository.swift */; };
+		2BC3ED2B230A94D400A5D133 /* Notification.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BC3ED2A230A94D400A5D133 /* Notification.swift */; };
 		DB16A63922D8652B00F1B04F /* UINavigationBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB16A63822D8652B00F1B04F /* UINavigationBar.swift */; };
 		DB4518F122DAFF4E0022BD1F /* ItunesSearchResults.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB4518F022DAFF4E0022BD1F /* ItunesSearchResults.swift */; };
 		DB4518F522DB01770022BD1F /* URLSessionHTTPClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB4518F322DB01770022BD1F /* URLSessionHTTPClient.swift */; };
@@ -85,6 +86,7 @@
 		2BC3ED222309401500A5D133 /* EpisodeDownloadManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EpisodeDownloadManager.swift; sourceTree = "<group>"; };
 		2BC3ED26230A86C900A5D133 /* LocalFileRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalFileRepository.swift; sourceTree = "<group>"; };
 		2BC3ED28230A880F00A5D133 /* FileRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileRepository.swift; sourceTree = "<group>"; };
+		2BC3ED2A230A94D400A5D133 /* Notification.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Notification.swift; sourceTree = "<group>"; };
 		DB16A63822D8652B00F1B04F /* UINavigationBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UINavigationBar.swift; sourceTree = "<group>"; };
 		DB4518F022DAFF4E0022BD1F /* ItunesSearchResults.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItunesSearchResults.swift; sourceTree = "<group>"; };
 		DB4518F322DB01770022BD1F /* URLSessionHTTPClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = URLSessionHTTPClient.swift; sourceTree = "<group>"; };
@@ -257,6 +259,7 @@
 				DBD9CF8D22E0AD08005EC448 /* CMTime.swift */,
 				DB6886E622F2E83300EEAEAB /* UIApplication.swift */,
 				2B6735DA22F624AF0014ABC5 /* UIView.swift */,
+				2BC3ED2A230A94D400A5D133 /* Notification.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -442,6 +445,7 @@
 				2BC3ED27230A86C900A5D133 /* LocalFileRepository.swift in Sources */,
 				DBDE163B22D790A500BD646F /* MainTabController.swift in Sources */,
 				2B3916AE2302A4F4001A9A31 /* DownloadEpisodesRepository.swift in Sources */,
+				2BC3ED2B230A94D400A5D133 /* Notification.swift in Sources */,
 				DB4518FC22DC47B40022BD1F /* ApiMediaLoader.swift in Sources */,
 				DB91B4A122DE3CE3005E70A9 /* EpisodesController.swift in Sources */,
 				DB91B49D22DD6245005E70A9 /* ImageCacheService.swift in Sources */,

@@ -30,6 +30,9 @@ final class EpisodeCell: UITableViewCell {
             episodeImageView.backgroundColor = .lightGray
         }
     }
+    
+    @IBOutlet weak var progressLabel: UILabel!
+    
 
     static let identifier = "EpisodeCell"
 

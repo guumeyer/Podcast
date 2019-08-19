@@ -27,7 +27,7 @@
                         </constraints>
                     </imageView>
                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="top" spacing="6" translatesAutoresizingMaskIntoConstraints="NO" id="oTl-bC-hV5">
-                        <rect key="frame" x="124" y="25.5" width="180" height="66.5"/>
+                        <rect key="frame" x="124" y="15.5" width="180" height="87"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="pubDate" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="RrO-vX-UfB">
                                 <rect key="frame" x="0.0" y="0.0" width="59" height="18"/>
@@ -47,6 +47,12 @@
                                 <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="100%" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="we9-wS-5Ev">
+                                <rect key="frame" x="0.0" y="72.5" width="31" height="14.5"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                     </stackView>
                 </subviews>
@@ -62,6 +68,7 @@
             <connections>
                 <outlet property="descriptionLabel" destination="A0x-5X-9JQ" id="ug9-d4-T7x"/>
                 <outlet property="episodeImageView" destination="ZWX-Rs-suG" id="eoM-70-gyK"/>
+                <outlet property="progressLabel" destination="we9-wS-5Ev" id="9Ec-Hl-ZVL"/>
                 <outlet property="pubDateLabel" destination="RrO-vX-UfB" id="vn6-im-7ya"/>
                 <outlet property="titleLabel" destination="kIb-8l-hiZ" id="1Q7-eP-8Rx"/>
             </connections>

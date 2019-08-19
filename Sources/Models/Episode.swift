@@ -49,6 +49,6 @@ protocol Episode {
 
 extension Episode {
     var id: String {
-        return "\(author)\(title)"
+        return mediaUrl
     }
 }
