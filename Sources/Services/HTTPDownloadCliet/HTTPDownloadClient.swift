@@ -19,8 +19,10 @@ typealias ProgressCompletionHandlerType = (_ url: URL, _ progress: Float, _ tota
 
 /// The download finished handler type
 ///
-/// - Parameter sourceUrl: The download source url
-typealias DownloadFinishedHandlerType = (_ sourceUrl: URL) -> Void
+/// - Parameters:
+///   - sourceUrl: The download source url
+///   - location: The temporary download location
+typealias DownloadFinishedHandlerType = (_ sourceUrl: URL, _ location: URL) -> Void
 
 
 protocol HTTPDownloadClient {

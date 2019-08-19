@@ -35,6 +35,16 @@ protocol Episode {
     ///
     /// - Returns: an image data.
     func getImage() -> Data?
+    
+    /// Sets the episode local file URL
+    ///
+    /// - Parameter url: the episode local file URL
+    func setFileUrl(url:URL?)
+    
+    /// Gets the episode local file URL
+    ///
+    /// - Returns: an local URL
+    func getFileUrl() -> URL?
 }
 
 extension Episode {

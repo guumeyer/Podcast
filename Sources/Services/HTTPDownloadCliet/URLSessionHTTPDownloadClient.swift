@@ -10,7 +10,6 @@ import Foundation
 import UIKit
 
 final class URLSessionHTTPDownloadClient: NSObject, HTTPDownloadClient {
-    
     private var progressCompletion: ProgressCompletionHandlerType?
     private var downloadFinishedCompletion: DownloadFinishedHandlerType?
     private static let identifier: String = "com.meyer.ios.Podcast.backgrondSession"
@@ -22,7 +21,9 @@ final class URLSessionHTTPDownloadClient: NSObject, HTTPDownloadClient {
                           delegateQueue: nil)
     }()
     
-    func download(with url: URL, progressCompletion: ProgressCompletionHandlerType?, downloadFinishedCompletion: DownloadFinishedHandlerType?) -> URLSessionDownloadTask {
+    func download(with url: URL,
+                  progressCompletion: ProgressCompletionHandlerType?,
+                  downloadFinishedCompletion: DownloadFinishedHandlerType?) -> URLSessionDownloadTask {
         self.progressCompletion = progressCompletion
         self.downloadFinishedCompletion = downloadFinishedCompletion
         
@@ -50,27 +51,19 @@ extension URLSessionHTTPDownloadClient: URLSessionDelegate {
 extension URLSessionHTTPDownloadClient: URLSessionDownloadDelegate {
     func urlSession(_ session: URLSession, downloadTask: URLSessionDownloadTask,
                     didFinishDownloadingTo location: URL) {
-        guard let sourceURL = downloadTask.originalRequest?.url else {
-            return
-        }
-
-        DispatchQueue.main.async { [weak self] in
-            self?.downloadFinishedCompletion?(sourceURL)
-        }
+        guard let sourceURL = downloadTask.originalRequest?.url else { return }
         
+        self.downloadFinishedCompletion?(sourceURL, location)
     }
 
     func urlSession(_ session: URLSession, downloadTask: URLSessionDownloadTask,
                     didWriteData bytesWritten: Int64, totalBytesWritten: Int64,
                     totalBytesExpectedToWrite: Int64) {
         guard let url = downloadTask.originalRequest?.url else { return }
-        
         let progress = Float(totalBytesWritten) / Float(totalBytesExpectedToWrite)
         let totalSize = ByteCountFormatter.string(fromByteCount: totalBytesExpectedToWrite, countStyle: .file)
 
-        DispatchQueue.main.async { [weak self] in
-            self?.progressCompletion?(url, progress, totalSize)
-        }
+        self.progressCompletion?(url, progress, totalSize)
     }
 }
 

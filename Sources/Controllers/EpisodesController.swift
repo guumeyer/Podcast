@@ -13,8 +13,6 @@ final class EpisodesController: UITableViewController {
     private lazy var podcastRepository: FavoritePodcastsRepository = LocalFavoritePodcastsRepository(nil)
     private lazy var episodesRepository: DownloadEpisodesRepository = LocalDownloadEpisodesRepository(nil)
     
-    private let downloadCliet: HTTPDownloadClient = URLSessionHTTPDownloadClient()
-    
     private var episodes = [Episode]()
     
     var podcast: Podcast! {
@@ -101,16 +99,21 @@ extension EpisodesController {
             print("Donwload")
             let episode = strongSelf.episodes[indexPath.row]
             strongSelf.episodesRepository.save(episode)
-            
-            guard let mediaUrl = URL(string: episode.mediaUrl) else { return }
-            
-            strongSelf.downloadCliet.download(with: mediaUrl, progressCompletion: { (url, progress, fileSize) in
-                print("url:", url)
-                print("progress:", progress)
-                print("fileSize:", fileSize)
-            }, downloadFinishedCompletion: { (url) in
-                print("download completed:", url)
+  
+            EpisodeDownloadManager.shared.download(episode, progressCompletion: { (url, progress, fileSize) in
+                print("progress:", progress, "; url:", url, "; fileSize:", fileSize)
+            }, downloadFinishedCompletion: {
+                print("download completed")
             })
+            
+            
+//            (with: mediaUrl, progressCompletion: { (url, progress, fileSize) in
+//                print("url:", url)
+//                print("progress:", progress)
+//                print("fileSize:", fileSize)
+//            }, downloadFinishedCompletion: { (url, location) in
+//                print("download completed:", url)
+//            })
         }
         return [donwloadAction]
     }

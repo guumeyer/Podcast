@@ -10,12 +10,13 @@ import Foundation
 
 // the DownloadEpisodes extension to conform to the Episode protocol
 extension DownloadEpisodes: Episode {
-    var imageUrl: String? {
-        return episodeImageUrl
-    }
     
     var author: String {
         return self.episodeAuthor ?? ""
+    }
+
+    var imageUrl: String? {
+        return episodeImageUrl
     }
     
     var title: String {
@@ -42,5 +43,11 @@ extension DownloadEpisodes: Episode {
         return episodeImage
     }
     
-
+    func setFileUrl(url: URL?) {
+        self.episodeFileUrl = url
+    }
+    
+    func getFileUrl() -> URL? {
+        return self.episodeFileUrl
+    }
 }

@@ -26,6 +26,7 @@
 		2BC3ED1623091C1400A5D133 /* EpisodeDownload.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BC3ED1523091C1400A5D133 /* EpisodeDownload.swift */; };
 		2BC3ED1F23092A1D00A5D133 /* URLSessionHTTPDownloadClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BC3ED1E23092A1D00A5D133 /* URLSessionHTTPDownloadClient.swift */; };
 		2BC3ED2123092A8400A5D133 /* HTTPDownloadClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BC3ED2023092A8300A5D133 /* HTTPDownloadClient.swift */; };
+		2BC3ED232309401500A5D133 /* EpisodeDownloadManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BC3ED222309401500A5D133 /* EpisodeDownloadManager.swift */; };
 		DB16A63922D8652B00F1B04F /* UINavigationBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB16A63822D8652B00F1B04F /* UINavigationBar.swift */; };
 		DB4518F122DAFF4E0022BD1F /* ItunesSearchResults.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB4518F022DAFF4E0022BD1F /* ItunesSearchResults.swift */; };
 		DB4518F522DB01770022BD1F /* URLSessionHTTPClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB4518F322DB01770022BD1F /* URLSessionHTTPClient.swift */; };
@@ -79,6 +80,7 @@
 		2BC3ED1523091C1400A5D133 /* EpisodeDownload.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EpisodeDownload.swift; sourceTree = "<group>"; };
 		2BC3ED1E23092A1D00A5D133 /* URLSessionHTTPDownloadClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLSessionHTTPDownloadClient.swift; sourceTree = "<group>"; };
 		2BC3ED2023092A8300A5D133 /* HTTPDownloadClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HTTPDownloadClient.swift; sourceTree = "<group>"; };
+		2BC3ED222309401500A5D133 /* EpisodeDownloadManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EpisodeDownloadManager.swift; sourceTree = "<group>"; };
 		DB16A63822D8652B00F1B04F /* UINavigationBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UINavigationBar.swift; sourceTree = "<group>"; };
 		DB4518F022DAFF4E0022BD1F /* ItunesSearchResults.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItunesSearchResults.swift; sourceTree = "<group>"; };
 		DB4518F322DB01770022BD1F /* URLSessionHTTPClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = URLSessionHTTPClient.swift; sourceTree = "<group>"; };
@@ -161,18 +163,19 @@
 		2BC3ED1423091BD900A5D133 /* EpisodeDownloads */ = {
 			isa = PBXGroup;
 			children = (
+				2BC3ED222309401500A5D133 /* EpisodeDownloadManager.swift */,
 				2BC3ED1523091C1400A5D133 /* EpisodeDownload.swift */,
 			);
 			path = EpisodeDownloads;
 			sourceTree = "<group>";
 		};
-		2BC3ED172309294A00A5D133 /* DownloadHTTPCliet */ = {
+		2BC3ED172309294A00A5D133 /* HTTPDownloadCliet */ = {
 			isa = PBXGroup;
 			children = (
 				2BC3ED2023092A8300A5D133 /* HTTPDownloadClient.swift */,
 				2BC3ED1E23092A1D00A5D133 /* URLSessionHTTPDownloadClient.swift */,
 			);
-			path = DownloadHTTPCliet;
+			path = HTTPDownloadCliet;
 			sourceTree = "<group>";
 		};
 		DB4518EF22DAFF3B0022BD1F /* Itunes */ = {
@@ -197,7 +200,7 @@
 		DB4518FD22DC4F070022BD1F /* Services */ = {
 			isa = PBXGroup;
 			children = (
-				2BC3ED172309294A00A5D133 /* DownloadHTTPCliet */,
+				2BC3ED172309294A00A5D133 /* HTTPDownloadCliet */,
 				DB4518F222DB01770022BD1F /* HTTPClient */,
 				DB4518FB22DC47B40022BD1F /* ApiMediaLoader.swift */,
 				DB4518FE22DC4F2A0022BD1F /* ApiService.swift */,
@@ -397,6 +400,7 @@
 				DB4518F522DB01770022BD1F /* URLSessionHTTPClient.swift in Sources */,
 				DB8FEE2F22DEF9EC0041A777 /* String.swift in Sources */,
 				DB91B49F22DDA4F6005E70A9 /* FeedEpisodesXmlParser.swift in Sources */,
+				2BC3ED232309401500A5D133 /* EpisodeDownloadManager.swift in Sources */,
 				2B6735D922F611CE0014ABC5 /* UIControllerFactory.swift in Sources */,
 				DB4518F122DAFF4E0022BD1F /* ItunesSearchResults.swift in Sources */,
 				DB4518FF22DC4F2A0022BD1F /* ApiService.swift in Sources */,

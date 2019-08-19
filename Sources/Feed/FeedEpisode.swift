@@ -17,6 +17,7 @@ final class FeedEpisode: Episode {
     var mediaUrl: String
     var imageUrl: String?
     var imageData: Data?
+    var fileUrl: URL?
     
     init(author: String,
          title: String,
@@ -43,5 +44,13 @@ final class FeedEpisode: Episode {
     
     func getImage() -> Data? {
         return imageData
+    }
+    
+    func setFileUrl(url: URL?) {
+        fileUrl = url
+    }
+    
+    func getFileUrl() -> URL? {
+        return fileUrl
     }
 }

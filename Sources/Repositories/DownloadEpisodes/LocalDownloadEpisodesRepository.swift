@@ -62,18 +62,57 @@ final class LocalDownloadEpisodesRepository: NSObject, DownloadEpisodesRepositor
         try? PodcastDataManager.default.saveViewContext()
     }
     
+    func findByTitleAndAuthor(title: String, author: String? = nil) -> DownloadEpisodes? {
+        let request:NSFetchRequest<DownloadEpisodes> = DownloadEpisodes.fetchRequest()
+        if let author = author {
+            request.predicate = NSPredicate(format: "episodeTitle = %@, episodeAuthor = %@", title, author)
+        } else {
+            request.predicate = NSPredicate(format: "episodeTitle = %@", title)
+        }
+        
+        do {
+            let result = try PodcastDataManager.default.controller.viewContext.fetch(request)
+            return result.first
+        } catch {
+            print("Failed")
+        }
+        return nil
+    }
+    
+    func findByMediaUrl(_ mediaUrl: String) -> DownloadEpisodes? {
+        let request:NSFetchRequest<DownloadEpisodes> = DownloadEpisodes.fetchRequest()
+        request.predicate = NSPredicate(format: "episodeMediaUrl = %@", mediaUrl)
+        
+        do {
+            let result = try PodcastDataManager.default.controller.viewContext.fetch(request)
+            return result.first
+        } catch {
+            print("Failed")
+        }
+        return nil
+    }
+    
     func save(_ episode: Episode) {
-        let downloadEpisode = DownloadEpisodes(context: PodcastDataManager.default.controller.viewContext)
-        downloadEpisode.episodeAuthor = episode.author
-        downloadEpisode.episodeDetail = episode.description
-        downloadEpisode.episodeImage = episode.getImage()
-        downloadEpisode.episodeMediaUrl = episode.mediaUrl
-        downloadEpisode.episodeImageUrl = episode.imageUrl
-        downloadEpisode.episodePubDate = episode.pubDate
-        downloadEpisode.episodeSummary = episode.summary
-        downloadEpisode.episodeTitle = episode.title
+        if let updateDownloadEpisode = findByMediaUrl(episode.mediaUrl) {
+            fillUpDownloadEpisode(updateDownloadEpisode, episode: episode)
+        } else {
+            let downloadEpisode = DownloadEpisodes(context: PodcastDataManager.default.controller.viewContext)
+            fillUpDownloadEpisode(downloadEpisode, episode: episode)
+        }
         
         try? PodcastDataManager.default.saveViewContext()
+    }
+    
+    private func fillUpDownloadEpisode(_ download: DownloadEpisodes, episode: Episode) {
+        download.episodeAuthor = episode.author
+        download.episodeDetail = episode.description
+        download.episodeImage = episode.getImage()
+        download.episodeMediaUrl = episode.mediaUrl
+        download.episodeImageUrl = episode.imageUrl
+        download.episodePubDate = episode.pubDate
+        download.episodeSummary = episode.summary
+        download.episodeTitle = episode.title
+        download.episodeFileUrl = episode.getFileUrl()
     }
 }
 

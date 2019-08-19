@@ -3,6 +3,7 @@
     <entity name="DownloadEpisodes" representedClassName="DownloadEpisodes" syncable="YES" codeGenerationType="class">
         <attribute name="episodeAuthor" attributeType="String" syncable="YES"/>
         <attribute name="episodeDetail" attributeType="String" syncable="YES"/>
+        <attribute name="episodeFileUrl" optional="YES" attributeType="URI" syncable="YES"/>
         <attribute name="episodeImage" optional="YES" attributeType="Binary" allowsExternalBinaryDataStorage="YES" syncable="YES"/>
         <attribute name="episodeImageUrl" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="episodeMediaUrl" attributeType="String" syncable="YES"/>
@@ -19,7 +20,7 @@
         <attribute name="title" attributeType="String" syncable="YES"/>
     </entity>
     <elements>
+        <element name="DownloadEpisodes" positionX="-63" positionY="27" width="128" height="180"/>
         <element name="FavoritePodcasts" positionX="-63" positionY="-18" width="128" height="135"/>
-        <element name="DownloadEpisodes" positionX="-63" positionY="27" width="128" height="165"/>
     </elements>
 </model>
