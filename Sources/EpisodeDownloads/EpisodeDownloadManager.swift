@@ -15,10 +15,6 @@ final class EpisodeDownloadManager {
     
     private init() {}
     
-    private func localFilePath(for url: URL) -> URL? {
-        return FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first?.appendingPathComponent(url.lastPathComponent)
-    }
-    
     func download(_ episode: Episode,
                   progressCompletion: ProgressCompletionHandlerType?,
                   downloadFinishedCompletion: (() -> Void)? ) {
@@ -32,21 +28,13 @@ final class EpisodeDownloadManager {
                 guard self != nil else { return }
                 progressCompletion?(url, progress, fileTotalSize)
             }
-            
         }) { (sourceURL, location) in
-            guard let destinationURL = self.localFilePath(for: sourceURL) else {
+            guard let destinationURL = LocalFileRepository.localFilePath(for: sourceURL) else {
                 print("destinationURL is nil")
                 return
             }
-            
             print(destinationURL)
-            try? FileManager.default.removeItem(at: destinationURL)
-            
-            do {
-                try FileManager.default.copyItem(at: location, to: destinationURL)
-            } catch let error {
-                print("Could not copy file to disk: \(error.localizedDescription)")
-            }
+            LocalFileRepository.copyItem(at: location, to: destinationURL)
             
             episode.setFileUrl(url: destinationURL)
             // TODO: check memory leak

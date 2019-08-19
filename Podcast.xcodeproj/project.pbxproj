@@ -27,6 +27,8 @@
 		2BC3ED1F23092A1D00A5D133 /* URLSessionHTTPDownloadClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BC3ED1E23092A1D00A5D133 /* URLSessionHTTPDownloadClient.swift */; };
 		2BC3ED2123092A8400A5D133 /* HTTPDownloadClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BC3ED2023092A8300A5D133 /* HTTPDownloadClient.swift */; };
 		2BC3ED232309401500A5D133 /* EpisodeDownloadManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BC3ED222309401500A5D133 /* EpisodeDownloadManager.swift */; };
+		2BC3ED27230A86C900A5D133 /* LocalFileRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BC3ED26230A86C900A5D133 /* LocalFileRepository.swift */; };
+		2BC3ED29230A880F00A5D133 /* FileRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BC3ED28230A880F00A5D133 /* FileRepository.swift */; };
 		DB16A63922D8652B00F1B04F /* UINavigationBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB16A63822D8652B00F1B04F /* UINavigationBar.swift */; };
 		DB4518F122DAFF4E0022BD1F /* ItunesSearchResults.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB4518F022DAFF4E0022BD1F /* ItunesSearchResults.swift */; };
 		DB4518F522DB01770022BD1F /* URLSessionHTTPClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB4518F322DB01770022BD1F /* URLSessionHTTPClient.swift */; };
@@ -81,6 +83,8 @@
 		2BC3ED1E23092A1D00A5D133 /* URLSessionHTTPDownloadClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLSessionHTTPDownloadClient.swift; sourceTree = "<group>"; };
 		2BC3ED2023092A8300A5D133 /* HTTPDownloadClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HTTPDownloadClient.swift; sourceTree = "<group>"; };
 		2BC3ED222309401500A5D133 /* EpisodeDownloadManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EpisodeDownloadManager.swift; sourceTree = "<group>"; };
+		2BC3ED26230A86C900A5D133 /* LocalFileRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalFileRepository.swift; sourceTree = "<group>"; };
+		2BC3ED28230A880F00A5D133 /* FileRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileRepository.swift; sourceTree = "<group>"; };
 		DB16A63822D8652B00F1B04F /* UINavigationBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UINavigationBar.swift; sourceTree = "<group>"; };
 		DB4518F022DAFF4E0022BD1F /* ItunesSearchResults.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItunesSearchResults.swift; sourceTree = "<group>"; };
 		DB4518F322DB01770022BD1F /* URLSessionHTTPClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = URLSessionHTTPClient.swift; sourceTree = "<group>"; };
@@ -156,6 +160,8 @@
 				2B7EA5DF2300D5120073DAF0 /* PodcastModel.xcdatamodeld */,
 				2B7EA5E22300D8DC0073DAF0 /* PodcastDataManager.swift */,
 				2B3916B32302AF4D001A9A31 /* RepositoryFeatchChangeContentResultType.swift */,
+				2BC3ED26230A86C900A5D133 /* LocalFileRepository.swift */,
+				2BC3ED28230A880F00A5D133 /* FileRepository.swift */,
 			);
 			path = Repositories;
 			sourceTree = "<group>";
@@ -414,6 +420,7 @@
 				2BC3ED2123092A8400A5D133 /* HTTPDownloadClient.swift in Sources */,
 				2B6735D722F610650014ABC5 /* FavoritesController.swift in Sources */,
 				2B6735E022F65C5C0014ABC5 /* FavoriteCell.swift in Sources */,
+				2BC3ED29230A880F00A5D133 /* FileRepository.swift in Sources */,
 				DB4518F822DB09760022BD1F /* ItunesMedia.swift in Sources */,
 				2B7EA5E32300D8DC0073DAF0 /* PodcastDataManager.swift in Sources */,
 				2B3916A1230291E5001A9A31 /* LocalFavoritePodcastsRepository.swift in Sources */,
@@ -432,6 +439,7 @@
 				2BC3ED1623091C1400A5D133 /* EpisodeDownload.swift in Sources */,
 				DB4518FA22DC47200022BD1F /* ItunesApiService.swift in Sources */,
 				2B39166D230151EC001A9A31 /* FavoritePodcastsRepository.swift in Sources */,
+				2BC3ED27230A86C900A5D133 /* LocalFileRepository.swift in Sources */,
 				DBDE163B22D790A500BD646F /* MainTabController.swift in Sources */,
 				2B3916AE2302A4F4001A9A31 /* DownloadEpisodesRepository.swift in Sources */,
 				DB4518FC22DC47B40022BD1F /* ApiMediaLoader.swift in Sources */,

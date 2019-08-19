@@ -470,10 +470,17 @@ extension PlayerView {
     }
     
     private func playEpisode() {
-        guard let url = URL(string: episode.mediaUrl) else {
-            return
+        if let url = episode.getFileUrl(), let localFileUrl = LocalFileRepository.localFilePath(for: url) {
+            playEpisode(localFileUrl)
+        } else {
+            guard let url = URL(string: episode.mediaUrl) else {
+                return
+            }
+            playEpisode(url)
         }
-        
+    }
+    
+    private func playEpisode(_ url: URL) {
         let playItem = AVPlayerItem(url: url)
         player.replaceCurrentItem(with: playItem)
         player.play()

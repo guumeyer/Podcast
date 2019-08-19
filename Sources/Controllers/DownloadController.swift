@@ -50,6 +50,7 @@ extension DownloadController {
          let episode = episodesRepository.object(at: indexPath)
         mainController?.maximizePlayerViewAnimation(episode: episode)
     }
+    
     override func numberOfSections(in tableView: UITableView) -> Int {
         return episodesRepository.numberOfSections
     }
