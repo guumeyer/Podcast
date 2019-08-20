@@ -10,6 +10,7 @@ import Foundation
 import UIKit
 
 final class URLSessionHTTPDownloadClient: NSObject, HTTPDownloadClient {
+    
     private var progressCompletion: ProgressCompletionHandlerType?
     private var downloadFinishedCompletion: DownloadFinishedHandlerType?
     private static let identifier: String = "com.meyer.ios.Podcast.backgrondSession"
@@ -32,6 +33,16 @@ final class URLSessionHTTPDownloadClient: NSObject, HTTPDownloadClient {
         
         return task
     }
+    
+    func download(withResumeData: Data, progressCompletion: ProgressCompletionHandlerType?, downloadFinishedCompletion: DownloadFinishedHandlerType?) -> URLSessionDownloadTask {
+        self.progressCompletion = progressCompletion
+        self.downloadFinishedCompletion = downloadFinishedCompletion
+        
+        let task = session.downloadTask(withResumeData: withResumeData)
+        task.resume()
+        
+        return task
+    }
 }
 
 // MARK: - URL Session Delegate
@@ -44,6 +55,11 @@ extension URLSessionHTTPDownloadClient: URLSessionDelegate {
                 completionHandler()
             }
         }
+    }
+    
+    func urlSession(_ session: URLSession, taskIsWaitingForConnectivity task: URLSessionTask) {
+        // waiting for connectivity, update UI, etc.
+        print("waiting for connectivity, update UI, etc.")
     }
 }
 

@@ -62,7 +62,7 @@ final class EpisodesController: UITableViewController {
     
     private func setupNavigationBarButtons() {
         navigationItem.rightBarButtonItems = [
-            UIBarButtonItem(title: "Favorite",
+            UIBarButtonItem(title: "Add Favorite",
                             style: .plain,
                             target: self,
                             action: #selector(handleSaveFavorites))
@@ -94,14 +94,28 @@ extension EpisodesController {
     }
 
     override func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
+        
+        let episode = episodes[indexPath.row]
+        
+        
         let donwloadAction = UITableViewRowAction(style: .normal, title: "Donwload") { [weak self] (_, _) in
             guard let strongSelf = self else { return }
-            print("Donwload")
-            let episode = strongSelf.episodes[indexPath.row]
-            strongSelf.episodesRepository.save(episode)
-  
-            EpisodeDownloadManager.shared.download(episode)
+            
+            if EpisodeDownloadManager.shared.isDonwloadInProgress(episode) {
+                strongSelf.showAlert(message: "Download in progress" )
+            } else if let episodeFromDatabase = strongSelf.episodesRepository.object(by: episode.id),
+                let _ = episodeFromDatabase.getFileUrl() {
+                strongSelf.showAlert(message: "Ready to be play")
+            } else {
+                do {
+                    try EpisodeDownloadManager.shared.download(episode)
+                    strongSelf.episodesRepository.save(episode)
+                } catch {
+                    strongSelf.showAlert(message: error.localizedDescription)
+                }
+            }
         }
+        
         return [donwloadAction]
     }
     

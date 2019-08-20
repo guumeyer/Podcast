@@ -38,7 +38,7 @@ final class EpisodeCell: UITableViewCell {
 
     var episode: Episode? {
         didSet {
-            pubDateLabel.text = episode?.pubDate
+            pubDateLabel.text = episode?.pubDate.string(with: .shortDateAndTime)
             titleLabel.text = episode?.title
             descriptionLabel.text = episode?.summary
             

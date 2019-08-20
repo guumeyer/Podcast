@@ -33,6 +33,7 @@ final class DownloadController: UITableViewController {
         tableView.register(UINib(nibName: String(describing:EpisodeCell.self), bundle: nil),
                            forCellReuseIdentifier: EpisodeCell.identifier)
         tableView.tableFooterView = UIView()
+        tableView.keyboardDismissMode = .interactive
     }
     
     private func setupObverservers() {
@@ -50,6 +51,7 @@ final class DownloadController: UITableViewController {
             guard let index = strongSelf.episodesRepository.objectIndex(by: id),
                 let cell = strongSelf.tableView.cellForRow(at: IndexPath(row: index, section: 0)) as? EpisodeCell else { return }
             cell.progressLabel.text = "\(Int(progress * 100))% of \(totalSize)"
+            cell.progressLabel.isHidden = (progress == 1)
         }
     }
 }
@@ -59,12 +61,17 @@ extension DownloadController {
     override func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
         let donwloadAction = UITableViewRowAction(style: .destructive, title: "Remove") { [weak self] (_, _) in
             guard let strongSelf = self else { return }
-            print("Remove")
+            print("Remove episode")
+            
+            if let fileUrl = strongSelf.episodesRepository.object(at: indexPath).getFileUrl() {
+                LocalFileRepository.removeItem(at: fileUrl)
+            }
             strongSelf.episodesRepository.remove(at: indexPath)
+            
         }
         return [donwloadAction]
     }
-    
+
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let episode = episodesRepository.object(at: indexPath)
         if episode.getFileUrl() != nil {
@@ -74,6 +81,12 @@ extension DownloadController {
             alertController.addAction(UIAlertAction(title: "Play by stream URL", style: .default, handler: { (_) in
                 self.mainController?.maximizePlayerViewAnimation(episode: episode)
             }))
+            
+            pauseAndResumeDownload(episode, alertController)
+            
+            retryDownload(episode, alertController)
+            
+            cancelDownload(episode, alertController)
             
             alertController.addAction(UIAlertAction(title: "Cancel", style: .cancel))
             present(alertController, animated: true)
@@ -103,5 +116,34 @@ extension DownloadController {
     
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 132
+    }
+    
+    fileprivate func pauseAndResumeDownload(_ episode: Episode, _ alertController: UIAlertController) {
+        if EpisodeDownloadManager.shared.isDonwloadInPause(episode) {
+            alertController.addAction(UIAlertAction(title: "Resume download", style: .default, handler: { (_) in
+                EpisodeDownloadManager.shared.resumeDownload(episode)
+            }))
+        } else if EpisodeDownloadManager.shared.isDonwloadInProgress(episode) {
+            alertController.addAction(UIAlertAction(title: "Pause download", style: .default, handler: { (_) in
+                EpisodeDownloadManager.shared.pauseDownload(episode)
+            }))
+        }
+    }
+    
+    fileprivate func retryDownload(_ episode: Episode, _ alertController: UIAlertController) {
+        if !EpisodeDownloadManager.shared.isDonwloadInProgress(episode) {
+            alertController.addAction(UIAlertAction(title: "Download again", style: .default, handler: { (_) in
+                EpisodeDownloadManager.shared.cancelDownload(episode)
+                try? EpisodeDownloadManager.shared.download(episode)
+            }))
+        }
+    }
+    
+    fileprivate func cancelDownload(_ episode: Episode, _ alertController: UIAlertController) {
+        if EpisodeDownloadManager.shared.isDonwloadInProgress(episode) {
+            alertController.addAction(UIAlertAction(title: "Cancel download", style: .default, handler: { (_) in
+                EpisodeDownloadManager.shared.cancelDownload(episode)
+            }))
+        }
     }
 }

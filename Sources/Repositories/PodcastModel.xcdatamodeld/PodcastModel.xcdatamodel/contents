@@ -7,7 +7,7 @@
         <attribute name="episodeImage" optional="YES" attributeType="Binary" allowsExternalBinaryDataStorage="YES" syncable="YES"/>
         <attribute name="episodeImageUrl" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="episodeMediaUrl" attributeType="String" syncable="YES"/>
-        <attribute name="episodePubDate" attributeType="String" syncable="YES"/>
+        <attribute name="episodePubDate" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
         <attribute name="episodeSummary" attributeType="String" syncable="YES"/>
         <attribute name="episodeTitle" attributeType="String" syncable="YES"/>
     </entity>

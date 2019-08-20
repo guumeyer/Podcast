@@ -16,7 +16,7 @@ final class LocalDownloadEpisodesRepository: NSObject, DownloadEpisodesRepositor
     
     private lazy var fetchedResultsController: NSFetchedResultsController<DownloadEpisodes> = {
         let fetchRequest:NSFetchRequest<DownloadEpisodes> = DownloadEpisodes.fetchRequest()
-        let sortDescriptor = NSSortDescriptor(key: "episodeTitle", ascending: false)
+        let sortDescriptor = NSSortDescriptor(key: "episodePubDate", ascending: false)
         fetchRequest.sortDescriptors = [sortDescriptor]
         
         let controller = NSFetchedResultsController(
@@ -58,6 +58,10 @@ final class LocalDownloadEpisodesRepository: NSObject, DownloadEpisodesRepositor
     
     func objectIndex(by id: String) -> Int? {
         return fetchedResultsController.fetchedObjects?.firstIndex(where: {$0.id == id})
+    }
+    
+    func object(by id: String) -> Episode? {
+        return fetchedResultsController.fetchedObjects?.first(where: {$0.id == id})
     }
     
     func remove(at indexPath: IndexPath) {

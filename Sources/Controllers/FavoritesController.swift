@@ -97,7 +97,6 @@ final class FavoritesController: UICollectionViewController, UICollectionViewDel
         alertView.addAction(UIAlertAction(title: "Cancel", style: .cancel))
         
         present(alertView, animated: true)
-        
     }
     
     private func calculateCellWidth(_ viewWidth: Float, space: Float, numberOfColumns: Int) -> CGFloat {

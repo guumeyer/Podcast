@@ -119,7 +119,7 @@ extension FeedEpisodesXmlParser: XMLParserDelegate {
                                   title: currentTitle,
                                   summary: currentSummary,
                                   description: currentDescription,
-                                  pubDate: currentPubDate,
+                                  pubDate:  Date(string: currentPubDate, formatter: .rfc822Formatter) ?? Date(),
                                   mediaUrl: currentMediaUrl,
                                   imageUrl: currentImage.isEmpty ? nil : currentImage
             )

@@ -20,7 +20,7 @@ final class EpisodeDownload {
     /// The episode to download. The episode's url property also acts as a unique identifier for Download.
     var episode: Episode
     
-    init(episode: Episode) {
+    init(_ episode: Episode) {
         self.episode = episode
     }
 }

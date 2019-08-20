@@ -22,7 +22,7 @@ final class LocalFileRepository: FileRepository {
         }
     }
     
-    private static func removeItem(at destinationURL: URL) {
+    static func removeItem(at destinationURL: URL) {
         do {
             try FileManager.default.removeItem(at: destinationURL)
         } catch let error {

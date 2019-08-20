@@ -70,4 +70,3 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         URLCache.shared = cache
     }
 }
-

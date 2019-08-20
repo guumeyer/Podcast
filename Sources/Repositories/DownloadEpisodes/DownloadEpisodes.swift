@@ -27,8 +27,8 @@ extension DownloadEpisodes: Episode {
         return self.episodeSummary ?? ""
     }
     
-    var pubDate: String {
-        return self.episodePubDate ?? ""
+    var pubDate: Date {
+        return self.episodePubDate ?? Date()
     }
     
     var mediaUrl: String {

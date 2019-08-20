@@ -37,4 +37,17 @@ protocol HTTPDownloadClient {
     func download(with url: URL,
                   progressCompletion: ProgressCompletionHandlerType?,
                   downloadFinishedCompletion: DownloadFinishedHandlerType?) -> URLSessionDownloadTask
+    
+    
+    /// Continues the donwload.
+    ///
+    /// - Parameters:
+    ///   - withResumeData: the data from previews download.
+    ///   - progressCompletion: the `ProgressCompletionHandlerType`.
+    ///   - downloadFinishedCompletion: the `DownloadFinishedHandlerType`.
+    /// - Returns: an `URLSessionDownloadTask`.
+    @discardableResult
+    func download(withResumeData: Data,
+                  progressCompletion: ProgressCompletionHandlerType?,
+                  downloadFinishedCompletion: DownloadFinishedHandlerType?) -> URLSessionDownloadTask
 }

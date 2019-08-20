@@ -21,7 +21,7 @@ protocol Episode {
     /// The episode decription
     var description: String { get }
     /// The publication date
-    var pubDate: String { get }
+    var pubDate: Date { get }
     /// The media URL
     var mediaUrl: String { get }
     /// The episode image URL

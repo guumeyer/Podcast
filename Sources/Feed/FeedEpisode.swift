@@ -13,7 +13,7 @@ final class FeedEpisode: Episode {
     var title: String
     var summary: String
     var description: String
-    var pubDate: String
+    var pubDate: Date
     var mediaUrl: String
     var imageUrl: String?
     var imageData: Data?
@@ -23,7 +23,7 @@ final class FeedEpisode: Episode {
          title: String,
          summary: String,
          description: String,
-         pubDate: String,
+         pubDate: Date,
          mediaUrl: String,
          imageUrl: String? = nil,
          imageData: Data? = nil) {
