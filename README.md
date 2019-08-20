@@ -33,7 +33,7 @@ The app has a main tab bar with four view controller and shared player view will
 	• The search podcasts - allows the user to search the podcast and navigation on episodes. 
 	• The episodes feed - allows the user see all podcast’s episodes, add the episode in the favorites, play the episode by streaming and download the episode.
 	• The download manager - allows the user to play the podcast offline and manager the download.
-	• The share player view - allows the user to control audio player. 
+	• The share player view - allows the user to control audio player. The audio player allows user to use the control remote 
 
 ### The favorite podcasts
 
@@ -53,6 +53,7 @@ The app has a main tab bar with four view controller and shared player view will
 	• Core Data to persistent the favorites podcasts and episodes download
 	• The podcast files are storing in the local file system.
 	• The navigation are composed by a main tab bar and three navigation bar for the Favorites, The Search and The Downloads scenes.
+	• Audio Remote control by iOS remote control when the app is in background mode, by Apple watch and Car play.
   
   ## Authors
 * **Gustavo Meyer** - *Initial work* - [Git](https://github.com/guumeyer)
