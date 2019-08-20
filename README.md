@@ -6,7 +6,9 @@ The MeyerPodcast is a podcast player, the user can search for a podcast and play
 What things you need to install the software and how to install them
 
 Xcode 10.2+
+
 Swift 5.0
+
 iOS 10.0+
 
 ### Installing
