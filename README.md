@@ -53,4 +53,4 @@ The app has a main tab bar with four view controller and shared player view will
 	• The navigation are composed by a main tab bar and three navigation bar for the Favorites, The Search and The Downloads scenes.
   
   ## Authors
-* **Gustavo Meyer** - *Initial work* - [PurpleBooth](https://github.com/guumeyer)
+* **Gustavo Meyer** - *Initial work* - [Git](https://github.com/guumeyer)
