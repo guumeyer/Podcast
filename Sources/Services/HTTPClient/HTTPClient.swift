@@ -19,16 +19,16 @@ public enum HTTPClientResult {
 
 public enum HTTPClientError: LocalizedError {
     case connectivity
-    case studentLocationConnectivity
     case httpError(Error)
     case invalidData
+    case invalidUrl
 
     public var errorDescription: String? {
         switch self {
         case .connectivity:
             return "The internet connection appears to be offline."
-        case .studentLocationConnectivity:
-            return "There was an error retrieving student data."
+        case .invalidUrl:
+            return "Invalid URL."
         case .httpError(let error) :
             return error.localizedDescription
         case .invalidData:

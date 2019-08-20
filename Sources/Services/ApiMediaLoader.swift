@@ -9,6 +9,6 @@
 import Foundation
 
 protocol ApiMediaLoader {
-    func featchMedias(searchText: String, completion: @escaping (Result<[Podcast], HTTPClientError>) -> Void )
+    func featchMedias(searchText: String, completion: @escaping (Result<[Podcast], Error>) -> Void )
     func featchEpisodes(for podcast: Podcast, completion: @escaping EpisodesFeedHandler)
 }

@@ -17,7 +17,7 @@ final class ItunesApiService: ApiMediaLoader {
         self.httpClient = httpClient
     }
 
-    func featchMedias(searchText: String, completion: @escaping (Result<[Podcast], HTTPClientError>) -> Void ) {
+    func featchMedias(searchText: String, completion: @escaping (Result<[Podcast], Error>) -> Void ) {
         featchMediasDataTask?.cancel()
         let term = searchText.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed) ?? ""
         let url = URL(string: "\(baseUrl)/search?term=\(term)&media=podcast")!
@@ -26,28 +26,24 @@ final class ItunesApiService: ApiMediaLoader {
         featchMediasDataTask = httpClient?.makeRequest(from: urlRequest) { (result) in
             switch result {
             case .success(let data, _):
-                if let searchRResults = try? JSONDecoder().decode(ItunesSearchResults.self, from: data) {
-                    
-                    completion(.success(searchRResults.results.filter({
+                if let searchResults = try? JSONDecoder().decode(ItunesSearchResults.self, from: data) {
+                    let resultWithFeedURL = searchResults.results.filter({
                         guard let feedUrl = $0.feedUrl else { return false }
                         return !feedUrl.isEmpty
-                    })))
+                    })
+                    completion(.success(resultWithFeedURL))
+                    return
                 }
-                print("featchMedias: success")
+                completion(.failure(HTTPClientError.invalidData))
             case .failure(let error):
-                print("featchMedias: ", error.localizedDescription)
+                completion(.failure(error))
             }
         }
     }
 
     func featchEpisodes(for podcast: Podcast, completion: @escaping EpisodesFeedHandler) {
-        guard let urlString = podcast.feedUrl else {
-            //TODO add completion .failure
-            return
-        }
-        //.toSecureHTTPS()
-        guard let url = URL(string: urlString) else {
-            //TODO add completion .failure
+        guard let urlString = podcast.feedUrl, let url = URL(string: urlString) else {
+            completion(.failure(HTTPClientError.invalidUrl))
             return
         }
         
@@ -56,10 +52,7 @@ final class ItunesApiService: ApiMediaLoader {
             case .success(let data, _):
                 let episodeParser = FeedEpisodesXmlParser()
                 episodeParser.parse(data: data, completionHandler: completion)
-                //TODO add completion .failure
-                print("featchMedias: success")
             case .failure(let error):
-                print("featchMedias: ", error.localizedDescription)
                 completion(.failure(error))
             }
         }

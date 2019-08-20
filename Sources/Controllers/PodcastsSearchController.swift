@@ -9,7 +9,6 @@
 import UIKit
 
 final class PodcastsSearchController: UITableViewController {
-
     private var podcasts: [Podcast] = []
     private var apiMediaLoader = ApiService.shared.apiMediaLoader
     private let searchController = UISearchController(searchResultsController: nil)
@@ -62,7 +61,6 @@ extension PodcastsSearchController {
         label.font = UIFont.systemFont(ofSize: 18, weight: .semibold)
         return label
     }
-
     
     override func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         return self.podcasts.isEmpty && searchController.searchBar.text?.isEmpty == true ? 250 : 0
@@ -91,10 +89,6 @@ extension PodcastsSearchController {
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: PodcastTableViewCell.identifier, for: indexPath)
-//
-//        guard let podcastCell = cell as? PodcastTableViewCell else { return cell }
-//
-//        podcastCell.podcast = podcasts[indexPath.row]
         return cell
     }
 
@@ -109,22 +103,23 @@ extension PodcastsSearchController: UISearchBarDelegate {
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         podcasts = []
         tableView.reloadData()
-
         searchTimer?.invalidate()
-        searchTimer = Timer.scheduledTimer(withTimeInterval: 0.5, repeats: false) { (_) in
-            self.apiMediaLoader.featchMedias(searchText: searchText,
-                                             completion: self.featchMediasHandler())
+        searchTimer = Timer.scheduledTimer(withTimeInterval: 0.5, repeats: false) { [weak self] (_) in
+            guard let strongSelf = self else { return }
+            strongSelf.apiMediaLoader.featchMedias(
+                searchText: searchText,
+                completion: strongSelf.featchMediasHandler())
         }
     }
 
-    func featchMediasHandler() -> (Result<[Podcast], HTTPClientError>) -> Void {
+    func featchMediasHandler() -> (Result<[Podcast], Error>) -> Void {
         return { [weak self] (result) in
             guard let strongSelf = self else { return }
 
             switch result {
             case .failure(let error):
-                print(error.localizedDescription)
                 DispatchQueue.main.async {
+                    self?.showAlert(message: error.localizedDescription)
                     self?.tableView.reloadData()
                 }
             case .success( let medias):
