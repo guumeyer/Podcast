@@ -30,35 +30,24 @@
                             <rect key="frame" x="8" y="8" width="398" height="48"/>
                             <subviews>
                                 <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="placeholder" translatesAutoresizingMaskIntoConstraints="NO" id="ris-DH-u3E" customClass="UIURLImageView" customModule="Podcast" customModuleProvider="target">
-                                    <rect key="frame" x="0.0" y="0.0" width="64" height="48"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="48" height="48"/>
                                     <constraints>
                                         <constraint firstAttribute="width" constant="48" id="ees-G2-JWp"/>
                                     </constraints>
                                 </imageView>
-                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1DJ-0g-Upb" userLabel="Episode Title">
-                                    <rect key="frame" x="72" y="0.0" width="37.333333333333343" height="48"/>
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1DJ-0g-Upb" userLabel="Episode Title">
+                                    <rect key="frame" x="55.999999999999993" y="0.0" width="127.33333333333331" height="48"/>
                                     <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                     <nil key="textColor"/>
                                     <nil key="highlightedColor"/>
                                 </label>
                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vJP-Qb-e0A" userLabel="PlayPause">
-                                    <rect key="frame" x="117.33333333333333" y="0.0" width="224.66666666666669" height="48"/>
+                                    <rect key="frame" x="191.33333333333337" y="0.0" width="206.66666666666663" height="48"/>
                                     <constraints>
                                         <constraint firstAttribute="width" constant="48" id="Cya-rn-czL"/>
                                     </constraints>
                                     <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     <state key="normal" image="pause"/>
-                                </button>
-                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="yz3-vT-OPk" userLabel="FastForward">
-                                    <rect key="frame" x="350" y="0.0" width="48" height="48"/>
-                                    <constraints>
-                                        <constraint firstAttribute="width" constant="48" id="Ova-U7-o25"/>
-                                    </constraints>
-                                    <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                    <state key="normal" image="fastforward15"/>
-                                    <connections>
-                                        <action selector="handleFastFoward:" destination="0LY-vd-FWp" eventType="touchUpInside" id="4PE-fT-386"/>
-                                    </connections>
                                 </button>
                             </subviews>
                             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -146,11 +135,11 @@
                         <stackView opaque="NO" contentMode="scaleToFill" distribution="equalCentering" translatesAutoresizingMaskIntoConstraints="NO" id="Tkc-qA-vxs">
                             <rect key="frame" x="0.0" y="570" width="366" height="185"/>
                             <subviews>
-                                <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="zQI-sn-hoJ">
+                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="zQI-sn-hoJ">
                                     <rect key="frame" x="0.0" y="0.0" width="52.333333333333336" height="185"/>
                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 </view>
-                                <button opaque="NO" contentMode="scaleAspectFit" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2u5-Iv-18l" userLabel="rewind">
+                                <button opaque="NO" contentMode="scaleAspectFit" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2u5-Iv-18l" userLabel="rewind">
                                     <rect key="frame" x="55.666666666666671" y="0.0" width="45.666666666666671" height="185"/>
                                     <constraints>
                                         <constraint firstAttribute="width" constant="46" id="hhZ-Oh-2Ld"/>
@@ -166,12 +155,12 @@
                                         <action selector="handleRewind:" destination="0LY-vd-FWp" eventType="touchUpInside" id="3vv-lS-1SJ"/>
                                     </connections>
                                 </button>
-                                <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="T94-Ya-yua">
-                                    <rect key="frame" x="104.33333333333333" y="0.0" width="52.333333333333329" height="185"/>
+                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="T94-Ya-yua">
+                                    <rect key="frame" x="104.66666666666664" y="0.0" width="52.333333333333329" height="185"/>
                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 </view>
-                                <button opaque="NO" contentMode="scaleAspectFit" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2eV-72-zcs" userLabel="Play">
-                                    <rect key="frame" x="156.66666666666666" y="0.0" width="59" height="185"/>
+                                <button opaque="NO" contentMode="scaleAspectFit" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2eV-72-zcs" userLabel="Play">
+                                    <rect key="frame" x="168" y="0.0" width="30" height="185"/>
                                     <constraints>
                                         <constraint firstAttribute="width" constant="54" id="EB4-wV-sE8"/>
                                     </constraints>
@@ -183,12 +172,12 @@
                                         </userDefinedRuntimeAttribute>
                                     </userDefinedRuntimeAttributes>
                                 </button>
-                                <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="2cK-Ey-quz">
-                                    <rect key="frame" x="215.66666666666666" y="0.0" width="52.333333333333343" height="185"/>
+                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="2cK-Ey-quz">
+                                    <rect key="frame" x="209" y="0.0" width="52.333333333333314" height="185"/>
                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 </view>
-                                <button opaque="NO" contentMode="scaleAspectFit" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="HHB-Et-Cav" userLabel="Forward">
-                                    <rect key="frame" x="268" y="0.0" width="45.666666666666686" height="185"/>
+                                <button opaque="NO" contentMode="scaleAspectFit" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="HHB-Et-Cav" userLabel="Forward">
+                                    <rect key="frame" x="264.66666666666669" y="0.0" width="45.666666666666686" height="185"/>
                                     <constraints>
                                         <constraint firstAttribute="width" constant="46" id="LKQ-a0-PA3"/>
                                     </constraints>
@@ -203,7 +192,7 @@
                                         <action selector="handleFastFoward:" destination="0LY-vd-FWp" eventType="touchUpInside" id="9fG-ZS-38r"/>
                                     </connections>
                                 </button>
-                                <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="pds-AF-5ox">
+                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="pds-AF-5ox">
                                     <rect key="frame" x="313.66666666666669" y="0.0" width="52.333333333333314" height="185"/>
                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 </view>
@@ -219,13 +208,13 @@
                                     </constraints>
                                 </imageView>
                                 <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="1" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="yK5-qT-Fdt">
-                                    <rect key="frame" x="32" y="0.0" width="303.66666666666669" height="35"/>
+                                    <rect key="frame" x="32" y="0.0" width="318" height="35"/>
                                     <connections>
                                         <action selector="handleVolumeChanges:" destination="0LY-vd-FWp" eventType="valueChanged" id="zmP-bJ-U95"/>
                                     </connections>
                                 </slider>
                                 <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="max_volume" translatesAutoresizingMaskIntoConstraints="NO" id="5X3-YL-6W1">
-                                    <rect key="frame" x="333.66666666666669" y="0.0" width="32.333333333333314" height="34"/>
+                                    <rect key="frame" x="348" y="0.0" width="18" height="34"/>
                                     <constraints>
                                         <constraint firstAttribute="width" constant="34" id="hWB-TZ-Gnh"/>
                                     </constraints>
@@ -257,7 +246,6 @@
                 <outlet property="episodeImageView" destination="N3i-eL-eUE" id="54m-gn-lYE"/>
                 <outlet property="maximazePlayer" destination="XYS-st-XPI" id="Ecp-5W-2gQ"/>
                 <outlet property="miniEpisodeImageView" destination="ris-DH-u3E" id="a9q-WR-U7x"/>
-                <outlet property="miniFastForwardButton" destination="yz3-vT-OPk" id="D6e-W3-APP"/>
                 <outlet property="miniPlayPauseButton" destination="vJP-Qb-e0A" id="R3V-AM-kVY"/>
                 <outlet property="miniPlayerView" destination="pD9-Wr-XhU" id="Ifu-Fy-QXK"/>
                 <outlet property="miniTitleLabel" destination="1DJ-0g-Upb" id="Fmi-c8-WCW"/>
@@ -269,11 +257,11 @@
     </objects>
     <resources>
         <image name="fastforward15" width="45.5" height="45.5"/>
-        <image name="max_volume" width="32.5" height="32.5"/>
-        <image name="muted_volume" width="32.5" height="32.5"/>
-        <image name="pause" width="57" height="57"/>
+        <image name="max_volume" width="30" height="30"/>
+        <image name="muted_volume" width="30" height="30"/>
+        <image name="pause" width="30" height="30"/>
         <image name="placeholder" width="64" height="64"/>
-        <image name="play" width="59" height="59"/>
+        <image name="play" width="30" height="30"/>
         <image name="rewind15" width="45.5" height="45.5"/>
     </resources>
 </document>

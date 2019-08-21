@@ -66,7 +66,6 @@ extension PodcastsSearchController {
         return self.podcasts.isEmpty && searchController.searchBar.text?.isEmpty == true ? 250 : 0
     }
 
-
     override func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
         return podcastSearchView
     }
@@ -99,7 +98,6 @@ extension PodcastsSearchController {
 
 // MARK: - UISearchBarDelegate
 extension PodcastsSearchController: UISearchBarDelegate {
-
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         podcasts = []
         tableView.reloadData()

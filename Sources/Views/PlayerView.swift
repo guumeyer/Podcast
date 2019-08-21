@@ -64,7 +64,6 @@ final class PlayerView: UIView {
             miniPlayPauseButton.addTarget(self, action: #selector(handlePlayAndPause), for: .touchUpInside)
         }
     }
-    @IBOutlet weak var miniFastForwardButton: UIButton!
     
     // MARK: - Maximize Player IBOutlet
     @IBOutlet weak var maximazePlayer: UIStackView!
@@ -87,7 +86,7 @@ final class PlayerView: UIView {
     }
     @IBOutlet weak var playAndPauseButton: UIButton! {
         didSet {
-            playAndPauseButton.setImage(UIImage(named: "pause"), for: .normal)
+            playAndPauseButton.setImage(UIImage(named: "pauseBig"), for: .normal)
             playAndPauseButton.addTarget(self, action: #selector(handlePlayAndPause), for: .touchUpInside)
         }
     }
@@ -434,7 +433,7 @@ extension PlayerView {
     
     
     private func handlePlayAction() {
-        playAndPauseButton.setImage(UIImage(named: "pause"), for: .normal)
+        playAndPauseButton.setImage(UIImage(named: "pauseBig"), for: .normal)
         miniPlayPauseButton.setImage(UIImage(named: "pause"), for: .normal)
         player.play()
         enlargeEpisodeImageViewAnimation()
@@ -448,7 +447,7 @@ extension PlayerView {
     }
     
     private func handlePauseUiAction() {
-        playAndPauseButton.setImage(UIImage(named: "play"), for: .normal)
+        playAndPauseButton.setImage(UIImage(named: "playBig"), for: .normal)
         miniPlayPauseButton.setImage(UIImage(named: "play"), for: .normal)
         scaleEpisodeImageView()
     }
