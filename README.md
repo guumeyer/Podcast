@@ -5,9 +5,9 @@ The MeyerPodcast is a podcast player, the user can search for a podcast and play
 
 What things you need to install the software and how to install them
 
-Xcode 10.2+
+Xcode 10.1+
 
-Swift 5.0
+Swift 4.2+
 
 iOS 10.0+
 
@@ -52,7 +52,7 @@ When the user select an episode the player view will play the episode by stream.
 ### The download manager
 The user can access the download view by download item in the tab bar.  The download will displayed all offline episodes and during the download  the use can see the progress of the download. During the episode download  if the user select the episode the app will display some option like “Play by stream URL, Pause download, Cancel download and Resume Download”.  After the episode download finished the user can play the audio offline.
 
-### The share player view
+### The player view
 In the player view user can control the audio in the  App or from the iOS Remote control from the Apple Watch or Car play.  
 
 ## Technical features:
