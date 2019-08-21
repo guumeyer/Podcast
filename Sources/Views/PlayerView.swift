@@ -150,7 +150,7 @@ final class PlayerView: UIView {
 extension PlayerView {
     private func setupSessionAudio() {
         do {
-            try AVAudioSession.sharedInstance().setCategory(.playback)
+            try AVAudioSession.sharedInstance().setCategory(.playback, mode: .default)
             try AVAudioSession.sharedInstance().setActive(true)
         } catch let error {
             print("Failed to activate session audio: ", error)
