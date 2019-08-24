@@ -9,7 +9,7 @@ Xcode 10.2+
 
 Swift 5+
 
-iOS 10.0+
+iOS 11.0+
 
 ### Installing
 
