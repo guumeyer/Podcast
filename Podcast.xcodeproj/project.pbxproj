@@ -374,6 +374,7 @@
 				TargetAttributes = {
 					DBDE162122D78D7700BD646F = {
 						CreatedOnToolsVersion = 10.2.1;
+						LastSwiftMigration = 1030;
 						SystemCapabilities = {
 							com.apple.BackgroundModes = {
 								enabled = 1;
@@ -645,7 +646,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.meyer.ios.Podcast;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 4.2;
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
@@ -664,7 +665,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.meyer.ios.Podcast;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 4.2;
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
