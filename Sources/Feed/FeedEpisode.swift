@@ -18,7 +18,7 @@ final class FeedEpisode: Episode {
     var imageUrl: String?
     var imageData: Data?
     var fileUrl: URL?
-    
+
     init(author: String,
          title: String,
          summary: String,
@@ -27,7 +27,6 @@ final class FeedEpisode: Episode {
          mediaUrl: String,
          imageUrl: String? = nil,
          imageData: Data? = nil) {
-        
         self.author = author
         self.title = title
         self.summary = summary
@@ -37,19 +36,19 @@ final class FeedEpisode: Episode {
         self.imageUrl = imageUrl
         self.imageData = imageData
     }
-    
+
     func setImage(data: Data) {
         imageData = data
     }
-    
+
     func getImage() -> Data? {
         return imageData
     }
-    
+
     func setFileUrl(url: URL?) {
         fileUrl = url
     }
-    
+
     func getFileUrl() -> URL? {
         return fileUrl
     }

@@ -35,6 +35,7 @@ final class ItunesApiService: ApiMediaLoader {
                     return
                 }
                 completion(.failure(HTTPClientError.invalidData))
+
             case .failure(let error):
                 completion(.failure(error))
             }
@@ -46,12 +47,13 @@ final class ItunesApiService: ApiMediaLoader {
             completion(.failure(HTTPClientError.invalidUrl))
             return
         }
-        
+
         httpClient?.makeRequest(from: URLRequest(url: url)) { (result) in
             switch result {
             case .success(let data, _):
                 let episodeParser = FeedEpisodesXmlParser()
                 episodeParser.parse(data: data, completionHandler: completion)
+
             case .failure(let error):
                 completion(.failure(error))
             }

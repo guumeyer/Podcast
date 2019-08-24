@@ -15,7 +15,7 @@ final class URLSessionHTTPClient: HTTPClient {
     init(session: URLSession = .shared) {
         self.session = session
     }
-    
+
     @discardableResult
     func makeRequest(from urlResquest: URLRequest, completion: @escaping (HTTPClientResult) -> Void)
         -> URLSessionDataTask {
@@ -31,5 +31,4 @@ final class URLSessionHTTPClient: HTTPClient {
         dataTask.resume()
         return dataTask
     }
-
 }

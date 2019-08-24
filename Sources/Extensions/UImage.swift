@@ -9,7 +9,6 @@
 import UIKit
 
 extension UIImage {
-
     /// Creates an image based on the parameters
     ///
     /// - Parameters:

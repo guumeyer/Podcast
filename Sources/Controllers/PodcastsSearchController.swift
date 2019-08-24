@@ -12,7 +12,8 @@ final class PodcastsSearchController: UITableViewController {
     private var podcasts: [Podcast] = []
     private var apiMediaLoader = ApiService.shared.apiMediaLoader
     private let searchController = UISearchController(searchResultsController: nil)
-    private var podcastSearchView = Bundle.main.loadNibNamed("MediaSearchingView", owner: self, options: nil)?.first as? UIView
+    private var podcastSearchView = Bundle.main
+        .loadNibNamed("MediaSearchingView", owner: self, options: nil)?.first as? UIView
     private var searchTimer: Timer?
 
     deinit {
@@ -40,7 +41,7 @@ final class PodcastsSearchController: UITableViewController {
     }
 
     private func setupTableView() {
-        tableView.register(UINib(nibName: String(describing:PodcastTableViewCell.self), bundle: nil),
+        tableView.register(UINib(nibName: String(describing: PodcastTableViewCell.self), bundle: nil),
                            forCellReuseIdentifier: PodcastTableViewCell.identifier)
         tableView.reloadData()
         tableView.tableFooterView = UIView()
@@ -49,7 +50,6 @@ final class PodcastsSearchController: UITableViewController {
 
 // MARK: - UITableView Delegate and DataSource
 extension PodcastsSearchController {
-    
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return podcasts.count
     }
@@ -61,7 +61,7 @@ extension PodcastsSearchController {
         label.font = UIFont.systemFont(ofSize: 18, weight: .semibold)
         return label
     }
-    
+
     override func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         return self.podcasts.isEmpty && searchController.searchBar.text?.isEmpty == true ? 250 : 0
     }
@@ -80,12 +80,14 @@ extension PodcastsSearchController {
         episodesController.displayAddFavorite = true
         navigationController?.pushViewController(episodesController, animated: true)
     }
-    
-    override func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+
+    override func tableView(_ tableView: UITableView,
+                            willDisplay cell: UITableViewCell,
+                            forRowAt indexPath: IndexPath) {
         guard let podcastCell = cell as? PodcastTableViewCell else { return }
         podcastCell.podcast = podcasts[indexPath.row]
     }
-    
+
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: PodcastTableViewCell.identifier, for: indexPath)
         return cell
@@ -120,6 +122,7 @@ extension PodcastsSearchController: UISearchBarDelegate {
                     self?.showAlert(message: error.localizedDescription)
                     self?.tableView.reloadData()
                 }
+
             case .success( let medias):
                 strongSelf.podcasts = medias
                 DispatchQueue.main.async {

@@ -9,8 +9,14 @@
 import UIKit
 
 extension UIImageView {
+    /// Animates to set `image` property
+    ///
+    /// - Parameter image: the `UIImage`.
     public func transition(toImage image: UIImage?) {
-        UIView.transition(with: self, duration: 0.3, options: [.transitionCrossDissolve], animations: {
+        UIView.transition(with: self,
+                          duration: 0.3,
+                          options: [.transitionCrossDissolve],
+                          animations: {
             self.image = image
         }, completion: nil)
     }

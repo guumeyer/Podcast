@@ -9,6 +9,6 @@
 import UIKit
 
 extension Notification.Name {
-    static let episodeDownloadProgress = NSNotification.Name("episodeDownloadProgress");
-    static let episodeDownloadComplete = NSNotification.Name("episodeDownloadComplete");
+    static let episodeDownloadProgress = NSNotification.Name("episodeDownloadProgress")
+    static let episodeDownloadComplete = NSNotification.Name("episodeDownloadComplete")
 }

@@ -17,7 +17,7 @@ final class UIURLImageView: UIImageView {
     /// Loads image based on the url web or local cache
     ///
     /// - Parameter url: the image URL
-    func load(url: String, completion: ((UIImage?) -> Void)? = nil)  {
+    func load(url: String, completion: ((UIImage?) -> Void)? = nil) {
         image = nil
         self.url = url
         guard let imageUrl = URL(string: url) else {
@@ -34,6 +34,7 @@ final class UIURLImageView: UIImageView {
                         strongSelf.transition(toImage: image)
                     }
                 }
+
             case .failure(let error):
                 DispatchQueue.main.async {
                     completion?(UIURLImageView.placeHolderImage)

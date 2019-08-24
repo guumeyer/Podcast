@@ -13,7 +13,9 @@ import Foundation
 /// - success: The sucess HTTP
 /// - failure: The failure HTTP
 public enum HTTPClientResult {
+    /// The sucess HTTP
     case success(Data, HTTPURLResponse)
+    /// The failure HTTP
     case failure(Error)
 }
 
@@ -26,20 +28,22 @@ public enum HTTPClientError: LocalizedError {
     public var errorDescription: String? {
         switch self {
         case .connectivity:
-            return "The internet connection appears to be offline."
+            return "HTTPClientError.connectivity".localized()
+
         case .invalidUrl:
-            return "Invalid URL."
+            return "HTTPClientError.invalidUrl".localized()
+
         case .httpError(let error) :
             return error.localizedDescription
+
         case .invalidData:
-            return "Invalid data"
+            return "HTTPClientError.invalidData".localized()
         }
     }
 }
 
 /// A protocol to make HTTP Request
 protocol HTTPClient {
-
     /// Makes a HTTP GET request
     ///
     /// - Parameters:

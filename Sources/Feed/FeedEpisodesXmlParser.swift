@@ -62,17 +62,15 @@ final class FeedEpisodesXmlParser: NSObject {
         parser.delegate = self
         parser.parse()
     }
-
 }
 
 // MARK: - XML Parser Delegate
 extension FeedEpisodesXmlParser: XMLParserDelegate {
-    
     func parser(_ parser: XMLParser,
                 didStartElement elementName: String,
                 namespaceURI: String?,
                 qualifiedName qName: String?,
-                attributes attributeDict: [String : String] = [:]) {
+                attributes attributeDict: [String: String] = [:]) {
         currentElement = elementName
         if currentElement == "item" {
             currentTitle = ""
@@ -82,7 +80,7 @@ extension FeedEpisodesXmlParser: XMLParserDelegate {
             currentSummary = ""
             currentImage = ""
         }
-        
+
         switch elementName {
         case "enclosure" :
             if attributeDict["type"] == "audio/mpeg", let mediaUrl = attributeDict["url"] {
@@ -97,8 +95,8 @@ extension FeedEpisodesXmlParser: XMLParserDelegate {
         default: break
         }
     }
-    
-    func parser(_ parser: XMLParser, foundCharacters string: String)   {
+
+    func parser(_ parser: XMLParser, foundCharacters string: String) {
         switch currentElement {
         case "itunes:author": currentAuthor += string
         case "title": currentTitle += string
@@ -109,29 +107,28 @@ extension FeedEpisodesXmlParser: XMLParserDelegate {
         default: break
         }
     }
-    
+
     func parser(_ parser: XMLParser,
                 didEndElement elementName: String,
                 namespaceURI: String?,
                 qualifiedName qName: String?) {
         if elementName == "item" {
             let rssItem = FeedEpisode(author: currentAuthor,
-                                  title: currentTitle,
-                                  summary: currentSummary,
-                                  description: currentDescription,
-                                  pubDate:  Date(string: currentPubDate, formatter: .rfc822Formatter) ?? Date(),
-                                  mediaUrl: currentMediaUrl,
-                                  imageUrl: currentImage.isEmpty ? nil : currentImage
+                                      title: currentTitle,
+                                      summary: currentSummary,
+                                      description: currentDescription,
+                                      pubDate: Date(string: currentPubDate, formatter: .rfc822Formatter) ?? Date(),
+                                      mediaUrl: currentMediaUrl,
+                                      imageUrl: currentImage.isEmpty ? nil : currentImage
             )
             episodes.append(rssItem)
         }
     }
-    
+
     func parserDidEndDocument(_ parser: XMLParser) {
         parserCompletionHandler?(.success(episodes))
     }
-    
-    
+
     func parser(_ parser: XMLParser, parseErrorOccurred parseError: Error) {
         parserCompletionHandler?(.failure(parseError))
     }

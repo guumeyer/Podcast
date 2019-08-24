@@ -13,8 +13,12 @@ struct ImageCache: Hashable {
     let image: UIImage
 }
 
-final class ImageCacheService {
+enum ImageCacheServiceError: LocalizedError {
+    case httpError(Error)
+    case invalidData(Int)
+}
 
+final class ImageCacheService {
     static let shared = ImageCacheService()
 
     private var cache: URLCache {
@@ -30,10 +34,10 @@ final class ImageCacheService {
         DispatchQueue.global(qos: .userInitiated).async {
             guard let data = self.cache.cachedResponse(for: request)?.data,
                 let imageFromCache = UIImage(data: data)  else {
-                print("Image from web")
+                    print("Image from web")
                     self.downloadImage(request, completion)
                     return
-            }   
+            }
             print("Image from cache")
             completion(.success(imageFromCache))
         }
@@ -44,18 +48,17 @@ final class ImageCacheService {
         httpClient.makeRequest(from: request) { (result) in
             switch result {
             case .failure(let error):
-                print(error.localizedDescription)
-            case .success(let data, let response):
-                if  (200 ..< 300).contains(response.statusCode), let image = UIImage(data: data)  {
+                 completion(.failure(ImageCacheServiceError.httpError(error)))
+
+            case let .success( data, response):
+                if  (200 ..< 300).contains(response.statusCode), let image = UIImage(data: data) {
                     let cachedData = CachedURLResponse(response: response, data: data)
                     self.cache.storeCachedResponse(cachedData, for: request)
                     completion(.success(image))
                 } else {
-                    //TODO add error handler
-                    print("Image : ", response.statusCode)
+                    completion(.failure(ImageCacheServiceError.invalidData(response.statusCode)))
                 }
             }
         }
     }
-
 }

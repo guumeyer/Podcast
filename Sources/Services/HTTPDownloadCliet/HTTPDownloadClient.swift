@@ -24,7 +24,6 @@ typealias ProgressCompletionHandlerType = (_ url: URL, _ progress: Float, _ tota
 ///   - location: The temporary download location
 typealias DownloadFinishedHandlerType = (_ sourceUrl: URL, _ location: URL) -> Void
 
-
 protocol HTTPDownloadClient {
     /// Downloads the url.
     ///
@@ -37,8 +36,7 @@ protocol HTTPDownloadClient {
     func download(with url: URL,
                   progressCompletion: ProgressCompletionHandlerType?,
                   downloadFinishedCompletion: DownloadFinishedHandlerType?) -> URLSessionDownloadTask
-    
-    
+
     /// Continues the donwload.
     ///
     /// - Parameters:

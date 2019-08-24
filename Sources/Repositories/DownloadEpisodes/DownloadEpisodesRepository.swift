@@ -9,39 +9,38 @@
 import Foundation
 
 protocol DownloadEpisodesRepository {
-    
     /// The number of sections
     var numberOfSections: Int { get }
-    
+
     /// Returns a number of objects by section
     ///
     /// - Parameter section: the selected section
     /// - Returns: the amount of objects present in the section
     func numberOfObjects(by section: Int) -> Int
-    
+
     /// Gets the Episode by index.
     ///
     /// - Parameter indexPath: the selected index path
     /// - Returns: a podcast.
     func object(at indexPath: IndexPath) -> Episode
-    
+
     /// Finds the object index
     ///
-    /// - Parameter id: the episode id
+    /// - Parameter code: the episode id
     /// - Returns: an index or nil
-    func objectIndex(by id: String) -> Int?
-    
+    func objectIndex(by code: String) -> Int?
+
     /// Finds the object index
     ///
     /// - Parameter id: the episode id
     /// - Returns: an Episode or nil
-    func object(by id: String) -> Episode?
-    
+    func object(by code: String) -> Episode?
+
     /// Removes the podcast based on the `indextPath`
     ///
     /// - Parameter indexPath: the selected index path
     func remove(at indexPath: IndexPath)
-    
+
     /// Saves the episode
     ///
     /// - Parameter episode: the episode

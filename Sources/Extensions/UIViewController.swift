@@ -9,7 +9,6 @@
 import UIKit
 
 extension UIViewController {
-    
     /// Shows alert view
     ///
     /// - Parameters:
@@ -18,7 +17,7 @@ extension UIViewController {
     func showAlert(title: String? = nil, message: String) {
         let alert = UIAlertController(title: title, message: message, preferredStyle: .actionSheet)
         alert.accessibilityLabel = title
-        alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil))
+        alert.addAction(UIAlertAction(title: "Ok".localized(), style: .default, handler: nil))
         self.present(alert, animated: true, completion: nil)
     }
 }

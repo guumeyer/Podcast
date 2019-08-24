@@ -41,6 +41,4 @@ final class PodcastTableViewCell: UITableViewCell {
             }
         }
     }
-
 }
-

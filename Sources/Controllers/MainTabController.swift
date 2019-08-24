@@ -10,7 +10,6 @@ import UIKit
 
 /// The main tab bar controller.
 final class MainTabController: UITabBarController {
-
     private var maximizedTopAnchorConstraint: NSLayoutConstraint!
     private var minimizedTopAnchorConstraint: NSLayoutConstraint!
     private var bottomAnchorConstraint: NSLayoutConstraint!
@@ -29,7 +28,8 @@ final class MainTabController: UITabBarController {
         setupPlayerView()
     }
 
-    @objc func minimazePlayerViewAnimation() {
+    @objc
+    func minimazePlayerViewAnimation() {
         maximizedTopAnchorConstraint.isActive = false
         bottomAnchorConstraint.constant = view.frame.height
         minimizedTopAnchorConstraint.isActive = true
@@ -44,7 +44,6 @@ final class MainTabController: UITabBarController {
                         self.tabBar.transform = CGAffineTransform.identity
                         self.playerView.maximazePlayer.alpha = 0
                         self.playerView.miniPlayerView.alpha = 1
-
         })
     }
 
@@ -53,7 +52,6 @@ final class MainTabController: UITabBarController {
         bottomAnchorConstraint.constant = 0
         maximizedTopAnchorConstraint.constant = 0
         maximizedTopAnchorConstraint.isActive = true
-
 
         if let episode = episode {
             playerView.prepare(by: episode, playList)
@@ -66,12 +64,12 @@ final class MainTabController: UITabBarController {
             self.playerView.miniPlayerView.alpha = 0
         }
     }
-    
+
     private func setupViewControllers() {
         viewControllers = [
             UIControllerFactory.create(.favorites),
             UIControllerFactory.create(.search),
-            UIControllerFactory.create(.donwload),
+            UIControllerFactory.create(.download)
         ]
     }
 
@@ -96,4 +94,3 @@ final class MainTabController: UITabBarController {
         playerView.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
     }
 }
-

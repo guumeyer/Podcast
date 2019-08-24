@@ -13,7 +13,7 @@ extension Date {
     func string(with format: DateFormatter) -> String {
         return format.string(from: self)
     }
-    
+
     /// Creates an `Date` from the given string and formatter. Nil if the string couldn't be parsed
     init?(string: String, formatter: DateFormatter) {
         guard let date = formatter.date(from: string) else { return nil }

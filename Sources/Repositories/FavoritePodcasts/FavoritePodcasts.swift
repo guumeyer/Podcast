@@ -13,19 +13,19 @@ extension FavoritePodcasts: Podcast {
     func setImage(data: Data) {
         image = data
     }
-    
+
     func getImage() -> Data? {
         return image
     }
-    
+
     var name: String {
         return title ?? ""
     }
-    
+
     var author: String {
         return authorName ?? ""
     }
-    
+
     var audioCount: Int {
         return Int(episodes)
     }

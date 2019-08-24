@@ -10,37 +10,38 @@ import Foundation
 import UIKit
 
 final class URLSessionHTTPDownloadClient: NSObject, HTTPDownloadClient {
-    
     private var progressCompletion: ProgressCompletionHandlerType?
     private var downloadFinishedCompletion: DownloadFinishedHandlerType?
     private static let identifier: String = "com.meyer.ios.Podcast.backgrondSession"
-    
+
     private lazy var session: URLSession = {
         let configuration = URLSessionConfiguration.background(withIdentifier: URLSessionHTTPDownloadClient.identifier)
         return URLSession(configuration: configuration,
                           delegate: self,
                           delegateQueue: nil)
     }()
-    
+
     func download(with url: URL,
                   progressCompletion: ProgressCompletionHandlerType?,
                   downloadFinishedCompletion: DownloadFinishedHandlerType?) -> URLSessionDownloadTask {
         self.progressCompletion = progressCompletion
         self.downloadFinishedCompletion = downloadFinishedCompletion
-        
+
         let task = session.downloadTask(with: url)
         task.resume()
-        
+
         return task
     }
-    
-    func download(withResumeData: Data, progressCompletion: ProgressCompletionHandlerType?, downloadFinishedCompletion: DownloadFinishedHandlerType?) -> URLSessionDownloadTask {
+
+    func download(withResumeData: Data,
+                  progressCompletion: ProgressCompletionHandlerType?,
+                  downloadFinishedCompletion: DownloadFinishedHandlerType?) -> URLSessionDownloadTask {
         self.progressCompletion = progressCompletion
         self.downloadFinishedCompletion = downloadFinishedCompletion
-        
+
         let task = session.downloadTask(withResumeData: withResumeData)
         task.resume()
-        
+
         return task
     }
 }
@@ -56,7 +57,7 @@ extension URLSessionHTTPDownloadClient: URLSessionDelegate {
             }
         }
     }
-    
+
     func urlSession(_ session: URLSession, taskIsWaitingForConnectivity task: URLSessionTask) {
         // waiting for connectivity, update UI, etc.
         print("waiting for connectivity, update UI, etc.")
@@ -65,15 +66,18 @@ extension URLSessionHTTPDownloadClient: URLSessionDelegate {
 
 // MARK: - URL Session Download Delegate
 extension URLSessionHTTPDownloadClient: URLSessionDownloadDelegate {
-    func urlSession(_ session: URLSession, downloadTask: URLSessionDownloadTask,
+    func urlSession(_ session: URLSession,
+                    downloadTask: URLSessionDownloadTask,
                     didFinishDownloadingTo location: URL) {
         guard let sourceURL = downloadTask.originalRequest?.url else { return }
-        
+
         self.downloadFinishedCompletion?(sourceURL, location)
     }
 
-    func urlSession(_ session: URLSession, downloadTask: URLSessionDownloadTask,
-                    didWriteData bytesWritten: Int64, totalBytesWritten: Int64,
+    func urlSession(_ session: URLSession,
+                    downloadTask: URLSessionDownloadTask,
+                    didWriteData bytesWritten: Int64,
+                    totalBytesWritten: Int64,
                     totalBytesExpectedToWrite: Int64) {
         guard let url = downloadTask.originalRequest?.url else { return }
         let progress = Float(totalBytesWritten) / Float(totalBytesExpectedToWrite)
@@ -82,4 +86,3 @@ extension URLSessionHTTPDownloadClient: URLSessionDownloadDelegate {
         self.progressCompletion?(url, progress, totalSize)
     }
 }
-

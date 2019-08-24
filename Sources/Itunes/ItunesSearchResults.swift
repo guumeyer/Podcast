@@ -7,7 +7,7 @@
 //
 
 import Foundation
-    
+
 /// Represents the Itunes search result 
 struct ItunesSearchResults: Decodable {
     let resultCount: Int

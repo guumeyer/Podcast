@@ -22,11 +22,11 @@ extension ItunesMedia: Podcast {
     func getImage() -> Data? {
         return artworkImage
     }
-    
+
     func setImage(data: Data) {
         artworkImage = data
     }
-    
+
     var audioCount: Int {
         return trackCount ?? 0
     }

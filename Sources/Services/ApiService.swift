@@ -9,6 +9,8 @@
 import Foundation
 
 final class ApiService {
+    /// The ApiMediaLoader interactes with the API's
     public let apiMediaLoader: ApiMediaLoader = ItunesApiService(httpClient: URLSessionHTTPClient())
+    /// A shared instance of ApiService.
     public static let shared = ApiService()
 }

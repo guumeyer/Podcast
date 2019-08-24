@@ -8,6 +8,7 @@
 
 import Foundation
 
+/// Represents the Episode download object
 final class EpisodeDownload {
     /// Indicates the download is downloading or pause.
     var isDownloading = false
@@ -19,7 +20,7 @@ final class EpisodeDownload {
     var task: URLSessionDownloadTask?
     /// The episode to download. The episode's url property also acts as a unique identifier for Download.
     var episode: Episode
-    
+
     init(_ episode: Episode) {
         self.episode = episode
     }

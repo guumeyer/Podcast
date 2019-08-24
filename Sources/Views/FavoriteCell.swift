@@ -22,49 +22,49 @@ final class FavoriteCell: UICollectionViewCell {
             }
         }
     }
-    
+
     private let imageView: UIURLImageView = {
         let imageView = UIURLImageView(image: UIImage(named: "placeholder"))
         imageView.layer.cornerRadius = 5
         imageView.clipsToBounds = true
         return imageView
     }()
-    
+
     private let nameLabel: UILabel = {
         let label = UILabel()
         label.font = UIFont.systemFont(ofSize: 15, weight: .semibold)
         return label
     }()
-    
+
     private let authorLabel: UILabel = {
         let label = UILabel()
         label.font = UIFont.systemFont(ofSize: 14)
         label.textColor = .lightGray
         return label
     }()
-    
+
     override init(frame: CGRect) {
         super.init(frame: frame)
-        
+
         nameLabel.text = "Episode name"
         authorLabel.text = "Author name"
-        
+
         setupViews()
     }
-    
+
     required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+        super.init(coder: aDecoder)
     }
-    
+
     private func setupViews() {
         imageView.heightAnchor.constraint(equalTo: imageView.widthAnchor).isActive = true
-        
+
         let stackView = UIStackView(arrangedSubviews: [
             imageView,
             nameLabel,
             authorLabel
-            ])
-        
+        ])
+
         stackView.axis = .vertical
         stackView.translatesAutoresizingMaskIntoConstraints = false
         addSubview(stackView)

@@ -11,7 +11,7 @@ import Foundation
 /// The Episode protocol will be diplayed on the UI components
 protocol Episode {
     /// The identification
-    var id: String { get }
+    var code: String { get }
     /// The author name
     var author: String { get }
     /// The episode title
@@ -30,17 +30,17 @@ protocol Episode {
     ///
     /// - Parameter data: the image data.
     func setImage(data: Data)
-    
+
     /// Gets the image data
     ///
     /// - Returns: an image data.
     func getImage() -> Data?
-    
+
     /// Sets the episode local file URL
     ///
     /// - Parameter url: the episode local file URL
-    func setFileUrl(url:URL?)
-    
+    func setFileUrl(url: URL?)
+
     /// Gets the episode local file URL
     ///
     /// - Returns: an local URL
@@ -48,7 +48,7 @@ protocol Episode {
 }
 
 extension Episode {
-    var id: String {
+    var code: String {
         return mediaUrl
     }
 }

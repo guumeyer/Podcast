@@ -10,7 +10,6 @@ import UIKit
 
 /// Custom the UI Appearance
 final class Appearance {
-    
     static func apply() {
         // Navigation bar
         let proxyNavBar = UINavigationBar.appearance()
@@ -21,11 +20,10 @@ final class Appearance {
             color: .clear,
             size: CGSize(width: 1, height: 1)
         )
-        
+
         proxyNavBar.shadowImage = UIImage()
         proxyNavBar.backIndicatorImage = UIImage()
-        
-        
+
         let proxyTabBar = UITabBar.appearance()
         proxyTabBar.isTranslucent = false
     }

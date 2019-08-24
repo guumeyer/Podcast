@@ -9,7 +9,6 @@
 import UIKit
 
 final class EpisodeCell: UITableViewCell {
-
     @IBOutlet weak var pubDateLabel: UILabel!
     @IBOutlet weak var titleLabel: UILabel! {
         didSet {
@@ -30,9 +29,8 @@ final class EpisodeCell: UITableViewCell {
             episodeImageView.backgroundColor = .lightGray
         }
     }
-    
+
     @IBOutlet weak var progressLabel: UILabel!
-    
 
     static let identifier = "EpisodeCell"
 
@@ -41,7 +39,6 @@ final class EpisodeCell: UITableViewCell {
             pubDateLabel.text = episode?.pubDate.string(with: .shortDateAndTime)
             titleLabel.text = episode?.title
             descriptionLabel.text = episode?.summary
-            
         }
     }
 
@@ -54,5 +51,4 @@ final class EpisodeCell: UITableViewCell {
             episodeImageView.load(url: urlString)
         }
     }
-
 }

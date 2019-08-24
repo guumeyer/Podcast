@@ -9,19 +9,18 @@
 import UIKit
 
 final class EpisodesController: UITableViewController {
-    
     private lazy var podcastRepository: FavoritePodcastsRepository = LocalFavoritePodcastsRepository(nil)
     private lazy var episodesRepository: DownloadEpisodesRepository = LocalDownloadEpisodesRepository(nil)
-    
+
     private var episodes = [Episode]()
-    
+
     var podcast: Podcast! {
         didSet {
             navigationItem.title = podcast.name
             featchEpisodes()
         }
     }
-    
+
     var displayAddFavorite = false {
         didSet {
             if displayAddFavorite {
@@ -35,7 +34,7 @@ final class EpisodesController: UITableViewController {
     private var mainController: MainTabController? {
         return UIApplication.shared.keyWindow?.rootViewController as? MainTabController
     }
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -51,6 +50,7 @@ final class EpisodesController: UITableViewController {
             switch result {
             case .failure(let error):
                 print(error.localizedDescription)
+
             case .success(let episodesResult):
                 strongSelf.episodes = episodesResult
                 OperationQueue.main.addOperation {
@@ -59,7 +59,7 @@ final class EpisodesController: UITableViewController {
             }
         }
     }
-    
+
     private func setupNavigationBarButtons() {
         navigationItem.rightBarButtonItems = [
             UIBarButtonItem(title: "Add Favorite",
@@ -70,12 +70,13 @@ final class EpisodesController: UITableViewController {
     }
 
     private func setupTableView() {
-        tableView.register(UINib(nibName: String(describing:EpisodeCell.self), bundle: nil),
+        tableView.register(UINib(nibName: String(describing: EpisodeCell.self), bundle: nil),
                            forCellReuseIdentifier: EpisodeCell.identifier)
         tableView.tableFooterView = UIView()
     }
-    
-    @objc private func handleSaveFavorites() {
+
+    @objc
+    private func handleSaveFavorites() {
         podcastRepository.save(podcast)
     }
 }
@@ -93,18 +94,17 @@ extension EpisodesController {
         return activityIndicatorView
     }
 
-    override func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
-        
+    override func tableView(_ tableView: UITableView,
+                            editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
         let episode = episodes[indexPath.row]
-        
-        
+
         let donwloadAction = UITableViewRowAction(style: .normal, title: "Donwload") { [weak self] (_, _) in
             guard let strongSelf = self else { return }
-            
+
             if EpisodeDownloadManager.shared.isDonwloadInProgress(episode) {
                 strongSelf.showAlert(message: "Download in progress" )
-            } else if let episodeFromDatabase = strongSelf.episodesRepository.object(by: episode.id),
-                let _ = episodeFromDatabase.getFileUrl() {
+            } else if let episodeFromDatabase = strongSelf.episodesRepository.object(by: episode.code),
+                episodeFromDatabase.getFileUrl() != nil {
                 strongSelf.showAlert(message: "Ready to be play")
             } else {
                 do {
@@ -115,10 +115,10 @@ extension EpisodesController {
                 }
             }
         }
-        
+
         return [donwloadAction]
     }
-    
+
     override func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
         return episodes.isEmpty ? 200 : 0
     }
@@ -126,8 +126,10 @@ extension EpisodesController {
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return episodes.count
     }
-    
-    override func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+
+    override func tableView(_ tableView: UITableView,
+                            willDisplay cell: UITableViewCell,
+                            forRowAt indexPath: IndexPath) {
         if let episodeCell = cell as? EpisodeCell {
             let episode = episodes[indexPath.row]
             episodeCell.episode = episode

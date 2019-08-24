@@ -9,14 +9,15 @@
 import Foundation
 
 extension URLCache {
-    
      // 500 MB
     private static let memoryCapacity = 500 * 1024 * 1024
     private static let diskCapacity = 1000 * 1024 * 1024
-    
+
     /// Setups the URLCache with the size
     public static func setupCache() {
-        let cache = URLCache(memoryCapacity: memoryCapacity, diskCapacity: diskCapacity, diskPath: "imagePath")
+        let cache = URLCache(memoryCapacity: memoryCapacity,
+                             diskCapacity: diskCapacity,
+                             diskPath: "imagePath")
         URLCache.shared = cache
     }
 }

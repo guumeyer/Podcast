@@ -9,7 +9,7 @@
 import UIKit
 
 extension UINavigationBar {
-    func shouldRemoveShadow(_ value: Bool) -> Void {
+    func shouldRemoveShadow(_ value: Bool) {
         if value {
             self.setValue(true, forKey: "hidesShadow")
         } else {

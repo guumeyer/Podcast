@@ -5,3 +5,15 @@
   Created by Gustavo on 2019-08-23.
   Copyright © 2019 Meyer Systems. All rights reserved.
 */
+
+// HTTPClientError
+"HTTPClientError.connectivity" = "The internet connection appears to be offline.";
+"HTTPClientError.invalidUrl" = "Invalid URL.";
+"HTTPClientError.invalidData" = "Invalid Data.";
+
+"EpisodeDownloadError.downloadInProgress" = "Download in progress";
+"EpisodeDownloadError.invalidUrl" = "Invalid URL";
+
+"AlertAction.title" = "Ok";
+"" = "";
+
