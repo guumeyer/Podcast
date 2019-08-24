@@ -126,7 +126,7 @@
 		DBB50B5E22D84C0A0029B74B /* Podcast.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Podcast.swift; sourceTree = "<group>"; };
 		DBD9CF8A22E01360005EC448 /* PlayerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerView.swift; sourceTree = "<group>"; };
 		DBD9CF8D22E0AD08005EC448 /* CMTime.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CMTime.swift; sourceTree = "<group>"; };
-		DBDE162222D78D7700BD646F /* Podcast.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Podcast.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		DBDE162222D78D7700BD646F /* MeyerCast.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MeyerCast.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		DBDE162522D78D7700BD646F /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		DBDE162F22D78D7700BD646F /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		DBDE163222D78D7700BD646F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -314,7 +314,7 @@
 		DBDE162322D78D7700BD646F /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				DBDE162222D78D7700BD646F /* Podcast.app */,
+				DBDE162222D78D7700BD646F /* MeyerCast.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -344,9 +344,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		DBDE162122D78D7700BD646F /* Podcast */ = {
+		DBDE162122D78D7700BD646F /* MeyerCast */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = DBDE163722D78D7700BD646F /* Build configuration list for PBXNativeTarget "Podcast" */;
+			buildConfigurationList = DBDE163722D78D7700BD646F /* Build configuration list for PBXNativeTarget "MeyerCast" */;
 			buildPhases = (
 				DBDE161E22D78D7700BD646F /* Sources */,
 				DBDE161F22D78D7700BD646F /* Frameworks */,
@@ -357,9 +357,9 @@
 			);
 			dependencies = (
 			);
-			name = Podcast;
+			name = MeyerCast;
 			productName = Podcast;
-			productReference = DBDE162222D78D7700BD646F /* Podcast.app */;
+			productReference = DBDE162222D78D7700BD646F /* MeyerCast.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -396,7 +396,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				DBDE162122D78D7700BD646F /* Podcast */,
+				DBDE162122D78D7700BD646F /* MeyerCast */,
 			);
 		};
 /* End PBXProject section */
@@ -682,7 +682,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		DBDE163722D78D7700BD646F /* Build configuration list for PBXNativeTarget "Podcast" */ = {
+		DBDE163722D78D7700BD646F /* Build configuration list for PBXNativeTarget "MeyerCast" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				DBDE163822D78D7700BD646F /* Debug */,
