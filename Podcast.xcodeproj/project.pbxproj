@@ -33,6 +33,9 @@
 		2BC3ED2D230BB15700A5D133 /* DateFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BC3ED2C230BB15700A5D133 /* DateFormatter.swift */; };
 		2BC3ED2F230BB24500A5D133 /* Date.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BC3ED2E230BB24500A5D133 /* Date.swift */; };
 		2BC3ED31230BCC6E00A5D133 /* UIViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BC3ED30230BCC6E00A5D133 /* UIViewController.swift */; };
+		2BD835DF2310E58500E777C9 /* URLCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BD835DE2310E58500E777C9 /* URLCache.swift */; };
+		2BD835E12310E64500E777C9 /* Apperance.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BD835E02310E64500E777C9 /* Apperance.swift */; };
+		2BD835E32310E8B100E777C9 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 2BD835E22310E8B100E777C9 /* Localizable.strings */; };
 		DB16A63922D8652B00F1B04F /* UINavigationBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB16A63822D8652B00F1B04F /* UINavigationBar.swift */; };
 		DB4518F122DAFF4E0022BD1F /* ItunesSearchResults.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB4518F022DAFF4E0022BD1F /* ItunesSearchResults.swift */; };
 		DB4518F522DB01770022BD1F /* URLSessionHTTPClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB4518F322DB01770022BD1F /* URLSessionHTTPClient.swift */; };
@@ -93,6 +96,9 @@
 		2BC3ED2C230BB15700A5D133 /* DateFormatter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateFormatter.swift; sourceTree = "<group>"; };
 		2BC3ED2E230BB24500A5D133 /* Date.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Date.swift; sourceTree = "<group>"; };
 		2BC3ED30230BCC6E00A5D133 /* UIViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIViewController.swift; sourceTree = "<group>"; };
+		2BD835DE2310E58500E777C9 /* URLCache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLCache.swift; sourceTree = "<group>"; };
+		2BD835E02310E64500E777C9 /* Apperance.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Apperance.swift; sourceTree = "<group>"; };
+		2BD835E22310E8B100E777C9 /* Localizable.strings */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; path = Localizable.strings; sourceTree = "<group>"; };
 		DB16A63822D8652B00F1B04F /* UINavigationBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UINavigationBar.swift; sourceTree = "<group>"; };
 		DB4518F022DAFF4E0022BD1F /* ItunesSearchResults.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItunesSearchResults.swift; sourceTree = "<group>"; };
 		DB4518F322DB01770022BD1F /* URLSessionHTTPClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = URLSessionHTTPClient.swift; sourceTree = "<group>"; };
@@ -270,6 +276,7 @@
 				2BC3ED2C230BB15700A5D133 /* DateFormatter.swift */,
 				2BC3ED2E230BB24500A5D133 /* Date.swift */,
 				2BC3ED30230BCC6E00A5D133 /* UIViewController.swift */,
+				2BD835DE2310E58500E777C9 /* URLCache.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -328,6 +335,8 @@
 				2B7EA5DC2300D4930073DAF0 /* Repositories */,
 				DB4518FD22DC4F070022BD1F /* Services */,
 				DB45190022DCCCF50022BD1F /* Views */,
+				2BD835E02310E64500E777C9 /* Apperance.swift */,
+				2BD835E22310E8B100E777C9 /* Localizable.strings */,
 			);
 			path = Sources;
 			sourceTree = "<group>";
@@ -398,6 +407,7 @@
 				DB8FEE3122DF03DE0041A777 /* PlayerView.xib in Resources */,
 				DB45190922DCE8C40022BD1F /* MediaSearchingView.xib in Resources */,
 				DBDE163322D78D7700BD646F /* LaunchScreen.storyboard in Resources */,
+				2BD835E32310E8B100E777C9 /* Localizable.strings in Resources */,
 				DBDE163022D78D7700BD646F /* Assets.xcassets in Resources */,
 				DB45190222DCCD1A0022BD1F /* PodcastTableViewCell.xib in Resources */,
 				DB8FEE2A22DEE56B0041A777 /* EpisodeCell.xib in Resources */,
@@ -415,6 +425,7 @@
 				2B7EA5E12300D5120073DAF0 /* PodcastModel.xcdatamodeld in Sources */,
 				DB6886E722F2E83300EEAEAB /* UIApplication.swift in Sources */,
 				DBB50B5C22D84B900029B74B /* PodcastsSearchController.swift in Sources */,
+				2BD835DF2310E58500E777C9 /* URLCache.swift in Sources */,
 				DB4518F522DB01770022BD1F /* URLSessionHTTPClient.swift in Sources */,
 				DB8FEE2F22DEF9EC0041A777 /* String.swift in Sources */,
 				DB91B49F22DDA4F6005E70A9 /* FeedEpisodesXmlParser.swift in Sources */,
@@ -422,6 +433,7 @@
 				2BC3ED31230BCC6E00A5D133 /* UIViewController.swift in Sources */,
 				2B6735D922F611CE0014ABC5 /* UIControllerFactory.swift in Sources */,
 				DB4518F122DAFF4E0022BD1F /* ItunesSearchResults.swift in Sources */,
+				2BD835E12310E64500E777C9 /* Apperance.swift in Sources */,
 				DB4518FF22DC4F2A0022BD1F /* ApiService.swift in Sources */,
 				2B39166F230157E3001A9A31 /* DownloadController.swift in Sources */,
 				DBD9CF8E22E0AD08005EC448 /* CMTime.swift in Sources */,
@@ -537,7 +549,7 @@
 				SDKROOT = iphoneos;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-				SWIFT_VERSION = 4.2;
+				SWIFT_VERSION = 5.0;
 			};
 			name = Debug;
 		};
@@ -592,7 +604,7 @@
 				SDKROOT = iphoneos;
 				SWIFT_COMPILATION_MODE = wholemodule;
 				SWIFT_OPTIMIZATION_LEVEL = "-O";
-				SWIFT_VERSION = 4.2;
+				SWIFT_VERSION = 5.0;
 				VALIDATE_PRODUCT = YES;
 			};
 			name = Release;

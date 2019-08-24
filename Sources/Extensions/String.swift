@@ -9,8 +9,13 @@
 import Foundation
 
 extension String {
-    func toSecureHTTPS() -> String {
-        return self.contains("https") ? self :
-            self.replacingOccurrences(of: "http", with: "https")
+    /// Localizes the content based on the Device locale
+    ///
+    /// - Parameter withComment: The comment for more detail
+    /// - Returns: A localized string or the content in case the term not present in the Localizeble.string
+    func localized(withComment: String? = nil) -> String {
+        return NSLocalizedString(self,
+                                 tableName: nil,
+                                 comment: withComment ?? "")
     }
 }

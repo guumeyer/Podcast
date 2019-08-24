@@ -8,11 +8,6 @@
 
 import Foundation
 
-enum Result<Value, Failure> {
-    case success(Value)
-    case failure(Failure)
-}
-
 final class ItunesApiService: ApiMediaLoader {
     private let baseUrl = "https://itunes.apple.com"
     private var featchMediasDataTask: URLSessionDataTask?
